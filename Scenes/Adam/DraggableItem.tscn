@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwdkkivsor7o2"]
+
+[ext_resource type="Script" uid="uid://c5lg5q7qclsmc" path="res://Scripts/Adam/DraggableItem.cs" id="1_np7iy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjkgt"]
+
+[node name="DraggableItem" type="Area2D"]
+script = ExtResource("1_np7iy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2.5, 2.5)
+shape = SubResource("RectangleShape2D_kjkgt")
+
+[node name="NameLabel" type="Label" parent="."]
+offset_left = -25.0
+offset_top = 25.0
+offset_right = 25.0
+offset_bottom = 48.0

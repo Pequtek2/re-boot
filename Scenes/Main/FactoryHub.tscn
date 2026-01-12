@@ -1,0 +1,142 @@
+[gd_scene load_steps=14 format=4 uid="uid://tl3m2ua6xmyl"]
+
+[ext_resource type="Texture2D" uid="uid://cy54wgvivkgex" path="res://IMG/Main/New Piskel.png" id="1_c83pb"]
+[ext_resource type="Texture2D" uid="uid://l3ndgiy2t4vx" path="res://IMG/Main/New Piskel (2).png" id="2_7fguo"]
+[ext_resource type="PackedScene" uid="uid://chk6tdok8l6v2" path="res://Scenes/Main/player.tscn" id="2_xjgxm"]
+[ext_resource type="Texture2D" uid="uid://dj0m3ja8j7bb7" path="res://IMG/Main/tileselect.png" id="4_a7u1l"]
+[ext_resource type="PackedScene" uid="uid://bth2nuny7s0cg" path="res://Prefabs/Machine.tscn" id="4_o0e8j"]
+[ext_resource type="PackedScene" uid="uid://c7valgw2njlef" path="res://Prefabs/DialogueUI.tscn" id="6_v5kct"]
+[ext_resource type="PackedScene" uid="uid://lc54a50wctt4" path="res://Dialogue/NPC/kierownik.tscn" id="7_uchr4"]
+[ext_resource type="PackedScene" uid="uid://cli5wdih77mi1" path="res://Prefabs/Machine2.tscn" id="8_qxtlx"]
+[ext_resource type="PackedScene" uid="uid://cwlssp4vauuam" path="res://Dialogue/NPC/inzynier.tscn" id="9_ddwxy"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_xjgxm"]
+vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 16, 32, 0, 0, -16, -32, 0)])
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xjgxm"]
+texture = ExtResource("1_c83pb")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_xjgxm")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o0e8j"]
+texture = ExtResource("2_7fguo")
+texture_region_size = Vector2i(64, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+
+[sub_resource type="TileSet" id="TileSet_7fguo"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(64, 32)
+navigation_layer_0/layers = 1
+custom_data_layer_0/name = "is_wall"
+custom_data_layer_0/type = 1
+sources/1 = SubResource("TileSetAtlasSource_xjgxm")
+sources/2 = SubResource("TileSetAtlasSource_o0e8j")
+
+[node name="FactoryHub" type="Node2D"]
+y_sort_enabled = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+z_index = -2
+position = Vector2(-160, -80)
+tile_map_data = PackedByteArray("AAAAAAAAAgAAAAAAAAABAAAAAQAAAAAAAAABAP//AQAAAAAAAAACAP//AQAAAAAAAAACAAAAAQAAAAAAAAABAAEAAQAAAAAAAAACAAEAAQAAAAAAAAAAAAEAAQAAAAAAAAD//wIAAQAAAAAAAAAAAAIAAQAAAAAAAAABAAIAAQAAAAAAAAACAAIAAQAAAAAAAAD//wEAAQAAAAAAAAD//wAAAgAAAAAAAAD/////AgAAAAAAAAAAAP//AgAAAAAAAAACAP7/AQAAAAAAAAABAP7/AQAAAAAAAAAAAP7/AQAAAAAAAAD///7/AQAAAAAAAAD+//7/AQAAAAAAAAD+////AQAAAAAAAAD+/wAAAQAAAAAAAAD+/wEAAQAAAAAAAAD+/wIAAQAAAAAAAAD9/wIAAQAAAAAAAAD9/wEAAQAAAAAAAAD9/wAAAQAAAAAAAAD9////AQAAAAAAAAD9//7/AQAAAAAAAAD9//3/AQAAAAAAAAD+//3/AQAAAAAAAAD///3/AQAAAAAAAAAAAP3/AQAAAAAAAAABAP3/AQAAAAAAAAACAP3/AQAAAAAAAAADAP3/AQAAAAAAAAADAP7/AQAAAAAAAAADAP//AQAAAAAAAAADAAAAAQAAAAAAAAADAAEAAQAAAAAAAAADAAIAAQAAAAAAAAADAAMAAQAAAAAAAAACAAMAAQAAAAAAAAD8/wEAAQAAAAAAAAD8/wAAAQAAAAAAAAD8////AQAAAAAAAAD8//7/AQAAAAAAAAD8//3/AQAAAAAAAAD8//z/AQAAAAAAAAD9//z/AQAAAAAAAAD+//z/AQAAAAAAAAD///z/AQAAAAAAAAAAAPz/AQAAAAAAAAABAPz/AQAAAAAAAAACAPz/AQAAAAAAAAADAPz/AQAAAAAAAAAEAPz/AQAAAAAAAAAEAP3/AQAAAAAAAAAEAP7/AQAAAAAAAAAEAP//AQAAAAAAAAAEAAAAAQAAAAAAAAAEAAEAAQAAAAAAAAAEAAIAAQAAAAAAAAAEAAMAAQAAAAAAAAAEAAQAAQAAAAAAAAADAAQAAQAAAAAAAAACAAQAAQAAAAAAAAABAAQAAQAAAAAAAAAAAAQAAgAAAAAAAAD//wQAAgAAAAAAAAABAAMAAQAAAAAAAAAAAAMAAgAAAAAAAAD//wMAAgAAAAAAAAD+/wMAAQAAAAAAAAD9/wMAAQAAAAAAAAD8/wMAAQAAAAAAAAD8/wIAAQAAAAAAAAD8/wQAAQAAAAAAAAD9/wQAAQAAAAAAAAD+/wQAAQAAAAAAAAAFAAQAAQAAAAAAAAAFAAMAAQAAAAAAAAAFAAIAAQAAAAAAAAAFAAEAAQAAAAAAAAAFAAAAAQAAAAAAAAAFAP//AQAAAAAAAAAFAP7/AQAAAAAAAAAFAP3/AQAAAAAAAAAFAPz/AQAAAAAAAAAGAPz/AQAAAAAAAAAGAP3/AQAAAAAAAAAGAP7/AQAAAAAAAAAGAP//AQAAAAAAAAAGAAMAAQAAAAAAAAAGAAQAAQAAAAAAAAAHAAQAAQAAAAAAAAAHAAMAAQAAAAAAAAAHAP//AQAAAAAAAAAHAP7/AQAAAAAAAAAHAP3/AQAAAAAAAAAIAP3/AQAAAAAAAAAIAPz/AQAAAAAAAAAHAPz/AQAAAAAAAAAJAPz/AQAAAAAAAAAJAP3/AQAAAAAAAAAJAP7/AQAAAAAAAAAJAP//AQAAAAAAAAAIAP//AQAAAAAAAAAIAAMAAQAAAAAAAAAIAAQAAQAAAAAAAAAJAAQAAQAAAAAAAAAJAAMAAQAAAAAAAAAJAAIAAQAAAAAAAAAJAAEAAQAAAAAAAAAJAAAAAQAAAAAAAAAIAP7/AQAAAAAAAAAKAPz/AQAAAAAAAAAKAP3/AQAAAAAAAAALAP3/AQAAAAAAAAALAP7/AQAAAAAAAAAKAP7/AQAAAAAAAAAKAP//AQAAAAAAAAAKAAAAAQAAAAAAAAAKAAEAAQAAAAAAAAAKAAMAAQAAAAAAAAAKAAQAAQAAAAAAAAALAAQAAQAAAAAAAAALAAMAAQAAAAAAAAALAAIAAQAAAAAAAAALAAEAAQAAAAAAAAALAAAAAQAAAAAAAAALAP//AQAAAAAAAAAKAAIAAQAAAAAAAAALAPz/AQAAAAAAAAAMAPz/AQAAAAAAAAAMAP3/AQAAAAAAAAAMAP7/AQAAAAAAAAAMAP//AQAAAAAAAAAMAAAAAQAAAAAAAAAMAAEAAQAAAAAAAAAMAAIAAQAAAAAAAAAMAAMAAQAAAAAAAAAMAAQAAQAAAAAAAAANAAQAAQAAAAAAAAANAAMAAQAAAAAAAAAOAAMAAQAAAAAAAAAOAAIAAQAAAAAAAAAOAAEAAQAAAAAAAAAOAAAAAQAAAAAAAAAOAP//AQAAAAAAAAANAP//AQAAAAAAAAANAP7/AQAAAAAAAAANAP3/AQAAAAAAAAANAPz/AQAAAAAAAAANAAAAAQAAAAAAAAANAAEAAQAAAAAAAAANAAIAAQAAAAAAAAAOAP7/AQAAAAAAAAAOAP3/AQAAAAAAAAAOAPz/AQAAAAAAAAAOAAQAAQAAAAAAAAAFAPv/AgAAAAAAAAAGAPv/AgAAAAAAAAAHAPv/AgAAAAAAAAAIAPv/AgAAAAAAAAAJAPv/AgAAAAAAAAAKAPv/AgAAAAAAAAALAPv/AgAAAAAAAAAMAPv/AgAAAAAAAAANAPv/AgAAAAAAAAAOAPv/AgAAAAAAAAAPAPv/AgAAAAAAAAAPAPz/AQAAAAAAAAAPAP3/AQAAAAAAAAAPAP7/AQAAAAAAAAAPAP//AQAAAAAAAAAPAAAAAQAAAAAAAAAPAAEAAQAAAAAAAAAPAAIAAQAAAAAAAAAPAAMAAQAAAAAAAAAPAAQAAQAAAAAAAAAPAAUAAQAAAAAAAAAOAAUAAQAAAAAAAAAOAAYAAQAAAAAAAAANAAYAAQAAAAAAAAAMAAYAAQAAAAAAAAALAAYAAQAAAAAAAAAKAAYAAQAAAAAAAAAJAAYAAQAAAAAAAAAJAAUAAQAAAAAAAAAIAAUAAQAAAAAAAAAHAAUAAQAAAAAAAAAGAAUAAQAAAAAAAAAFAAUAAQAAAAAAAAAKAAUAAQAAAAAAAAALAAUAAQAAAAAAAAAMAAUAAQAAAAAAAAANAAUAAQAAAAAAAAAIAAYAAQAAAAAAAAAHAAYAAQAAAAAAAAAGAAYAAQAAAAAAAAAFAAYAAQAAAAAAAAAEAAYAAQAAAAAAAAAEAAUAAQAAAAAAAAAEAPv/AgAAAAAAAAADAPv/AgAAAAAAAAACAPv/AgAAAAAAAAABAPv/AgAAAAAAAAAAAPv/AgAAAAAAAAD///v/AgAAAAAAAAD+//v/AgAAAAAAAAD9//v/AgAAAAAAAAD8//v/AgAAAAAAAAAGAAAAAgAAAAAAAAAGAAEAAgAAAAAAAAAGAAIAAgAAAAAAAAAHAAIAAgAAAAAAAAAIAAIAAgAAAAAAAAAIAAEAAgAAAAAAAAAIAAAAAgAAAAAAAAAHAAAAAgAAAAAAAAABAAUAAQAAAAAAAAAAAAUAAQAAAAAAAAD//wUAAQAAAAAAAAD+/wUAAQAAAAAAAAD9/wUAAQAAAAAAAAD8/wUAAQAAAAAAAAACAAUAAQAAAAAAAAADAAUAAQAAAAAAAAADAAYAAQAAAAAAAAACAAcAAQAAAAAAAAABAAcAAQAAAAAAAAABAAYAAQAAAAAAAAAAAAYAAQAAAAAAAAD//wYAAQAAAAAAAAD+/wYAAQAAAAAAAAD9/wYAAQAAAAAAAAD8/wYAAQAAAAAAAAD9/wcAAQAAAAAAAAD+/wcAAQAAAAAAAAD//wcAAQAAAAAAAAAAAAcAAQAAAAAAAAACAAYAAQAAAAAAAAADAAcAAQAAAAAAAAD8/wcAAQAAAAAAAAA=")
+tile_set = SubResource("TileSet_7fguo")
+
+[node name="Player" parent="." node_paths=PackedStringArray("LevelTileMap", "TileSelector") instance=ExtResource("2_xjgxm")]
+LevelTileMap = NodePath("../TileMapLayer")
+TileSelector = NodePath("../TileSelector")
+
+[node name="TileSelector" type="Sprite2D" parent="."]
+z_index = -1
+y_sort_enabled = true
+texture = ExtResource("4_a7u1l")
+
+[node name="Machine" parent="." node_paths=PackedStringArray("ConfirmPanel", "MessageLabel", "YesButton", "NoButton") instance=ExtResource("4_o0e8j")]
+position = Vector2(-125, -81)
+MachineID = "machine_1"
+MinigameScenePath = "res://Scenes/Adam/MiniGame.tscn"
+LockedDialogueID = "system_locked"
+ConfirmPanel = NodePath("../CanvasLayer/ConfirmPanel")
+MessageLabel = NodePath("../CanvasLayer/ConfirmPanel/MessageLabel")
+YesButton = NodePath("../CanvasLayer/ConfirmPanel/YesButton")
+NoButton = NodePath("../CanvasLayer/ConfirmPanel/NoButton")
+
+[node name="Machine2" parent="." node_paths=PackedStringArray("ConfirmPanel", "MessageLabel", "YesButton", "NoButton") instance=ExtResource("8_qxtlx")]
+position = Vector2(-253, -17)
+MinigameScenePath = "res://Scenes/Adam/MiniGame.tscn"
+ConfirmPanel = NodePath("../CanvasLayer/ConfirmPanel")
+MessageLabel = NodePath("../CanvasLayer/ConfirmPanel/MessageLabel")
+YesButton = NodePath("../CanvasLayer/ConfirmPanel/YesButton")
+NoButton = NodePath("../CanvasLayer/ConfirmPanel/NoButton")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ConfirmPanel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -165.0
+offset_top = -96.0
+offset_right = 165.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/ConfirmPanel"]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 14.0
+offset_right = 240.0
+offset_bottom = 37.0
+text = "Naprawić Maszyne?"
+
+[node name="MessageLabel" type="Label" parent="CanvasLayer/ConfirmPanel"]
+layout_mode = 0
+offset_left = 83.0
+offset_top = 47.0
+offset_right = 245.0
+offset_bottom = 70.0
+
+[node name="YesButton" type="Button" parent="CanvasLayer/ConfirmPanel"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 90.0
+offset_right = 146.0
+offset_bottom = 121.0
+text = "Tak"
+
+[node name="NoButton" type="Button" parent="CanvasLayer/ConfirmPanel"]
+layout_mode = 0
+offset_left = 187.0
+offset_top = 90.0
+offset_right = 222.0
+offset_bottom = 121.0
+text = "Nie"
+
+[node name="DialogueUI" parent="." instance=ExtResource("6_v5kct")]
+
+[node name="NPC" parent="." instance=ExtResource("7_uchr4")]
+position = Vector2(275, 125)
+IntroID = "kierownik_start"
+WaitingID = "kierownik_waiting"
+SuccessID = "kierownik_thanks"
+NextStepID = "kierownik_go_to_2"
+LockedID = ""
+MachineID = "machine_1"
+
+[node name="NPC2" parent="." instance=ExtResource("9_ddwxy")]
+position = Vector2(132, 183)
+IntroID = "inzynier_start"
+WaitingID = "inzynier_waiting"
+SuccessID = "inzynier_thanks"
+NextStepID = "inzynier_go_next"
+LockedID = "inzynier_busy"
+MachineID = "machine_2"
+RequiredMachineID = "machine_1"

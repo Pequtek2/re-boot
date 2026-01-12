@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvx1cbmkpq7v2"]
+
+[ext_resource type="Script" uid="uid://c5q48tavybe63" path="res://Scripts/Adam/Slot.cs" id="1_vqo0j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4h18v"]
+
+[node name="Slot" type="Area2D"]
+script = ExtResource("1_vqo0j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_4h18v")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -49.0
+offset_top = -54.0
+offset_right = 49.0
+offset_bottom = -31.0
+horizontal_alignment = 1

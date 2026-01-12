@@ -1,0 +1,26 @@
+# Godot 4+ specific ignores
+.godot/
+*.translation
+export_presets.cfg
+
+# Godot 3 specific (jesli uzywasz starszej wersji)
+.import/
+export.cfg
+
+# Mono / C# specific (BARDZO WAŻNE)
+.mono/
+data_*/
+mono_crash.*.json
+bin/
+obj/
+
+# Visual Studio / Rider / VS Code (pliki konfiguracyjne IDE)
+.vs/
+.idea/
+*.sln.DotSettings.user
+*.csproj.user
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db

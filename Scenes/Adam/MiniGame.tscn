@@ -1,0 +1,57 @@
+[gd_scene load_steps=16 format=3 uid="uid://y00vm72ds2x1"]
+
+[ext_resource type="Script" uid="uid://dgqm02j54re8p" path="res://Scripts/Adam/GameManager.cs" id="1_m20gm"]
+[ext_resource type="PackedScene" uid="uid://dwdkkivsor7o2" path="res://Scenes/Adam/DraggableItem.tscn" id="2_wfeed"]
+[ext_resource type="PackedScene" uid="uid://bvx1cbmkpq7v2" path="res://Scenes/Adam/Slot.tscn" id="3_6g2m7"]
+[ext_resource type="AudioStream" uid="uid://bx6pgqpjrws2y" path="res://Sounds/Adam/click.ogg" id="4_far8q"]
+[ext_resource type="PackedScene" uid="uid://tl3m2ua6xmyl" path="res://Scenes/Main/FactoryHub.tscn" id="4_vvu1n"]
+[ext_resource type="AudioStream" uid="uid://cvgosnb4tniel" path="res://Sounds/Adam/sucess.ogg" id="5_q4ydf"]
+[ext_resource type="AudioStream" uid="uid://c0rgnxh3kh4vm" path="res://Sounds/Adam/fail.ogg" id="6_4hf4s"]
+[ext_resource type="AudioStream" uid="uid://54knusi48db2" path="res://Sounds/Adam/drop.ogg" id="7_x5njg"]
+[ext_resource type="AudioStream" uid="uid://crqis5g0td5is" path="res://Sounds/Adam/win.mp3" id="8_v43e1"]
+[ext_resource type="AudioStream" uid="uid://iyul02k1meuh" path="res://Sounds/Adam/chip-mode-danijel-zambo-main-version-1431-02-05.mp3" id="9_dkno8"]
+[ext_resource type="AudioStream" uid="uid://1x7aphv2ax72" path="res://Sounds/Adam/cyborg-ninja-kevin-macleod-main-version-7993-03-00.mp3" id="10_afp1c"]
+[ext_resource type="AudioStream" uid="uid://byrlitu58n2l1" path="res://Sounds/Adam/ready-set-drift-michael-grubb-main-version-24555-02-59.mp3" id="11_asx7a"]
+[ext_resource type="Script" uid="uid://dieafocers2h0" path="res://Scripts/Adam/BoardRenderer.cs" id="12_kqitr"]
+[ext_resource type="Shader" uid="uid://bls1tph3p66x3" path="res://Scenes/Menu/crt_glitch.gdshader" id="13_sj8dy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yg2tm"]
+shader = ExtResource("13_sj8dy")
+shader_parameter/scanline_count = 540.0
+shader_parameter/glitch_intensity = 0.002
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/distortion = 0.0
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("ShaderRect")]
+script = ExtResource("1_m20gm")
+ItemPrefab = ExtResource("2_wfeed")
+SlotPrefab = ExtResource("3_6g2m7")
+MainMenuScene = ExtResource("4_vvu1n")
+SoundClick = ExtResource("4_far8q")
+SoundSuccess = ExtResource("5_q4ydf")
+SoundError = ExtResource("6_4hf4s")
+SoundDrop = ExtResource("7_x5njg")
+SoundGameWin = ExtResource("8_v43e1")
+BackgroundMusic = Array[AudioStream]([ExtResource("9_dkno8"), ExtResource("10_afp1c"), ExtResource("11_asx7a")])
+ShaderRect = NodePath("CanvasLayer/ColorRect")
+
+[node name="BoardRenderer" type="Node2D" parent="."]
+script = ExtResource("12_kqitr")
+
+[node name="SlotsContainer" type="Node2D" parent="."]
+
+[node name="ItemsContainer" type="Node2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_yg2tm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

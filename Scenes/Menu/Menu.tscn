@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://cn5webe7bjsnt"]
+
+[ext_resource type="Script" uid="uid://eka7swfn04rs" path="res://Scripts/Menu/Menu.cs" id="1_3kh17"]
+[ext_resource type="AudioStream" uid="uid://d2rdltbr32ac2" path="res://Sounds/Menu/Walen - Gameboy (freetouse.com).mp3" id="2_h7084"]
+[ext_resource type="Shader" uid="uid://bls1tph3p66x3" path="res://Scenes/Menu/crt_glitch.gdshader" id="2_kqkty"]
+[ext_resource type="AudioStream" uid="uid://dyps7vd6j1bsj" path="res://Sounds/Menu/start.wav" id="2_kulhe"]
+[ext_resource type="AudioStream" uid="uid://bp7bej8i8fn7x" path="res://Sounds/Menu/boot.wav" id="2_l7xyq"]
+[ext_resource type="AudioStream" uid="uid://caxiaoj6bham" path="res://Sounds/Menu/hover.wav" id="3_l7xyq"]
+[ext_resource type="AudioStream" uid="uid://bymyysg48ll56" path="res://Sounds/Menu/click.wav" id="4_h7084"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_47xui"]
+shader = ExtResource("2_kqkty")
+shader_parameter/scanline_count = 540.0
+shader_parameter/glitch_intensity = 0.002
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/distortion = 0.02
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_3kh17")
+TargetResolution = Vector2i(1400, 780)
+GameScenePath = "res://Scenes/Main/FactoryHub.tscn"
+SplashTitle = "SKNI"
+SplashSubtitle = "UP Lublin"
+GameTitle = "Re:boot"
+ButtonLabels = PackedStringArray("ROZPOCZNIJ", "TWÓRCY", "INFORMACJE", "KÓŁKO", "WYJŚCIE")
+WebsiteURL = "https://up.lublin.pl"
+WebsiteURL2 = "https://skni.up.lublin.pl"
+MusicStream = ExtResource("2_h7084")
+BootSoundStream = ExtResource("2_l7xyq")
+MenuLoadSoundStream = ExtResource("2_kulhe")
+HoverSoundStream = ExtResource("3_l7xyq")
+ClickSoundStream = ExtResource("4_h7084")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Splash" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Booting" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CRTShader" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_47xui")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

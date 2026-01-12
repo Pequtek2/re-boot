@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7valgw2njlef"]
+
+[ext_resource type="Script" uid="uid://ddws8t8qosir4" path="res://Scripts/Main/DialogueManager.cs" id="1_m5yo6"]
+
+[node name="DialogueUI" type="CanvasLayer" node_paths=PackedStringArray("NameLabel", "TextLabel", "DialoguePanel")]
+script = ExtResource("1_m5yo6")
+NameLabel = NodePath("Background/NameLabel")
+TextLabel = NodePath("Background/TextLabel")
+DialoguePanel = NodePath("Background")
+
+[node name="Background" type="Panel" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -282.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NameLabel" type="Label" parent="Background"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 2.0
+offset_right = 168.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 24
+
+[node name="TextLabel" type="RichTextLabel" parent="Background"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 42.0
+offset_right = 1210.0
+offset_bottom = 266.0
+
+[node name="PressSpaceLabel" type="Label" parent="Background"]
+layout_mode = 0
+offset_left = 1279.0
+offset_top = 250.0
+offset_right = 1391.0
+offset_bottom = 273.0
+text = "Wciśnij SPACJĘ"
+
+[node name="PortraitRect" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = -302.0
+offset_right = 311.0
+offset_bottom = -2.0
+expand_mode = 2
+stretch_mode = 5
