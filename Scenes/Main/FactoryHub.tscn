@@ -49,6 +49,7 @@ tile_set = SubResource("TileSet_7fguo")
 
 [node name="Player" parent="." node_paths=PackedStringArray("LevelTileMap", "TileSelector") instance=ExtResource("2_xjgxm")]
 LevelTileMap = NodePath("../TileMapLayer")
+Speed = 100.0
 TileSelector = NodePath("../TileSelector")
 
 [node name="TileSelector" type="Sprite2D" parent="."]
@@ -122,17 +123,8 @@ text = "Nie"
 
 [node name="DialogueUI" parent="." instance=ExtResource("6_v5kct")]
 
-[node name="NPC" parent="." instance=ExtResource("7_uchr4")]
-position = Vector2(275, 125)
-IntroID = "kierownik_start"
-WaitingID = "kierownik_waiting"
-SuccessID = "kierownik_thanks"
-NextStepID = "kierownik_go_to_2"
-LockedID = ""
-MachineID = "machine_1"
-
-[node name="NPC2" parent="." instance=ExtResource("9_ddwxy")]
-position = Vector2(132, 183)
+[node name="Inzynier" parent="." instance=ExtResource("9_ddwxy")]
+position = Vector2(61, 222)
 IntroID = "inzynier_start"
 WaitingID = "inzynier_waiting"
 SuccessID = "inzynier_thanks"
@@ -140,3 +132,12 @@ NextStepID = "inzynier_go_next"
 LockedID = "inzynier_busy"
 MachineID = "machine_2"
 RequiredMachineID = "machine_1"
+
+[node name="Kierownik" parent="." instance=ExtResource("7_uchr4")]
+position = Vector2(321, 102)
+IntroID = "kierownik_start"
+WaitingID = "kierownik_waiting"
+SuccessID = "kierownik_thanks"
+NextStepID = "kierownik_go_to_2"
+LockedID = ""
+MachineID = "machine_1"

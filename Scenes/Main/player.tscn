@@ -1,16 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://chk6tdok8l6v2"]
 
-[ext_resource type="Texture2D" uid="uid://4klyplhr8u3p" path="res://IMG/Main/New Piskel (1).png" id="1_fm463"]
 [ext_resource type="Script" uid="uid://44owpl4mrhhe" path="res://Scripts/Main/PlayerController.cs" id="1_hf81g"]
+[ext_resource type="SpriteFrames" uid="uid://4p1fyojv7p4w" path="res://Scenes/Main/Player_Male.tres" id="2_hf81g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hf81g"]
 radius = 32.01562
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_hf81g")
+MaleFrames = ExtResource("2_hf81g")
+FemaleFrames = ExtResource("2_hf81g")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_fm463")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -10)
+sprite_frames = ExtResource("2_hf81g")
+animation = &"walk_down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hf81g")

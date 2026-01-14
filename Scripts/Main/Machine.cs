@@ -4,11 +4,9 @@ using System;
 public partial class Machine : Area2D
 {
 	[ExportGroup("Settings")]
-	[Export] public string MachineID = "machine_2"; // Upewnij się, że to ID pasuje do tego w NPC!
+	[Export] public string MachineID = "machine_2"; // To ID musi się zgadzać z ID w NPC Inżyniera
 	[Export] public string MachineName = "Taśmociąg";
 	[Export] public string MinigameScenePath = "res://_Scenes/Minigames/Game2.tscn";
-	
-	// Dialog wyświetlany, gdy klikniesz ZANIM Inżynier odblokuje maszynę
 	[Export] public string LockedDialogueID = "system_locked_2"; 
 
 	[ExportGroup("UI References")]
@@ -22,7 +20,7 @@ public partial class Machine : Area2D
 	private bool _isPlayerNearby = false;
 	private bool _isUIOpen = false;
 	
-	// Stany
+	// Zmienne stanu
 	private bool _isLocked = true; 
 	private bool _isFixed = false;
 
@@ -42,7 +40,6 @@ public partial class Machine : Area2D
 
 	public override void _Process(double delta)
 	{
-		// Sprawdzamy stan co klatkę, żeby reagować natychmiast na rozmowę z NPC
 		CheckLockState();
 	}
 
@@ -50,21 +47,21 @@ public partial class Machine : Area2D
 	{
 		if (MainGameManager.Instance == null) return;
 
-		// 1. Sprawdzamy czy JA jestem naprawiona
+		// 1. Czy JA jestem naprawiona? (Nie obchodzi nas Maszyna 1!)
 		_isFixed = MainGameManager.Instance.IsMachineFixed(MachineID);
 		
-		// 2. KLUCZOWA ZMIANA: Ignorujemy inne maszyny. 
-		// Sprawdzamy TYLKO czy NPC nas odblokował w Managerze.
+		// 2. Czy Inżynier mnie odblokował?
+		// Ta flaga (IsMachineUnlocked) zmienia się na TRUE tylko w momencie rozmowy z Inżynierem.
 		bool unlockedByNPC = MainGameManager.Instance.IsMachineUnlocked(MachineID);
 		
 		if (_isFixed) 
 		{
-			_isLocked = false; // Jak naprawiona, to odblokowana na stałe (zielona)
+			_isLocked = false; // Naprawiona = Zawsze otwarta (zielona)
 		}
 		else 
 		{
-			// Jeśli nie jest naprawiona, to jej stan zależy WYŁĄCZNIE od NPC.
-			// Jeśli NPC nie zagadał (unlockedByNPC == false), to maszyna jest ZABLOKOWANA.
+			// Jeśli nie jest naprawiona, to jedyny sposób na odblokowanie to zgoda NPC.
+			// Stan naprawy Maszyny 1 NIE MA tu żadnego znaczenia.
 			_isLocked = !unlockedByNPC; 
 		}
 
@@ -76,12 +73,11 @@ public partial class Machine : Area2D
 		if (_machineSprite == null) return;
 
 		if (_isFixed) _machineSprite.Modulate = Colors.Green;       
-		else if (_isLocked) _machineSprite.Modulate = Colors.Gray;  // Szara = zablokowana
-		else _machineSprite.Modulate = Colors.White;                // Biała = gotowa do gry
+		else if (_isLocked) _machineSprite.Modulate = Colors.Gray;  
+		else _machineSprite.Modulate = Colors.White;                
 
 		if (_iconE != null)
 		{
-			// Ikonka widoczna, jeśli podejdziemy, nawet jak zablokowana (żeby kliknąć i dostać info)
 			_iconE.Visible = _isPlayerNearby && !_isFixed && !_isUIOpen;
 		}
 	}
@@ -92,13 +88,12 @@ public partial class Machine : Area2D
 		{
 			if (_isLocked)
 			{
-				// Maszyna zablokowana -> Wyświetl komunikat "Błąd systemu / Idź do Inżyniera"
+				// Jeśli Inżynier jeszcze nie odblokował -> Wyświetl komunikat o błędzie
 				if (DialogueManager.Instance != null) 
 					DialogueManager.Instance.StartDialogue(LockedDialogueID);
 			}
 			else
 			{
-				// Maszyna odblokowana -> Otwórz panel naprawy
 				if (!_isUIOpen) OpenPanel();
 				else ClosePanel();
 			}

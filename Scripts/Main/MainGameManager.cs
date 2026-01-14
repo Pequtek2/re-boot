@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public partial class MainGameManager : Node
 {
 	public static MainGameManager Instance { get; private set; }
-
+	public bool IsMale = true;
 	private HashSet<string> _seenDialogues = new HashSet<string>();
 	private HashSet<string> _fixedMachines = new HashSet<string>();
 	
 	// NOWE: Maszyny, które NPC pozwolił nam naprawić
 	private HashSet<string> _unlockedMachines = new HashSet<string>();
-
+	public event Action OnSkinChanged;
 	public override void _Ready()
 	{
 		Instance = this;
@@ -38,5 +38,13 @@ public partial class MainGameManager : Node
 			_unlockedMachines.Add(machineId);
 			GD.Print($"Odblokowano dostęp do maszyny: {machineId}");
 		}
+	}
+	public void SetGender(bool isMale)
+	{
+		IsMale = isMale;
+		GD.Print("Zmiana płci na: " + (IsMale ? "Mężczyzna" : "Kobieta"));
+		
+		// Powiadom subskrybentów (czyli postać gracza)
+		OnSkinChanged?.Invoke();
 	}
 }
