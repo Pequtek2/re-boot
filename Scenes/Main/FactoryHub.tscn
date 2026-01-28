@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://tl3m2ua6xmyl"]
+[gd_scene load_steps=15 format=4 uid="uid://tl3m2ua6xmyl"]
 
 [ext_resource type="Texture2D" uid="uid://cy54wgvivkgex" path="res://IMG/Main/New Piskel.png" id="1_c83pb"]
 [ext_resource type="Texture2D" uid="uid://l3ndgiy2t4vx" path="res://IMG/Main/New Piskel (2).png" id="2_7fguo"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://lc54a50wctt4" path="res://Dialogue/NPC/kierownik.tscn" id="7_uchr4"]
 [ext_resource type="PackedScene" uid="uid://cli5wdih77mi1" path="res://Prefabs/Machine2.tscn" id="8_qxtlx"]
 [ext_resource type="PackedScene" uid="uid://cwlssp4vauuam" path="res://Dialogue/NPC/inzynier.tscn" id="9_ddwxy"]
+[ext_resource type="PackedScene" uid="uid://dxw8ewojfiwi0" path="res://Scenes/Main/QuestJournal.tscn" id="10_fxl2g"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_xjgxm"]
 vertices = PackedVector2Array(32, 0, 0, 16, -32, 0, 0, -16)
@@ -122,6 +123,8 @@ offset_bottom = 121.0
 text = "Nie"
 
 [node name="DialogueUI" parent="." instance=ExtResource("6_v5kct")]
+
+[node name="QuestJournal" parent="." instance=ExtResource("10_fxl2g")]
 
 [node name="Inzynier" parent="." instance=ExtResource("9_ddwxy")]
 position = Vector2(61, 222)

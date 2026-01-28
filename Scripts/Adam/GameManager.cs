@@ -284,16 +284,23 @@ public partial class GameManager : Node2D
 			var invPanel = _itemsContainer.GetNodeOrNull<Panel>("InventoryPanel");
 			if (invPanel != null) invPanel.Visible = false;
 			if (MainGameManager.Instance != null)
-			{
-				// Zgłaszamy do głównego zarządcy, że maszyna o tym ID jest naprawiona
+				{
+				// 1. Zapisz w globalnym stanie, że maszyna jest naprawiona
 				MainGameManager.Instance.SetMachineFixed(TargetMachineID);
-				GD.Print($"SUKCES! Maszyna {TargetMachineID} została naprawiona.");
+				
+				// 2. ZAKTUALIZUJ ZADANIE (Zamiast CompleteQuest)
+				// Używamy ID: "quest_" + ID_maszyny
+				// Cel: "Wróć do Kierownika/Inżyniera po nagrodę"
+				string questID = "quest_" + TargetMachineID; 
+				QuestManager.Instance?.UpdateQuestObjective(questID, "Zgłoś wykonanie zadania");
+				
+				GD.Print($"Minigra wygrana. Maszyna: {TargetMachineID}, Quest zaktualizowany.");
+			}	GD.Print($"SUKCES! Maszyna {TargetMachineID} została naprawiona.");
 			}
 			PlaySound(SoundGameWin);
 			OnViewportSizeChanged();
 			InitSnakes();
 		}
-	}
 
 	private void CheckWinCondition()
 	{

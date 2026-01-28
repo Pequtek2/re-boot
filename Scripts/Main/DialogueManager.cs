@@ -87,52 +87,89 @@ public partial class DialogueManager : CanvasLayer
 	}
 
 	private void ShowNextLine()
+{
+	if (_currentLineIndex < _currentDialogueLines.Count)
 	{
-		if (_currentLineIndex < _currentDialogueLines.Count)
+		var line = _currentDialogueLines[_currentLineIndex];
+		
+		// 1. Ustaw teksty
+		if (NameLabel != null) NameLabel.Text = (string)line.GetValueOrDefault("name", "???");
+		if (TextLabel != null) TextLabel.Text = (string)line.GetValueOrDefault("text", "...");
+		
+		// 2. Obsługa Portretu
+		if (PortraitRect != null)
 		{
-			var line = _currentDialogueLines[_currentLineIndex];
-			
-			// 1. Ustaw teksty
-			if (NameLabel != null) NameLabel.Text = (string)line.GetValueOrDefault("name", "???");
-			if (TextLabel != null) TextLabel.Text = (string)line.GetValueOrDefault("text", "...");
-			
-			// 2. Obsługa Portretu
-			if (PortraitRect != null)
+			if (line.ContainsKey("portrait"))
 			{
-				if (line.ContainsKey("portrait"))
-				{
-					string imageName = (string)line["portrait"];
-					string fullPath = $"{PortraitsPath}{imageName}.png";
+				string imageName = (string)line["portrait"];
+				string fullPath = $"{PortraitsPath}{imageName}.png";
 
-					if (ResourceLoader.Exists(fullPath))
-					{
-						PortraitRect.Texture = ResourceLoader.Load<Texture2D>(fullPath);
-						PortraitRect.Visible = true;
-					}
-					else
-					{
-						GD.PrintErr($"Nie znaleziono pliku graficznego: {fullPath}");
-						PortraitRect.Visible = false;
-					}
+				if (ResourceLoader.Exists(fullPath))
+				{
+					PortraitRect.Texture = ResourceLoader.Load<Texture2D>(fullPath);
+					PortraitRect.Visible = true;
 				}
 				else
 				{
-					// Brak pola 'portrait' w JSON -> ukryj obrazek
+					GD.PrintErr($"Nie znaleziono pliku graficznego: {fullPath}");
 					PortraitRect.Visible = false;
 				}
 			}
-
-			// 3. Reset efektu pisania
-			if (TextLabel != null) TextLabel.VisibleRatio = 0;
-			_visibleRatio = 0;
-
-			_currentLineIndex++;
+			else
+			{
+				PortraitRect.Visible = false;
+			}
 		}
-		else
+
+		// --- SPRAWDZANIE KOMEND ---
+		if (line.ContainsKey("command"))
 		{
-			EndDialogue();
+			ExecuteDialogueCommand((string)line["command"]);
 		}
+
+		// 3. Reset efektu pisania
+		if (TextLabel != null) TextLabel.VisibleRatio = 0;
+		_visibleRatio = 0;
+
+		_currentLineIndex++;
 	}
+	else
+	{
+		EndDialogue();
+	}
+}
+
+// TA METODA MUSI BYĆ POZA ShowNextLine, ALE WEWNĄTRZ KLASY DialogueManager
+private void ExecuteDialogueCommand(string commandRaw)
+{
+	// GD.Print($"Wykonywanie komendy: {commandRaw}");
+	var parts = commandRaw.Split(':');
+	string action = parts[0];
+
+	switch (action)
+	{
+		// start_quest:id_questa:Tytuł Zadania:Cel początkowy
+		case "start_quest":
+			if (parts.Length >= 4)
+				QuestManager.Instance?.StartQuest(parts[1], parts[2], parts[3]);
+			break;
+
+		// update_quest:id_questa:Nowy cel
+		case "update_quest":
+			 if (parts.Length >= 3)
+				QuestManager.Instance?.UpdateQuestObjective(parts[1], parts[2]);
+			break;
+
+		// finish_quest:id_questa
+		case "finish_quest":
+			QuestManager.Instance?.FinishQuest(parts[1]);
+			break;
+
+		case "unlock_machine":
+			MainGameManager.Instance?.UnlockMachine(parts[1]);
+			break;
+	}
+}
 
 	private void EndDialogue()
 	{

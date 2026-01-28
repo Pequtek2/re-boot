@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7valgw2njlef"]
+[gd_scene load_steps=3 format=3 uid="uid://c7valgw2njlef"]
 
 [ext_resource type="Script" uid="uid://ddws8t8qosir4" path="res://Scripts/Main/DialogueManager.cs" id="1_m5yo6"]
+[ext_resource type="Texture2D" uid="uid://d0p7oh8wr5kno" path="res://UI/dialoguebox.png" id="2_a3yo6"]
 
 [node name="DialogueUI" type="CanvasLayer" node_paths=PackedStringArray("NameLabel", "TextLabel", "DialoguePanel")]
 script = ExtResource("1_m5yo6")
@@ -9,35 +10,47 @@ TextLabel = NodePath("Background/TextLabel")
 DialoguePanel = NodePath("Background")
 
 [node name="Background" type="Panel" parent="."]
-anchors_preset = 12
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_top = -282.0
+offset_left = -650.0
+offset_top = -300.0
+offset_right = 650.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 
+[node name="TextureRect" type="TextureRect" parent="Background"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -99.0
+offset_right = 1299.0
+offset_bottom = 481.0
+texture = ExtResource("2_a3yo6")
+
 [node name="NameLabel" type="Label" parent="Background"]
 layout_mode = 0
-offset_left = 19.0
-offset_top = 2.0
-offset_right = 168.0
-offset_bottom = 36.0
+offset_left = 106.0
+offset_top = -54.0
+offset_right = 255.0
+offset_bottom = -20.0
 theme_override_font_sizes/font_size = 24
 
 [node name="TextLabel" type="RichTextLabel" parent="Background"]
 layout_mode = 0
-offset_left = 17.0
-offset_top = 42.0
-offset_right = 1210.0
-offset_bottom = 266.0
+offset_left = 14.0
+offset_top = 23.0
+offset_right = 1283.0
+offset_bottom = 233.0
 
 [node name="PressSpaceLabel" type="Label" parent="Background"]
 layout_mode = 0
-offset_left = 1279.0
-offset_top = 250.0
-offset_right = 1391.0
-offset_bottom = 273.0
+offset_left = 1169.0
+offset_top = 238.0
+offset_right = 1281.0
+offset_bottom = 261.0
 text = "Wciśnij SPACJĘ"
 
 [node name="PortraitRect" type="TextureRect" parent="Background"]

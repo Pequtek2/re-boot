@@ -22,12 +22,14 @@
 	{
 	  "name": "Kierownik",
 	  "text": "Główne Ramię Robota padło i cała linia stoi. Tracimy pieniądze!",
-	  "portrait": "kierownik_angry"
+	  "portrait": "kierownik_angry",
+	  "command": "start_quest:quest_machine_1:Awaria Ramienia:Napraw Maszynę nr 1"
 	},
 	{
 	  "name": "Kierownik",
 	  "text": "Odblokowałem Ci dostęp do terminala. Idź i to napraw. Już!",
-	  "portrait": "kierownik_normal"
+	  "portrait": "kierownik_normal",
+	  "command": "unlock_machine:machine_1"
 	}
   ],
   "kierownik_waiting": [
@@ -40,8 +42,14 @@
   "kierownik_thanks": [
 	{
 	  "name": "Kierownik",
-	  "text": "Słyszysz? Cisza... A nie, czekaj, to dźwięk pracującej maszyny. Dobra robota.",
-	  "portrait": "kierownik_happy"
+	  "text": "Słyszę, że maszyna pracuje. Wreszcie.",
+	  "portrait": "kierownik_happy",
+	  "command": "finish_quest:quest_machine_1"
+	},
+	{
+	  "name": "Kierownik",
+	  "text": "Masz tu premię. A teraz wracaj do roboty.",
+	  "portrait": "kierownik_normal"
 	}
   ],
   "kierownik_go_to_2": [

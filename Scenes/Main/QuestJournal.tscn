@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxw8ewojfiwi0"]
+
+[ext_resource type="Script" uid="uid://fkvt5awca7qq" path="res://Scripts/Main/QuestLogUI.cs" id="1_58rqg"]
+[ext_resource type="Texture2D" uid="uid://cw28vbpio2yf0" path="res://UI/QuestJournal.png" id="2_p57by"]
+
+[node name="QuestJournal" type="CanvasLayer" node_paths=PackedStringArray("JournalWindow", "QuestListContainer")]
+script = ExtResource("1_58rqg")
+JournalWindow = NodePath("JournalWindow")
+QuestListContainer = NodePath("JournalWindow/ScrollContainer/QuestList")
+
+[node name="JournalWindow" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="JournalWindow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.25
+offset_top = -249.0
+offset_right = 206.75
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="JournalWindow/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_p57by")
+
+[node name="Label" type="Label" parent="JournalWindow"]
+layout_mode = 0
+offset_left = -52.0
+offset_top = -211.0
+offset_right = 68.0
+offset_bottom = -188.0
+text = "Dziennik Zadań"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="JournalWindow"]
+layout_mode = 0
+offset_left = -177.0
+offset_top = -166.0
+offset_right = 190.0
+offset_bottom = 233.0
+
+[node name="QuestList" type="VBoxContainer" parent="JournalWindow/ScrollContainer"]
+layout_mode = 2
