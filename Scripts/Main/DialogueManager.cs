@@ -1,7 +1,6 @@
 using Godot;
 using System;
-using System.Collections.Generic; // Używamy tego do List<> i Dictionary<,>
-// USUNIĘTO: using Godot.Collections; aby uniknąć konfliktów
+using System.Collections.Generic;
 
 public partial class DialogueManager : CanvasLayer
 {
@@ -13,16 +12,20 @@ public partial class DialogueManager : CanvasLayer
 	[Export] public Control DialoguePanel;
 	[Export] public string PortraitsPath = "res://Art/Portraits/";
 
-	// Baza dialogów: Klucz (ID NPC) -> Wartość (Godot Array wariantów dialogowych)
-	// Używamy System.Collections.Generic.Dictionary dla głównej bazy
+	// Ustawienia animacji skakania
+	[Export] public float BounceHeight = 5.0f; // Jak wysoko skacze (w pikselach)
+	[Export] public float BounceSpeed = 20.0f; // Jak szybko skacze
+
 	private Dictionary<string, Godot.Collections.Array> _dialogueDatabase;
-	
-	// Aktualna sesja: Lista linii (jako Godot Dictionaries)
 	private List<Godot.Collections.Dictionary> _currentLines = new List<Godot.Collections.Dictionary>();
 	
 	private int _currentIndex = 0;
 	private bool _isActive = false;
 	private double _visibleRatio = 0.0;
+	
+	// Zmienne do obsługi portretu
+	private Vector2 _portraitBasePos; // Zapamiętujemy, gdzie obrazek stoi normalnie
+	private string _currentNpcId = ""; // Kto teraz gada?
 
 	public override void _Ready()
 	{
@@ -30,148 +33,125 @@ public partial class DialogueManager : CanvasLayer
 		LoadDatabase();
 		
 		if (DialoguePanel != null) DialoguePanel.Visible = false;
-		if (PortraitRect != null) PortraitRect.Visible = false;
+		
+		// Zapamiętaj oryginalną pozycję obrazka (żeby wiedzieć, gdzie wracać po skoku)
+		if (PortraitRect != null) 
+		{
+			_portraitBasePos = PortraitRect.Position;
+			PortraitRect.Visible = false;
+		}
 	}
 
 	private void LoadDatabase()
 	{
 		string path = "res://Dialogue/dialogues.json";
-		if (!FileAccess.FileExists(path))
-		{
-			GD.PrintErr($"Brak pliku dialogów: {path}");
-			return;
-		}
+		if (!FileAccess.FileExists(path)) return;
 
 		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
-		string content = file.GetAsText();
 		var json = new Json();
-		
-		if (json.Parse(content) == Error.Ok)
+		if (json.Parse(file.GetAsText()) == Error.Ok)
 		{
-			// Rzutujemy wynik na Godot.Collections.Dictionary (bo to zwraca JSON)
 			var rawData = (Godot.Collections.Dictionary)json.Data;
-			
-			// Inicjalizujemy naszą bazę (C# Dictionary)
 			_dialogueDatabase = new Dictionary<string, Godot.Collections.Array>();
 
 			foreach (var keyVariant in rawData.Keys)
 			{
-				string key = (string)keyVariant; // ID NPC np. "kierownik"
-				var variantList = (Godot.Collections.Array)rawData[key];
-				
-				_dialogueDatabase.Add(key, variantList);
+				string key = (string)keyVariant;
+				_dialogueDatabase.Add(key, (Godot.Collections.Array)rawData[key]);
 			}
-		}
-		else
-		{
-			GD.PrintErr("Błąd w pliku JSON: " + json.GetErrorMessage());
 		}
 	}
 
 	public void StartDialogue(string npcId)
 	{
-		if (_dialogueDatabase == null || !_dialogueDatabase.ContainsKey(npcId))
-		{
-			GD.PrintErr($"Nie znaleziono dialogów dla NPC: {npcId}");
-			return;
-		}
+		if (_dialogueDatabase == null || !_dialogueDatabase.ContainsKey(npcId)) return;
 
-		// Pobieramy listę wariantów (Godot Array)
+		_currentNpcId = npcId; // Zapamiętaj z kim gadamy
+
+		// --- AUTOMATYCZNE ŁADOWANIE GŁÓWNEGO PORTRETU ---
+		// Próbuje załadować np. "marek.png"
+		SetPortrait(npcId);
+		// ------------------------------------------------
+
 		var variants = _dialogueDatabase[npcId];
 		Godot.Collections.Dictionary bestMatch = null;
 
-		// Szukamy pasującego wariantu (od góry do dołu)
 		foreach (var variantObj in variants)
 		{
 			var variant = (Godot.Collections.Dictionary)variantObj;
 			if (CheckConditions(variant))
 			{
 				bestMatch = variant;
-				break; // Znaleziono pierwszy pasujący!
+				break;
 			}
 		}
 
 		if (bestMatch != null)
+			PlayLines((Godot.Collections.Array)bestMatch["lines"]);
+		else
+			PlayDefaultMessage(npcId);
+	}
+
+	private void SetPortrait(string imageName)
+	{
+		if (PortraitRect == null) return;
+
+		string fullPath = PortraitsPath + imageName + ".png";
+		if (ResourceLoader.Exists(fullPath))
 		{
-			// Pobieramy linie tekstu dla tego wariantu
-			var lines = (Godot.Collections.Array)bestMatch["lines"];
-			PlayLines(lines);
+			PortraitRect.Texture = ResourceLoader.Load<Texture2D>(fullPath);
+			PortraitRect.Visible = true;
+			// Reset pozycji przy zmianie obrazka
+			PortraitRect.Position = _portraitBasePos; 
 		}
 		else
 		{
-			PlayDefaultMessage(npcId);
+			// Jeśli nie ma pliku, po prostu ukryj (chyba że chcesz zostawić stary)
+			 // PortraitRect.Visible = false; 
 		}
 	}
 
 	private bool CheckConditions(Godot.Collections.Dictionary variant)
 	{
-		// 1. Sprawdź wymagania (requires)
+		// Logika warunków (bez zmian)
 		if (variant.ContainsKey("requires"))
 		{
 			string reqs = (string)variant["requires"];
-			var list = reqs.Split(',');
-			foreach (var cond in list)
-			{
+			foreach (var cond in reqs.Split(','))
 				if (!CheckSingleCondition(cond.Trim(), true)) return false;
-			}
 		}
-
-		// 2. Sprawdź wykluczenia (excludes)
 		if (variant.ContainsKey("excludes"))
 		{
 			string excls = (string)variant["excludes"];
-			var list = excls.Split(',');
-			foreach (var cond in list)
-			{
-				// Jeśli znajdziemy tag, który jest wykluczony -> odrzucamy dialog
-				if (CheckSingleCondition(cond.Trim(), false)) return false; 
-			}
+			foreach (var cond in excls.Split(','))
+				if (CheckSingleCondition(cond.Trim(), false)) return false;
 		}
-
 		return true;
 	}
 
 	private bool CheckSingleCondition(string tag, bool expectedValue)
 	{
-		bool hasTag = false;
-
 		if (tag.StartsWith("quest_active:"))
 		{
-			string qId = tag.Split(':')[1];
-			var state = QuestManager.Instance?.GetQuestState(qId);
-			hasTag = (state != null && !state.IsCompleted);
+			var s = QuestManager.Instance?.GetQuestState(tag.Split(':')[1]);
+			return (s != null && !s.IsCompleted);
 		}
 		else if (tag.StartsWith("quest_done:"))
 		{
-			string qId = tag.Split(':')[1];
-			var state = QuestManager.Instance?.GetQuestState(qId);
-			hasTag = (state != null && state.IsCompleted);
+			var s = QuestManager.Instance?.GetQuestState(tag.Split(':')[1]);
+			return (s != null && s.IsCompleted);
 		}
 		else if (tag.StartsWith("machine_fixed:"))
-	{
-		string mId = tag.Split(':')[1];
-		// Sprawdzamy w MainGameManagerze czy maszyna jest naprawiona
-		hasTag = MainGameManager.Instance != null && MainGameManager.Instance.IsMachineFixed(mId);
-	}
-		else
 		{
-			// Sprawdzamy zwykłe tagi w TagManagerze
-			hasTag = TagManager.Instance != null && TagManager.Instance.HasTag(tag);
+			return MainGameManager.Instance != null && MainGameManager.Instance.IsMachineFixed(tag.Split(':')[1]);
 		}
-
-		// Dla 'requires' (expected=true): musimy mieć tag (return hasTag).
-		// Dla 'excludes' (expected=false): logika jest odwrócona na poziomie CheckConditions.
-		// Tutaj po prostu zwracamy prawdę, czy tag istnieje.
-		return hasTag;
+		return TagManager.Instance != null && TagManager.Instance.HasTag(tag);
 	}
 
 	private void PlayLines(Godot.Collections.Array linesRaw)
 	{
 		_currentLines.Clear();
-		foreach (var l in linesRaw)
-		{
-			_currentLines.Add((Godot.Collections.Dictionary)l);
-		}
+		foreach (var l in linesRaw) _currentLines.Add((Godot.Collections.Dictionary)l);
 		
 		_currentIndex = 0;
 		_isActive = true;
@@ -184,7 +164,6 @@ public partial class DialogueManager : CanvasLayer
 		var dict = new Godot.Collections.Dictionary();
 		dict["name"] = npcName;
 		dict["text"] = "...";
-		
 		_currentLines.Clear();
 		_currentLines.Add(dict);
 		
@@ -200,7 +179,6 @@ public partial class DialogueManager : CanvasLayer
 		{
 			var line = _currentLines[_currentIndex];
 			
-			// Teksty
 			if (NameLabel != null) NameLabel.Text = (string)line.GetValueOrDefault("name", "???");
 			if (TextLabel != null)
 			{
@@ -209,27 +187,22 @@ public partial class DialogueManager : CanvasLayer
 			}
 			_visibleRatio = 0;
 
-			// Portret
-			if (PortraitRect != null)
+			// --- OBSŁUGA PORTRETU (NADPSYWANIE) ---
+			// Domyślnie mamy obrazek załadowany w StartDialogue (np. marek.png).
+			// Ale jeśli w tej konkretnej linijce JSON jest "portrait": "marek_angry", to zmieniamy.
+			if (line.ContainsKey("portrait"))
 			{
-				if (line.ContainsKey("portrait"))
-				{
-					string path = PortraitsPath + (string)line["portrait"] + ".png";
-					if (ResourceLoader.Exists(path))
-					{
-						PortraitRect.Texture = ResourceLoader.Load<Texture2D>(path);
-						PortraitRect.Visible = true;
-					}
-					else PortraitRect.Visible = false;
-				}
-				else PortraitRect.Visible = false;
+				SetPortrait((string)line["portrait"]);
 			}
+			else
+			{
+				// Opcjonalnie: Jeśli linijka nie ma portretu, przywróć domyślny dla tego NPC
+				// (Odkomentuj poniższe, jeśli chcesz, żeby emocje znikały w kolejnym zdaniu)
+				// SetPortrait(_currentNpcId); 
+			}
+			// ---------------------------------------
 
-			// Komendy
-			if (line.ContainsKey("command"))
-			{
-				ExecuteDialogueCommand((string)line["command"]);
-			}
+			if (line.ContainsKey("command")) ExecuteDialogueCommand((string)line["command"]);
 
 			_currentIndex++;
 		}
@@ -252,29 +225,16 @@ public partial class DialogueManager : CanvasLayer
 
 		switch (action)
 		{
-			case "start_quest":
-				if (parts.Length >= 2) QuestManager.Instance?.StartQuest(parts[1]);
+			case "start_quest": if (parts.Length >= 2) QuestManager.Instance?.StartQuest(parts[1]); break;
+			case "progress_quest": 
+				int amt = 1;
+				if (parts.Length > 2) int.TryParse(parts[2], out amt);
+				if (parts.Length >= 2) QuestManager.Instance?.ProgressQuest(parts[1], amt); 
 				break;
-			case "progress_quest":
-				if (parts.Length >= 2) 
-				{
-					int amt = 1;
-					if (parts.Length > 2) int.TryParse(parts[2], out amt);
-					QuestManager.Instance?.ProgressQuest(parts[1], amt);
-				}
-				break;
-			case "finish_quest":
-				if (parts.Length >= 2) QuestManager.Instance?.ForceCompleteQuest(parts[1]);
-				break;
-			case "give_item":
-				if (parts.Length >= 2) NotificationUI.Instance?.AddNotification("OTRZYMANO PRZEDMIOT", parts[1]);
-				break;
-			case "add_tag":
-				if (parts.Length >= 2) TagManager.Instance?.AddTag(parts[1]);
-				break;
-			case "unlock_machine":
-				if (parts.Length >= 2) MainGameManager.Instance?.UnlockMachine(parts[1]);
-				break;
+			case "finish_quest": if (parts.Length >= 2) QuestManager.Instance?.ForceCompleteQuest(parts[1]); break;
+			case "give_item": if (parts.Length >= 2) NotificationUI.Instance?.AddNotification("OTRZYMANO PRZEDMIOT", parts[1]); break;
+			case "add_tag": if (parts.Length >= 2) TagManager.Instance?.AddTag(parts[1]); break;
+			case "unlock_machine": if (parts.Length >= 2) MainGameManager.Instance?.UnlockMachine(parts[1]); break;
 		}
 	}
 
@@ -282,14 +242,35 @@ public partial class DialogueManager : CanvasLayer
 	{
 		if (!_isActive) return;
 
-		// Efekt pisania
+		// 1. Logika pisania tekstu
+		bool isTyping = false;
 		if (TextLabel != null && TextLabel.VisibleRatio < 1.0)
 		{
 			_visibleRatio += delta * 2.0; 
 			TextLabel.VisibleRatio = (float)_visibleRatio;
+			isTyping = true;
 		}
 
-		// Pomijanie / Następna linia
+		// 2. --- ANIMACJA SKAKANIA ---
+		if (PortraitRect != null && PortraitRect.Visible)
+		{
+			if (isTyping)
+			{
+				// Używamy Sinusa czasu, żeby robić góra-dół
+				// Mathf.Abs sprawia, że skacze tylko do góry (jak piłeczka), a nie góra-dół
+				float bounce = Mathf.Abs(Mathf.Sin(Time.GetTicksMsec() / 100.0f * (BounceSpeed / 10.0f))) * BounceHeight;
+				
+				// Odejmujemy od Y, bo w Godot "w górę" to minus Y
+				PortraitRect.Position = new Vector2(_portraitBasePos.X, _portraitBasePos.Y - bounce);
+			}
+			else
+			{
+				// Jeśli przestał mówić, wróć na miejsce
+				PortraitRect.Position = _portraitBasePos; 
+			}
+		}
+		// -----------------------------
+
 		if (Input.IsActionJustPressed("ui_accept") || Input.IsActionJustPressed("interact"))
 		{
 			if (TextLabel != null && TextLabel.VisibleRatio < 1.0)

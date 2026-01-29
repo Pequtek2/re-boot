@@ -1,41 +1,20 @@
 [
   {
-	"id": "quest_naprawa_ramienia",
-	"title": "Awaria Głównego Ramienia",
-	"description": "Fabryka stanęła. Kierownik jest wściekły. Muszę przywrócić zasilanie w sektorze A, a potem naprawić samo ramię robota.",
+	"id": "main_quest_1",
+	"title": "Awaria Logiki",
+	"description": "Marek prosił o szybką akcję we Wschodniej Hali. Główny komputer ma awarię. Jak to naprawię, Marek pewnie powie mi co dalej.",
 	"stages": [
-	  {
-		"objective": "Napraw Maszyne",
-		"amount": 1
-	  },
-	  {
-		"objective": "Zgłos naprawienie maszyny",
-		"amount": 1
-	  }
+	  { "objective": "Napraw Komputer Główny (Wschód)", "amount": 1 },
+	  { "objective": "Zamelduj wykonanie Markowi", "amount": 1 }
 	]
   },
   {
-	"id": "quest_inzynier",
-	"title": "Awaria Inzyniera ",
-	"description": "Inzynier stanęła. Pret jest wściekły. Muszę przywrócić zasilanie w sektorze Dol, a potem naprawić samo ramię patyka.",
+	"id": "main_quest_2",
+	"title": "Korekta Lasera",
+	"description": "Marek wysłał mnie do Piotra. Gość jest oschły i twierdzi, że wycinarka laserowa jest rozkalibrowana. Muszę to naprawić, zanim kogoś zwolni.",
 	"stages": [
-	  {
-		"objective": "Napraw Maszyne",
-		"amount": 1
-	  },
-	  {
-		"objective": "Zgłos naprawienie maszyny",
-		"amount": 1
-	  }
-	]
-  },
-  {
-	"id": "quest_zagubiony_klucz",
-	"title": "Zgubiony Klucz",
-	"description": "Jakiś gapa zgubił klucz do toalety. Muszę go znaleźć, bo sytuacja robi się napięta.",
-	"stages": [
-	  { "objective": "Znajdź klucz", "amount": 1 },
-	  { "objective": "Oddaj klucz Inżynierowi", "amount": 1 }
+	  { "objective": "Skalibruj Wycinarkę Laserową", "amount": 1 },
+	  { "objective": "Zamelduj wykonanie Piotrowi", "amount": 1 }
 	]
   }
 ]

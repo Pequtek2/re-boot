@@ -292,7 +292,7 @@ public partial class GameManager : Node2D
 				// Używamy ID: "quest_" + ID_maszyny
 				// Cel: "Wróć do Kierownika/Inżyniera po nagrodę"
 				string questID = "quest_" + TargetMachineID; 
-				QuestManager.Instance.ProgressQuest("quest_naprawa_ramienia", 1);
+				QuestManager.Instance.ProgressQuest("main_quest_1", 1);
 				
 				GD.Print($"Minigra wygrana. Maszyna: {TargetMachineID}, Quest zaktualizowany.");
 			}	GD.Print($"SUKCES! Maszyna {TargetMachineID} została naprawiona.");

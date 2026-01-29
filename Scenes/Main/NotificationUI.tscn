@@ -1,37 +1,43 @@
-[gd_scene load_steps=10 format=3 uid="uid://71nava7ct4ev"]
+[gd_scene load_steps=16 format=3 uid="uid://71nava7ct4ev"]
 
 [ext_resource type="Script" uid="uid://dqpovptw4a2i3" path="res://Scripts/Main/NotificationUI.cs" id="1_n7kbs"]
+[ext_resource type="Texture2D" uid="uid://c64rqm6gyt3wx" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_01.png" id="2_fh0m6"]
+[ext_resource type="Texture2D" uid="uid://b56kaafcsk60a" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_18.png" id="2_l5ird"]
 [ext_resource type="AudioStream" uid="uid://b3j08pcl6qg66" path="res://Sounds/Main/quest_start.mp3" id="2_uljyd"]
+[ext_resource type="Texture2D" uid="uid://bkqs2eqjjl2v2" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_10.png" id="3_fh0m6"]
 [ext_resource type="AudioStream" uid="uid://1iugukwsl6k4" path="res://Sounds/Main/quest_update.mp3" id="3_th73l"]
 [ext_resource type="AudioStream" uid="uid://dqhyjkh4x1s7o" path="res://Sounds/Main/quest_done.mp3" id="4_l5ird"]
+[ext_resource type="Texture2D" uid="uid://dd8p25lonvx7q" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_25.png" id="5_f7drh"]
 [ext_resource type="AudioStream" uid="uid://cqlpd3q78cq2d" path="res://Sounds/Main/achievment.mp3" id="5_fh0m6"]
 [ext_resource type="AudioStream" uid="uid://ki7brcos3v6q" path="res://Sounds/Main/item_get.mp3" id="6_qmi23"]
+[ext_resource type="Texture2D" uid="uid://ofvnayw8vfwq" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_20.png" id="6_t25ju"]
+[ext_resource type="Texture2D" uid="uid://5gqnry70knu7" path="res://UI/notification.png" id="12_t25ju"]
 
 [sub_resource type="Animation" id="Animation_b8ked"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel:custom_minimum_size")
+tracks/0/path = NodePath("Panel:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, -100)]
+"values": [Color(1, 1, 1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Panel:modulate")
+tracks/1/path = NodePath("Panel:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 0)]
+"values": [Vector2(699.5, -100)]
 }
 
 [sub_resource type="Animation" id="Animation_nriyn"]
@@ -40,26 +46,26 @@ length = 3.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Panel:custom_minimum_size")
+tracks/0/path = NodePath("Panel:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 3.0333333, 3.5),
-"transitions": PackedFloat32Array(1, 0.43527535, 0.55478466, 1),
-"update": 0,
-"values": [Vector2(0, -100), Vector2(0, 20), Vector2(0, 20), Vector2(0, -100)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Panel:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 3, 3.5),
 "transitions": PackedFloat32Array(0.36602148, 0.57434845, 0.37892917, 0.4204483),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 3, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(699.5, -100), Vector2(699.5, 40), Vector2(699.5, 40), Vector2(699.5, -100)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_b8ked"]
@@ -68,30 +74,61 @@ _data = {
 &"slide_in": SubResource("Animation_nriyn")
 }
 
-[node name="NotificationUI" type="CanvasLayer" node_paths=PackedStringArray("TypeLabel", "TitleLabel", "NotificationPanel", "AnimPlayer", "AudioPlayer")]
+[node name="NotificationUI" type="CanvasLayer" node_paths=PackedStringArray("TypeLabel", "TitleLabel", "NotificationPanel", "AnimPlayer", "AudioPlayer", "IconRect")]
 layer = 128
 script = ExtResource("1_n7kbs")
 TypeLabel = NodePath("Panel/VBoxContainer/TypeLabel")
 TitleLabel = NodePath("Panel/VBoxContainer/TitleLabel")
-NotificationPanel = NodePath("Panel")
+NotificationPanel = NodePath("")
 AnimPlayer = NodePath("AnimationPlayer")
 AudioPlayer = NodePath("AudioPlayer")
+IconRect = NodePath("Panel/IconRect")
+IconQuestStart = ExtResource("2_fh0m6")
+IconQuestUpdate = ExtResource("2_l5ird")
+IconQuestComplete = ExtResource("3_fh0m6")
+IconItem = ExtResource("5_f7drh")
+IconAchievement = ExtResource("6_t25ju")
 SoundQuestStart = ExtResource("2_uljyd")
 SoundQuestUpdate = ExtResource("3_th73l")
 SoundQuestComplete = ExtResource("4_l5ird")
 SoundAchievement = ExtResource("5_fh0m6")
 SoundItemGet = ExtResource("6_qmi23")
 
-[node name="Panel" type="PanelContainer" parent="."]
+[node name="Panel" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, -100)
+clip_contents = true
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
+offset_left = -0.5
+offset_top = -100.0
+offset_right = 233.5
+offset_bottom = -18.0
 grow_horizontal = 2
 
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_right = 234.0
+offset_bottom = 82.0
+texture = ExtResource("12_t25ju")
+
+[node name="IconRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = 5.5
+offset_top = 31.0
+offset_right = 45.5
+offset_bottom = 57.0
+stretch_mode = 3
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-layout_mode = 2
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 0
+offset_left = 43.5
+offset_top = 22.0
+offset_right = 277.5
+offset_bottom = 93.0
 
 [node name="TypeLabel" type="Label" parent="Panel/VBoxContainer"]
 layout_mode = 2

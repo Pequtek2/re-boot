@@ -1,68 +1,101 @@
 {
-"kierownik": [
+"marek": [
 	{
-	  "requires": "quest_done:quest_naprawa_ramienia",
+	  "requires": "quest_done:main_quest_1",
 	  "lines": [
-		{ "name": "Kierownik", "text": "Maszyna działa. Możesz iść do Inżyniera." }
+		{ "name": "Marek", "text": "Dzięki za pomoc z komputerem. Nie trać czasu, Piotr na produkcji już na Ciebie czeka.", "portrait": "marek_normal" }
 	  ]
 	},
 	{
-	  "comment": "SUKCES - To odpali się, gdy masz zadanie I naprawiłeś maszynę",
-	  "requires": "quest_active:quest_naprawa_ramienia, machine_fixed:machine_1",
+	  "comment": "SUKCES - Zadanie aktywne + Maszyna naprawiona",
+	  "requires": "quest_active:main_quest_1, machine_fixed:machine_1",
 	  "lines": [
 		{ 
-		  "name": "Kierownik", 
-		  "text": "Słyszę, że maszyna pracuje! Nareszcie. Dobra robota.", 
-		  "portrait": "kierownik_happy",
-		  "command": "finish_quest:quest_naprawa_ramienia"
+		  "name": "Marek", 
+		  "text": "O, logi systemowe są czyste. Wiedziałem, że sobie poradzisz.", 
+		  "portrait": "marek_happy",
+		  "command": "finish_quest:main_quest_1"
 		},
 		{ 
-		  "name": "Kierownik", 
-		  "text": "Skoro to umiesz, zgłoś się do Inżyniera przy drugiej maszynie."
+		  "name": "Marek", 
+		  "text": "Słuchaj, dzwonił do mnie Piotr z działu produkcji. Ma jakiś problem z laserami.", 
+		  "portrait": "marek_normal" 
+		},
+		{ 
+		  "name": "Marek", 
+		  "text": "Idź do niego. Powiedz, że ja Cię przysyłam.", 
+		  "portrait": "marek_normal" 
 		}
 	  ]
 	},
 	{
-	  "comment": "REMINDER - To odpali się, gdy masz zadanie, ale maszyna ZEPSUTA",
-	  "requires": "quest_active:quest_naprawa_ramienia",
+	  "comment": "REMINDER - Zadanie w toku",
+	  "requires": "quest_active:main_quest_1",
 	  "lines": [
-		{ "name": "Kierownik", "text": "Dlaczego tu stoisz? Maszyna 1 wciąż zepsuta! Ruszaj się!", "portrait": "kierownik_angry" }
+		{ "name": "Marek", "text": "Komputer we Wschodniej Hali sam się nie naprawi. Ruchy!", "portrait": "marek_worried" }
 	  ]
 	},
 	{
-	  "comment": "START - To odpali się na początku",
+	  "comment": "START",
 	  "lines": [
-		{ "name": "Kierownik", "text": "Hej nowy! Maszyna nr 1 padła. Odblokowuję ci do niej dostęp.", "portrait": "kierownik_normal", "command": "unlock_machine:machine_1" },
-		{ "name": "Kierownik", "text": "Bierz się do roboty.", "command": "start_quest:quest_naprawa_ramienia" }
+		{ "name": "Marek", "text": "Siemasz. Jestem Marek. Krótka piłka – mamy awarię.", "portrait": "marek_normal" },
+		{ "name": "Marek", "text": "Główny komputer we Wschodniej Hali świruje. Trzeba tam podejść i zrestartować układy.", "portrait": "marek_normal" },
+		{ "name": "Marek", "text": "Masz uprawnienia admina. Zrób to szybko.", "portrait": "marek_normal", "command": "unlock_machine:machine_1" },
+		{ "name": "Marek", "text": "Powodzenia.", "command": "start_quest:main_quest_1" }
 	  ]
 	}
   ],
 
-  "inzynier": [
+  "piotr": [
 	{
-	  "requires": "quest_done:quest_inzynier",
+	  "requires": "quest_done:main_quest_2",
 	  "lines": [
-		{ "name": "Inżynier", "text": "Dzięki za pomoc z taśmą. Jesteś niezły.", "portrait": "inzynier_happy" }
+		{ "name": "Piotr", "text": "Laser działa, więc nie mam do ciebie pytań. Zgłoś się do Zarządcy.", "portrait": "piotr_normal" }
 	  ]
 	},
 	{
-	  "requires": "quest_active:quest_inzynier",
+	  "comment": "SUKCES - Zadanie aktywne + Maszyna naprawiona",
+	  "requires": "quest_active:main_quest_2, machine_fixed:machine_2",
 	  "lines": [
-		{ "name": "Inżynier", "text": "Skalibruj tę maszynę nr 2, proszę.", "portrait": "inzynier_worried" }
+		{ 
+		  "name": "Piotr", 
+		  "text": "Parametry w normie. Wreszcie nic nie wybucha.", 
+		  "portrait": "piotr_normal",
+		  "command": "finish_quest:main_quest_2"
+		},
+		{ 
+		  "name": "Piotr", 
+		  "text": "Jesteś użyteczny. Idź teraz na górę, do biura. Zarządca chce z tobą mówić.", 
+		  "portrait": "piotr_normal"
+		},
+		{ 
+		  "name": "Piotr", 
+		  "text": "Tylko nie każ mu czekać.", 
+		  "portrait": "piotr_angry"
+		}
 	  ]
 	},
 	{
-	  "requires": "quest_done:quest_kierownik",
+	  "comment": "REMINDER - Zadanie w toku",
+	  "requires": "quest_active:main_quest_2",
 	  "lines": [
-		{ "name": "Inżynier", "text": "Słyszałem, że naprawiłeś maszynę Kierownika. Imponujące.", "portrait": "inzynier_normal" },
-		{ "name": "Inżynier", "text": "Mam problem z Maszyną nr 2. Daję ci dostęp.", "command": "unlock_machine:machine_2" },
-		{ "name": "Inżynier", "text": "Zajmij się tym.", "command": "start_quest:quest_inzynier" }
+		{ "name": "Piotr", "text": "Dlaczego tu stoisz? Wydałem polecenie. Skalibruj ten laser!", "portrait": "piotr_angry" }
 	  ]
 	},
 	{
-	  "comment": "DEFAULT - Jeśli nie zrobiłeś zadania Kierownika, Inżynier cię olewa",
+	  "comment": "START - Wymaga ukończenia zadania Marka",
+	  "requires": "quest_done:main_quest_1",
 	  "lines": [
-		{ "name": "Inżynier", "text": "Jestem zajęty. Zgłoś się najpierw do Kierownika.", "portrait": "inzynier_worried" }
+		{ "name": "Piotr", "text": "Ty jesteś ten nowy od Marka? Spóźniłeś się.", "portrait": "piotr_angry" },
+		{ "name": "Piotr", "text": "Wycinarka laserowa niszczy materiał. Ktoś ją źle ustawił. Pewnie ty.", "portrait": "piotr_normal" },
+		{ "name": "Piotr", "text": "Masz dostęp do panelu. Skalibruj soczewki. Precyzyjnie.", "portrait": "piotr_normal", "command": "unlock_machine:machine_2" },
+		{ "name": "Piotr", "text": "Bez dyskusji. Do roboty.", "command": "start_quest:main_quest_2" }
+	  ]
+	},
+	{
+	  "comment": "LOCKED - Jeśli nie zrobiłeś zadania Marka",
+	  "lines": [
+		{ "name": "Piotr", "text": "Zajęty jestem. Nie mam czasu na oprowadzanie wycieczek. Idź do Marka.", "portrait": "piotr_angry" }
 	  ]
 	}
   ]

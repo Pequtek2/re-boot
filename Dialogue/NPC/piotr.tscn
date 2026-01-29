@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://cwlssp4vauuam"]
+
+[ext_resource type="Script" uid="uid://cj2rrchvrb4bb" path="res://Scripts/Main/NPC.cs" id="1_pdr4e"]
+[ext_resource type="Texture2D" uid="uid://oqbtcoo0llre" path="res://Art/npc/stropek_2.png" id="2_n6f6q"]
+[ext_resource type="Texture2D" uid="uid://cb4d2d18kyf5e" path="res://Art/npc/stropek_1.png" id="3_xrc0h"]
+[ext_resource type="Texture2D" uid="uid://di8xfeoef2aoy" path="res://Art/npc/stropek_4.png" id="4_ep4js"]
+[ext_resource type="Texture2D" uid="uid://cojrwoy5epkdk" path="res://Art/npc/stropek_3.png" id="5_5vqj2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3yqel"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n6f6q")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_xrc0h")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ep4js")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_5vqj2")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oeoos"]
+size = Vector2(131, 127.5)
+
+[node name="NPC" type="Area2D" node_paths=PackedStringArray("NpcSprite")]
+script = ExtResource("1_pdr4e")
+NpcID = "piotr"
+NpcSprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3yqel")
+animation = &"idle_right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0.25)
+shape = SubResource("RectangleShape2D_oeoos")

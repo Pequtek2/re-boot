@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dxw8ewojfiwi0"]
+[gd_scene load_steps=10 format=3 uid="uid://dxw8ewojfiwi0"]
 
 [ext_resource type="Script" uid="uid://fkvt5awca7qq" path="res://Scripts/Main/QuestLogUI.cs" id="1_58rqg"]
+[ext_resource type="Texture2D" uid="uid://dkn0f1frmtvql" path="res://UI/questbutton1.png" id="2_npk02"]
 [ext_resource type="Texture2D" uid="uid://cw28vbpio2yf0" path="res://UI/QuestJournal.png" id="2_p57by"]
 [ext_resource type="Texture2D" uid="uid://yml0hjta7wxe" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Buttons2/Button2_01.png" id="3_ujrac"]
 [ext_resource type="Texture2D" uid="uid://dold731xicrpg" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Buttons2/Button2_11.png" id="4_qe06w"]
@@ -15,6 +16,7 @@ JournalWindow = NodePath("JournalWindow")
 CloseButton = NodePath("JournalWindow/TextureButton")
 ListView = NodePath("JournalWindow/ViewsContainer/ListView")
 QuestListContainer = NodePath("JournalWindow/ViewsContainer/ListView/ScrollContainer/QuestListContainer")
+QuestButtonTexture = ExtResource("2_npk02")
 DetailsView = NodePath("JournalWindow/ViewsContainer/DetailsView")
 BackButton = NodePath("JournalWindow/ViewsContainer/DetailsView/BackButton")
 DetailsTitle = NodePath("JournalWindow/ViewsContainer/DetailsView/QuestTitleLabel")
@@ -32,6 +34,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="JournalWindow"]
+custom_minimum_size = Vector2(400, 500)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -72,10 +75,11 @@ texture = ExtResource("5_3kjdr")
 
 [node name="Label" type="Label" parent="JournalWindow"]
 layout_mode = 0
-offset_left = -52.0
-offset_top = -211.0
-offset_right = 68.0
-offset_bottom = -188.0
+offset_left = -66.0
+offset_top = -209.0
+offset_right = 112.0
+offset_bottom = -175.0
+theme_override_font_sizes/font_size = 24
 text = "Dziennik Zadań"
 
 [node name="ViewsContainer" type="Control" parent="JournalWindow"]

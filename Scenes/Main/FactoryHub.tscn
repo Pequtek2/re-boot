@@ -6,9 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://dj0m3ja8j7bb7" path="res://IMG/Main/tileselect.png" id="4_a7u1l"]
 [ext_resource type="PackedScene" uid="uid://bth2nuny7s0cg" path="res://Prefabs/Machine.tscn" id="4_o0e8j"]
 [ext_resource type="PackedScene" uid="uid://c7valgw2njlef" path="res://Prefabs/DialogueUI.tscn" id="6_v5kct"]
-[ext_resource type="PackedScene" uid="uid://lc54a50wctt4" path="res://Dialogue/NPC/kierownik.tscn" id="7_uchr4"]
+[ext_resource type="PackedScene" uid="uid://lc54a50wctt4" path="res://Dialogue/NPC/marek.tscn" id="7_uchr4"]
 [ext_resource type="PackedScene" uid="uid://cli5wdih77mi1" path="res://Prefabs/Machine2.tscn" id="8_qxtlx"]
-[ext_resource type="PackedScene" uid="uid://cwlssp4vauuam" path="res://Dialogue/NPC/inzynier.tscn" id="9_ddwxy"]
+[ext_resource type="PackedScene" uid="uid://cwlssp4vauuam" path="res://Dialogue/NPC/piotr.tscn" id="9_ddwxy"]
 [ext_resource type="PackedScene" uid="uid://dxw8ewojfiwi0" path="res://Scenes/Main/QuestJournal.tscn" id="10_fxl2g"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_xjgxm"]
@@ -76,6 +76,14 @@ MessageLabel = NodePath("../CanvasLayer/ConfirmPanel/MessageLabel")
 YesButton = NodePath("../CanvasLayer/ConfirmPanel/YesButton")
 NoButton = NodePath("../CanvasLayer/ConfirmPanel/NoButton")
 
+[node name="NPC" parent="." instance=ExtResource("7_uchr4")]
+y_sort_enabled = true
+position = Vector2(321, 116)
+
+[node name="NPC2" parent="." instance=ExtResource("9_ddwxy")]
+y_sort_enabled = true
+position = Vector2(62, 212)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ConfirmPanel" type="Panel" parent="CanvasLayer"]
@@ -125,9 +133,3 @@ text = "Nie"
 [node name="DialogueUI" parent="." instance=ExtResource("6_v5kct")]
 
 [node name="QuestJournal" parent="." instance=ExtResource("10_fxl2g")]
-
-[node name="Inzynier" parent="." instance=ExtResource("9_ddwxy")]
-position = Vector2(61, 222)
-
-[node name="Kierownik" parent="." instance=ExtResource("7_uchr4")]
-position = Vector2(321, 102)
