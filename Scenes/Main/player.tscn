@@ -20,5 +20,5 @@ animation = &"walk_down"
 shape = SubResource("CircleShape2D_hf81g")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(2, 2)
 position_smoothing_enabled = true

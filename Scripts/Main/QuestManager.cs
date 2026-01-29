@@ -1,82 +1,137 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-
-// Prosta klasa danych zadania
-public class Quest
-{
-	public string Id;
-	public string Title;
-	public string CurrentObjective; // Np. "Znajdź klucz", "Wróć do szefa"
-	public bool IsCompleted;
-
-	public Quest(string id, string title, string objective)
-	{
-		Id = id;
-		Title = title;
-		CurrentObjective = objective;
-		IsCompleted = false;
-	}
-}
+using System.Linq; // Ważne do obsługi list
 
 public partial class QuestManager : Node
 {
 	public static QuestManager Instance { get; private set; }
 
-	// Słownik: ID zadania -> Obiekt Quest
-	private Dictionary<string, Quest> _quests = new Dictionary<string, Quest>();
+	// Baza definicji (tylko do odczytu)
+	private Dictionary<string, QuestDefinition> _definitions = new Dictionary<string, QuestDefinition>();
+	
+	// Aktualny stan gracza
+	private Dictionary<string, QuestState> _activeQuests = new Dictionary<string, QuestState>();
+	private HashSet<string> _completedQuests = new HashSet<string>();
 
 	public event Action OnQuestsUpdated;
-	
 	public event Action<string, string> OnQuestNotification;
 
 	public override void _Ready()
 	{
 		Instance = this;
+		LoadQuestDefinitions();
 	}
 
-	// 1. Rozpoczęcie zadania
-	public void StartQuest(string id, string title, string initialObjective)
+	private void LoadQuestDefinitions()
 	{
-		if (!_quests.ContainsKey(id))
+		string text = FileAccess.GetFileAsString("res://Dialogue/quests.json");
+		if (string.IsNullOrEmpty(text)) { GD.PrintErr("Brak pliku quests.json!"); return; }
+
+		var json = Json.ParseString(text).AsGodotArray();
+
+		foreach (var item in json)
 		{
-			var newQuest = new Quest(id, title, initialObjective);
-			_quests.Add(id, newQuest);
-			GD.Print($"[QUEST] Rozpoczęto: {title}");
-			OnQuestsUpdated?.Invoke();
-			OnQuestNotification?.Invoke("NOWE ZADANIE", title);
+			var dict = item.AsGodotDictionary();
+			var q = new QuestDefinition
+			{
+				Id = (string)dict["id"],
+				Title = (string)dict["title"],
+				Description = (string)dict["description"]
+			};
+
+			var stagesArr = (Godot.Collections.Array)dict["stages"];
+			foreach (var stageRaw in stagesArr)
+			{
+				var stageDict = (Godot.Collections.Dictionary)stageRaw;
+				q.Stages.Add(new QuestStage
+				{
+					Objective = (string)stageDict["objective"],
+					RequiredAmount = stageDict.ContainsKey("amount") ? (int)stageDict["amount"] : 1
+				});
+			}
+			_definitions.Add(q.Id, q);
 		}
 	}
 
-	// 2. Aktualizacja celu (np. po naprawie maszyny)
-	public void UpdateQuestObjective(string id, string newObjective)
+	// --- LOGIKA ---
+
+	public void StartQuest(string questId)
 	{
-		if (_quests.ContainsKey(id) && !_quests[id].IsCompleted)
+		if (_definitions.ContainsKey(questId) && !_activeQuests.ContainsKey(questId) && !_completedQuests.Contains(questId))
 		{
-			_quests[id].CurrentObjective = newObjective;
-			GD.Print($"[QUEST] Aktualizacja celu: {newObjective}");
-			OnQuestsUpdated?.Invoke();
-			OnQuestNotification?.Invoke("ZAKTUALIZOWANO ZADANIE", _quests[id].Title);
+			var newState = new QuestState { QuestId = questId };
+			_activeQuests.Add(questId, newState);
+			
+			NotifyUpdate("NOWE ZADANIE", _definitions[questId].Title);
 		}
 	}
 
-	// 3. Całkowite zakończenie zadania
-	public void FinishQuest(string id)
+	public void ProgressQuest(string questId, int amount = 1)
 	{
-		if (_quests.ContainsKey(id) && !_quests[id].IsCompleted)
+		if (!_activeQuests.ContainsKey(questId)) return;
+
+		var state = _activeQuests[questId];
+		var def = _definitions[questId];
+		var currentStage = def.Stages[state.CurrentStageIndex];
+
+		// Zwiększ licznik
+		state.CurrentAmount += amount;
+
+		// Sprawdź czy etap zakończony
+		if (state.CurrentAmount >= currentStage.RequiredAmount)
 		{
-			_quests[id].IsCompleted = true;
-			// Można tu dodać logikę usuwania z aktywnych, albo przenoszenia do historii
-			_quests.Remove(id); // Usuwamy z listy aktywnych
-			GD.Print($"[QUEST] Zakończono zadanie: {id}");
-			OnQuestsUpdated?.Invoke();
-			OnQuestNotification?.Invoke("ZADANIE UKOŃCZONE", _quests[id].Title);
+			state.CurrentAmount = 0; // Reset licznika dla następnego etapu
+			state.CurrentStageIndex++; // Następny etap
+
+			// Czy to był ostatni etap?
+			if (state.CurrentStageIndex >= def.Stages.Count)
+			{
+				CompleteQuest(questId);
+			}
+			else
+			{
+				NotifyUpdate("ZAKTUALIZOWANO", def.Title);
+			}
+		}
+		else
+		{
+			// Tylko progres licznika (np. 1/3 -> 2/3)
+			OnQuestsUpdated?.Invoke(); 
 		}
 	}
 
-	public List<Quest> GetActiveQuests()
+	private void CompleteQuest(string questId)
 	{
-		// Zwracamy listę aktywnych questów
-		return new List<Quest>(_quests.Values);
+		if (_activeQuests.ContainsKey(questId))
+		{
+			var title = _definitions[questId].Title;
+			_activeQuests.Remove(questId);
+			_completedQuests.Add(questId);
+			
+			NotifyUpdate("ZADANIE UKOŃCZONE", title);
+		}
 	}
+	// Dodaj to do klasy QuestManager:
+// Dodaj to do QuestManager.cs
+public QuestState GetQuestState(string id)
+{
+	if (_activeQuests.ContainsKey(id)) return _activeQuests[id];
+	// Jeśli zadanie jest w zakończonych, stwórz tymczasowy stan "completed" dla sprawdzenia
+	if (_completedQuests.Contains(id)) return new QuestState { QuestId = id, IsCompleted = true };
+	return null;
+}
+public void ForceCompleteQuest(string questId)
+{
+	CompleteQuest(questId);
+}
+	// Pomocnicze metody do UI
+	private void NotifyUpdate(string type, string title)
+	{
+		OnQuestsUpdated?.Invoke();
+		OnQuestNotification?.Invoke(type, title);
+	}
+
+	public QuestDefinition GetDefinition(string id) => _definitions.ContainsKey(id) ? _definitions[id] : null;
+	public List<QuestState> GetActiveStates() => _activeQuests.Values.ToList();
 }

@@ -102,6 +102,21 @@ public partial class Machine : Area2D
 
 	private void OpenPanel() { _isUIOpen = true; if(ConfirmPanel != null) ConfirmPanel.Visible = true; if(MessageLabel != null) MessageLabel.Text = $"Naprawić: {MachineName}?"; }
 	private void ClosePanel() { _isUIOpen = false; if(ConfirmPanel != null) ConfirmPanel.Visible = false; }
-	private void OnYesPressed() { GetTree().ChangeSceneToFile(MinigameScenePath); }
+// W pliku Machine.cs
+
+private void OnYesPressed() 
+{ 
+	// Sprawdź czy drzewo w ogóle istnieje
+	var tree = GetTree();
+	if (tree == null)
+	{
+		GD.PrintErr("BŁĄD: Maszyna utraciła połączenie z drzewem sceny!");
+		return;
+	}
+
+	// Użyj CallDeferred dla bezpieczeństwa
+	// Zamiast: tree.ChangeSceneToFile(MinigameScenePath);
+	tree.CallDeferred(SceneTree.MethodName.ChangeSceneToFile, MinigameScenePath);
+}
 	private void OnNoPressed() { ClosePanel(); }
 }

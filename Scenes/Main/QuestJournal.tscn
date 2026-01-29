@@ -1,12 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxw8ewojfiwi0"]
+[gd_scene load_steps=9 format=3 uid="uid://dxw8ewojfiwi0"]
 
 [ext_resource type="Script" uid="uid://fkvt5awca7qq" path="res://Scripts/Main/QuestLogUI.cs" id="1_58rqg"]
 [ext_resource type="Texture2D" uid="uid://cw28vbpio2yf0" path="res://UI/QuestJournal.png" id="2_p57by"]
+[ext_resource type="Texture2D" uid="uid://yml0hjta7wxe" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Buttons2/Button2_01.png" id="3_ujrac"]
+[ext_resource type="Texture2D" uid="uid://dold731xicrpg" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Buttons2/Button2_11.png" id="4_qe06w"]
+[ext_resource type="Texture2D" uid="uid://cjimcemgy0sbl" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_02.png" id="5_3kjdr"]
+[ext_resource type="Texture2D" uid="uid://dc8abv26uvfyt" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Buttons2/Button2_06.png" id="6_84xkm"]
+[ext_resource type="Texture2D" uid="uid://bj0o7y221dmit" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Buttons2/Button2_16.png" id="7_npk02"]
+[ext_resource type="Texture2D" uid="uid://can328ufrtnui" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_12.png" id="8_wrdmd"]
 
-[node name="QuestJournal" type="CanvasLayer" node_paths=PackedStringArray("JournalWindow", "QuestListContainer")]
+[node name="QuestJournal" type="CanvasLayer" node_paths=PackedStringArray("JournalWindow", "CloseButton", "ListView", "QuestListContainer", "DetailsView", "BackButton", "DetailsTitle", "DetailsDesc", "DetailsObjectivesContainer")]
 script = ExtResource("1_58rqg")
 JournalWindow = NodePath("JournalWindow")
-QuestListContainer = NodePath("JournalWindow/ScrollContainer/QuestList")
+CloseButton = NodePath("JournalWindow/TextureButton")
+ListView = NodePath("JournalWindow/ViewsContainer/ListView")
+QuestListContainer = NodePath("JournalWindow/ViewsContainer/ListView/ScrollContainer/QuestListContainer")
+DetailsView = NodePath("JournalWindow/ViewsContainer/DetailsView")
+BackButton = NodePath("JournalWindow/ViewsContainer/DetailsView/BackButton")
+DetailsTitle = NodePath("JournalWindow/ViewsContainer/DetailsView/QuestTitleLabel")
+DetailsDesc = NodePath("JournalWindow/ViewsContainer/DetailsView/QuestDescLabel")
+DetailsObjectivesContainer = NodePath("JournalWindow/ViewsContainer/DetailsView/ObjectivesList")
 
 [node name="JournalWindow" type="Control" parent="."]
 layout_mode = 3
@@ -38,6 +51,25 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_p57by")
 
+[node name="TextureButton" type="TextureButton" parent="JournalWindow"]
+layout_mode = 0
+offset_left = 159.0
+offset_top = -229.0
+offset_right = 199.0
+offset_bottom = -189.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("3_ujrac")
+texture_pressed = ExtResource("4_qe06w")
+
+[node name="TextureRect" type="TextureRect" parent="JournalWindow/TextureButton"]
+layout_mode = 0
+offset_left = 1.5
+offset_top = 1.5
+offset_right = 41.5
+offset_bottom = 41.5
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_3kjdr")
+
 [node name="Label" type="Label" parent="JournalWindow"]
 layout_mode = 0
 offset_left = -52.0
@@ -46,12 +78,79 @@ offset_right = 68.0
 offset_bottom = -188.0
 text = "Dziennik Zadań"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="JournalWindow"]
-layout_mode = 0
-offset_left = -177.0
-offset_top = -166.0
-offset_right = 190.0
-offset_bottom = 233.0
+[node name="ViewsContainer" type="Control" parent="JournalWindow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="QuestList" type="VBoxContainer" parent="JournalWindow/ScrollContainer"]
+[node name="ListView" type="Control" parent="JournalWindow/ViewsContainer"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="JournalWindow/ViewsContainer/ListView"]
+layout_mode = 0
+offset_left = -136.0
+offset_top = -124.0
+offset_right = 181.0
+offset_bottom = -84.0
+
+[node name="QuestListContainer" type="VBoxContainer" parent="JournalWindow/ViewsContainer/ListView/ScrollContainer"]
 layout_mode = 2
+
+[node name="DetailsView" type="Control" parent="JournalWindow/ViewsContainer"]
+anchors_preset = 0
+offset_left = -7.0
+offset_top = -2.0
+offset_right = 33.0
+offset_bottom = 38.0
+
+[node name="BackButton" type="TextureButton" parent="JournalWindow/ViewsContainer/DetailsView"]
+layout_mode = 0
+offset_left = -148.0
+offset_top = -133.0
+offset_right = -108.0
+offset_bottom = -93.0
+scale = Vector2(2, 2)
+texture_normal = ExtResource("6_84xkm")
+texture_pressed = ExtResource("7_npk02")
+
+[node name="TextureRect" type="TextureRect" parent="JournalWindow/ViewsContainer/DetailsView/BackButton"]
+layout_mode = 0
+offset_left = 13.5
+offset_top = 13.5
+offset_right = 53.5
+offset_bottom = 53.5
+rotation = -3.1415927
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("8_wrdmd")
+
+[node name="QuestTitleLabel" type="Label" parent="JournalWindow/ViewsContainer/DetailsView"]
+layout_mode = 0
+offset_left = -85.0
+offset_top = -128.0
+offset_right = -45.0
+offset_bottom = -105.0
+
+[node name="QuestDescLabel" type="RichTextLabel" parent="JournalWindow/ViewsContainer/DetailsView"]
+layout_mode = 0
+offset_left = -135.0
+offset_top = -84.0
+offset_right = 198.0
+offset_bottom = 57.0
+
+[node name="ObjectivesList" type="VBoxContainer" parent="JournalWindow/ViewsContainer/DetailsView"]
+layout_mode = 0
+offset_left = -133.0
+offset_top = 57.0
+offset_right = -93.0
+offset_bottom = 97.0

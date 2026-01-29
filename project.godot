@@ -19,8 +19,10 @@ config/icon="res://icon.svg"
 
 MainGameManager="*res://Scripts/Main/MainGameManager.cs"
 PauseMenu="*res://Scenes/Main/PauseMenu.tscn"
+TagManager="*res://Scripts/Main/TagManager.cs"
 QuestManager="*res://Scripts/Main/QuestManager.cs"
 NotificationUi="*res://Scenes/Main/NotificationUI.tscn"
+DebugConsole="*res://Scenes/Main/DebugConsole.tscn"
 
 [display]
 
@@ -31,6 +33,10 @@ window/stretch/mode="viewport"
 [dotnet]
 
 project/assembly_name="re-boot"
+
+[gui]
+
+theme/custom_font="uid://ckxsy73inapqs"
 
 [input]
 

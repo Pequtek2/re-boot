@@ -1,0 +1,41 @@
+[
+  {
+	"id": "quest_naprawa_ramienia",
+	"title": "Awaria Głównego Ramienia",
+	"description": "Fabryka stanęła. Kierownik jest wściekły. Muszę przywrócić zasilanie w sektorze A, a potem naprawić samo ramię robota.",
+	"stages": [
+	  {
+		"objective": "Napraw Maszyne",
+		"amount": 1
+	  },
+	  {
+		"objective": "Zgłos naprawienie maszyny",
+		"amount": 1
+	  }
+	]
+  },
+  {
+	"id": "quest_inzynier",
+	"title": "Awaria Inzyniera ",
+	"description": "Inzynier stanęła. Pret jest wściekły. Muszę przywrócić zasilanie w sektorze Dol, a potem naprawić samo ramię patyka.",
+	"stages": [
+	  {
+		"objective": "Napraw Maszyne",
+		"amount": 1
+	  },
+	  {
+		"objective": "Zgłos naprawienie maszyny",
+		"amount": 1
+	  }
+	]
+  },
+  {
+	"id": "quest_zagubiony_klucz",
+	"title": "Zgubiony Klucz",
+	"description": "Jakiś gapa zgubił klucz do toalety. Muszę go znaleźć, bo sytuacja robi się napięta.",
+	"stages": [
+	  { "objective": "Znajdź klucz", "amount": 1 },
+	  { "objective": "Oddaj klucz Inżynierowi", "amount": 1 }
+	]
+  }
+]

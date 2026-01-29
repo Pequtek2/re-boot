@@ -1,119 +1,69 @@
 {
-  "system_locked": [
+"kierownik": [
 	{
-	  "name": "SYSTEM",
-	  "text": "BŁĄD 403: Odmowa dostępu. Wymagane zezwolenie przełożonego."
-	}
-  ],
-  "system_locked_2": [
+	  "requires": "quest_done:quest_naprawa_ramienia",
+	  "lines": [
+		{ "name": "Kierownik", "text": "Maszyna działa. Możesz iść do Inżyniera." }
+	  ]
+	},
 	{
-	  "name": "SYSTEM",
-	  "text": "BŁĄD: Strefa zamknięta. Zgłoś się do Głównego Inżyniera."
+	  "comment": "SUKCES - To odpali się, gdy masz zadanie I naprawiłeś maszynę",
+	  "requires": "quest_active:quest_naprawa_ramienia, machine_fixed:machine_1",
+	  "lines": [
+		{ 
+		  "name": "Kierownik", 
+		  "text": "Słyszę, że maszyna pracuje! Nareszcie. Dobra robota.", 
+		  "portrait": "kierownik_happy",
+		  "command": "finish_quest:quest_naprawa_ramienia"
+		},
+		{ 
+		  "name": "Kierownik", 
+		  "text": "Skoro to umiesz, zgłoś się do Inżyniera przy drugiej maszynie."
+		}
+	  ]
+	},
+	{
+	  "comment": "REMINDER - To odpali się, gdy masz zadanie, ale maszyna ZEPSUTA",
+	  "requires": "quest_active:quest_naprawa_ramienia",
+	  "lines": [
+		{ "name": "Kierownik", "text": "Dlaczego tu stoisz? Maszyna 1 wciąż zepsuta! Ruszaj się!", "portrait": "kierownik_angry" }
+	  ]
+	},
+	{
+	  "comment": "START - To odpali się na początku",
+	  "lines": [
+		{ "name": "Kierownik", "text": "Hej nowy! Maszyna nr 1 padła. Odblokowuję ci do niej dostęp.", "portrait": "kierownik_normal", "command": "unlock_machine:machine_1" },
+		{ "name": "Kierownik", "text": "Bierz się do roboty.", "command": "start_quest:quest_naprawa_ramienia" }
+	  ]
 	}
   ],
 
-
-  "kierownik_start": [
+  "inzynier": [
 	{
-	  "name": "Kierownik",
-	  "text": "O, jesteś wreszcie! Nowy, tak? Nie ma czasu na kawę.",
-	  "portrait": "kierownik_angry"
+	  "requires": "quest_done:quest_inzynier",
+	  "lines": [
+		{ "name": "Inżynier", "text": "Dzięki za pomoc z taśmą. Jesteś niezły.", "portrait": "inzynier_happy" }
+	  ]
 	},
 	{
-	  "name": "Kierownik",
-	  "text": "Główne Ramię Robota padło i cała linia stoi. Tracimy pieniądze!",
-	  "portrait": "kierownik_angry",
-	  "command": "start_quest:quest_machine_1:Awaria Ramienia:Napraw Maszynę nr 1"
+	  "requires": "quest_active:quest_inzynier",
+	  "lines": [
+		{ "name": "Inżynier", "text": "Skalibruj tę maszynę nr 2, proszę.", "portrait": "inzynier_worried" }
+	  ]
 	},
 	{
-	  "name": "Kierownik",
-	  "text": "Odblokowałem Ci dostęp do terminala. Idź i to napraw. Już!",
-	  "portrait": "kierownik_normal",
-	  "command": "unlock_machine:machine_1"
-	}
-  ],
-  "kierownik_waiting": [
-	{
-	  "name": "Kierownik",
-	  "text": "Dlaczego tu stoisz? Robot sam się nie naprawi!",
-	  "portrait": "kierownik_angry"
-	}
-  ],
-  "kierownik_thanks": [
-	{
-	  "name": "Kierownik",
-	  "text": "Słyszę, że maszyna pracuje. Wreszcie.",
-	  "portrait": "kierownik_happy",
-	  "command": "finish_quest:quest_machine_1"
+	  "requires": "quest_done:quest_kierownik",
+	  "lines": [
+		{ "name": "Inżynier", "text": "Słyszałem, że naprawiłeś maszynę Kierownika. Imponujące.", "portrait": "inzynier_normal" },
+		{ "name": "Inżynier", "text": "Mam problem z Maszyną nr 2. Daję ci dostęp.", "command": "unlock_machine:machine_2" },
+		{ "name": "Inżynier", "text": "Zajmij się tym.", "command": "start_quest:quest_inzynier" }
+	  ]
 	},
 	{
-	  "name": "Kierownik",
-	  "text": "Masz tu premię. A teraz wracaj do roboty.",
-	  "portrait": "kierownik_normal"
-	}
-  ],
-  "kierownik_go_to_2": [
-	{
-	  "name": "Kierownik",
-	  "text": "Nie spoczywaj na laurach. Inżynier w Sektorze B zgłaszał problemy z Taśmociągiem.",
-	  "portrait": "kierownik_normal"
-	},
-	{
-	  "name": "Kierownik",
-	  "text": "Idź do niego, pewnie potrzebuje pomocy. Bez taśmy robot na nic się nie zda.",
-	  "portrait": "kierownik_normal"
-	}
-  ],
-
-
-  "inzynier_start": [
-	{
-	  "name": "Inżynier",
-	  "text": "Cześć. Kierownik Cię przysłał? Uff, całe szczęście.",
-	  "portrait": "inzynier_worried"
-	},
-	{
-	  "name": "Inżynier",
-	  "text": "Taśmociąg ma awarię silnika. Próbowałem to obejść, ale potrzebuję kogoś do kalibracji.",
-	  "portrait": "inzynier_normal"
-	},
-	{
-	  "name": "Inżynier",
-	  "text": "Wprowadziłem twoje dane do systemu. Możesz podejść do maszyny nr 2.",
-	  "portrait": "inzynier_normal"
-	}
-  ],
-  "inzynier_waiting": [
-	{
-	  "name": "Inżynier",
-	  "text": "Uważaj na zębatki przy kalibracji. Są ostre.",
-	  "portrait": "inzynier_worried"
-	}
-  ],
-"inzynier_busy": [
-	{
-	  "name": "Inżynier",
-	  "text": "Wybacz, jestem bardzo zajęty kalibracją. Jeśli jesteś nowy, zgłoś się najpierw do Kierownika.",
-	  "portrait": "inzynier_worried"
-	}
-  ],
-  "inzynier_thanks": [
-	{
-	  "name": "Inżynier",
-	  "text": "Działa! Widzisz jak płynnie chodzi? Piękna sprawa.",
-	  "portrait": "inzynier_happy"
-	},
-	{
-	  "name": "Inżynier",
-	  "text": "Dzięki za pomoc. Możemy wracać do pracy.",
-	  "portrait": "inzynier_happy"
-	}
-  ],
-  "inzynier_go_next": [
-	{
-	  "name": "Inżynier",
-	  "text": "Na razie to wszystko. Możesz zrobić sobie przerwę... dopóki Kierownik nie wróci.",
-	  "portrait": "inzynier_normal"
+	  "comment": "DEFAULT - Jeśli nie zrobiłeś zadania Kierownika, Inżynier cię olewa",
+	  "lines": [
+		{ "name": "Inżynier", "text": "Jestem zajęty. Zgłoś się najpierw do Kierownika.", "portrait": "inzynier_worried" }
+	  ]
 	}
   ]
 }

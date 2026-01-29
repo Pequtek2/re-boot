@@ -1,59 +1,66 @@
 using Godot;
 using System;
-using System.Collections.Generic;
-using Godot.Collections; // Ważne do obsługi JSON w Godot
+using System.Collections.Generic; // Używamy tego do List<> i Dictionary<,>
+// USUNIĘTO: using Godot.Collections; aby uniknąć konfliktów
 
 public partial class DialogueManager : CanvasLayer
 {
-	// Singleton
 	public static DialogueManager Instance { get; private set; }
 
 	[Export] public Label NameLabel;
 	[Export] public RichTextLabel TextLabel;
-	[Export] public TextureRect PortraitRect; // Miejsce na obrazek
-	[Export] public Control DialoguePanel;    // Tło/Ramka
+	[Export] public TextureRect PortraitRect;
+	[Export] public Control DialoguePanel;
+	[Export] public string PortraitsPath = "res://Art/Portraits/";
 
-	[Export] public string PortraitsPath = "res://Art/Portraits/"; // Ścieżka do folderu z obrazkami
-
-	// Zmienne wewnętrzne
-	private Godot.Collections.Dictionary _dialogueData;
-	private List<Dictionary> _currentDialogueLines = new List<Dictionary>();
-	private int _currentLineIndex = 0;
-	private bool _isDialogueActive = false;
-
-	// Efekt pisania
+	// Baza dialogów: Klucz (ID NPC) -> Wartość (Godot Array wariantów dialogowych)
+	// Używamy System.Collections.Generic.Dictionary dla głównej bazy
+	private Dictionary<string, Godot.Collections.Array> _dialogueDatabase;
+	
+	// Aktualna sesja: Lista linii (jako Godot Dictionaries)
+	private List<Godot.Collections.Dictionary> _currentLines = new List<Godot.Collections.Dictionary>();
+	
+	private int _currentIndex = 0;
+	private bool _isActive = false;
 	private double _visibleRatio = 0.0;
-	private double _typeSpeed = 0.5;
 
 	public override void _Ready()
 	{
 		Instance = this;
-		LoadDialogueData();
+		LoadDatabase();
 		
-		// Ukryj panel na starcie
 		if (DialoguePanel != null) DialoguePanel.Visible = false;
 		if (PortraitRect != null) PortraitRect.Visible = false;
 	}
 
-	private void LoadDialogueData()
+	private void LoadDatabase()
 	{
-		string filePath = "res://Dialogue/dialogues.json";
-		
-		if (!FileAccess.FileExists(filePath))
+		string path = "res://Dialogue/dialogues.json";
+		if (!FileAccess.FileExists(path))
 		{
-			GD.PrintErr($"Brak pliku dialogów: {filePath}");
+			GD.PrintErr($"Brak pliku dialogów: {path}");
 			return;
 		}
 
-		using var file = FileAccess.Open(filePath, FileAccess.ModeFlags.Read);
+		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
 		string content = file.GetAsText();
-		
 		var json = new Json();
-		var error = json.Parse(content);
 		
-		if (error == Error.Ok)
+		if (json.Parse(content) == Error.Ok)
 		{
-			_dialogueData = (Godot.Collections.Dictionary)json.Data;
+			// Rzutujemy wynik na Godot.Collections.Dictionary (bo to zwraca JSON)
+			var rawData = (Godot.Collections.Dictionary)json.Data;
+			
+			// Inicjalizujemy naszą bazę (C# Dictionary)
+			_dialogueDatabase = new Dictionary<string, Godot.Collections.Array>();
+
+			foreach (var keyVariant in rawData.Keys)
+			{
+				string key = (string)keyVariant; // ID NPC np. "kierownik"
+				var variantList = (Godot.Collections.Array)rawData[key];
+				
+				_dialogueDatabase.Add(key, variantList);
+			}
 		}
 		else
 		{
@@ -61,145 +68,237 @@ public partial class DialogueManager : CanvasLayer
 		}
 	}
 
-	public void StartDialogue(string dialogueId)
+	public void StartDialogue(string npcId)
 	{
-		if (_dialogueData == null || !_dialogueData.ContainsKey(dialogueId))
+		if (_dialogueDatabase == null || !_dialogueDatabase.ContainsKey(npcId))
 		{
-			GD.PrintErr($"Nie znaleziono ID dialogu: {dialogueId}");
+			GD.PrintErr($"Nie znaleziono dialogów dla NPC: {npcId}");
 			return;
 		}
 
-		// Pobierz listę kwestii
-		var rawLines = (Godot.Collections.Array)_dialogueData[dialogueId];
-		
-		_currentDialogueLines.Clear();
-		foreach (var line in rawLines)
+		// Pobieramy listę wariantów (Godot Array)
+		var variants = _dialogueDatabase[npcId];
+		Godot.Collections.Dictionary bestMatch = null;
+
+		// Szukamy pasującego wariantu (od góry do dołu)
+		foreach (var variantObj in variants)
 		{
-			_currentDialogueLines.Add((Godot.Collections.Dictionary)line);
+			var variant = (Godot.Collections.Dictionary)variantObj;
+			if (CheckConditions(variant))
+			{
+				bestMatch = variant;
+				break; // Znaleziono pierwszy pasujący!
+			}
 		}
 
-		_currentLineIndex = 0;
-		_isDialogueActive = true;
-		
-		if (DialoguePanel != null) DialoguePanel.Visible = true;
+		if (bestMatch != null)
+		{
+			// Pobieramy linie tekstu dla tego wariantu
+			var lines = (Godot.Collections.Array)bestMatch["lines"];
+			PlayLines(lines);
+		}
+		else
+		{
+			PlayDefaultMessage(npcId);
+		}
+	}
 
+	private bool CheckConditions(Godot.Collections.Dictionary variant)
+	{
+		// 1. Sprawdź wymagania (requires)
+		if (variant.ContainsKey("requires"))
+		{
+			string reqs = (string)variant["requires"];
+			var list = reqs.Split(',');
+			foreach (var cond in list)
+			{
+				if (!CheckSingleCondition(cond.Trim(), true)) return false;
+			}
+		}
+
+		// 2. Sprawdź wykluczenia (excludes)
+		if (variant.ContainsKey("excludes"))
+		{
+			string excls = (string)variant["excludes"];
+			var list = excls.Split(',');
+			foreach (var cond in list)
+			{
+				// Jeśli znajdziemy tag, który jest wykluczony -> odrzucamy dialog
+				if (CheckSingleCondition(cond.Trim(), false)) return false; 
+			}
+		}
+
+		return true;
+	}
+
+	private bool CheckSingleCondition(string tag, bool expectedValue)
+	{
+		bool hasTag = false;
+
+		if (tag.StartsWith("quest_active:"))
+		{
+			string qId = tag.Split(':')[1];
+			var state = QuestManager.Instance?.GetQuestState(qId);
+			hasTag = (state != null && !state.IsCompleted);
+		}
+		else if (tag.StartsWith("quest_done:"))
+		{
+			string qId = tag.Split(':')[1];
+			var state = QuestManager.Instance?.GetQuestState(qId);
+			hasTag = (state != null && state.IsCompleted);
+		}
+		else if (tag.StartsWith("machine_fixed:"))
+	{
+		string mId = tag.Split(':')[1];
+		// Sprawdzamy w MainGameManagerze czy maszyna jest naprawiona
+		hasTag = MainGameManager.Instance != null && MainGameManager.Instance.IsMachineFixed(mId);
+	}
+		else
+		{
+			// Sprawdzamy zwykłe tagi w TagManagerze
+			hasTag = TagManager.Instance != null && TagManager.Instance.HasTag(tag);
+		}
+
+		// Dla 'requires' (expected=true): musimy mieć tag (return hasTag).
+		// Dla 'excludes' (expected=false): logika jest odwrócona na poziomie CheckConditions.
+		// Tutaj po prostu zwracamy prawdę, czy tag istnieje.
+		return hasTag;
+	}
+
+	private void PlayLines(Godot.Collections.Array linesRaw)
+	{
+		_currentLines.Clear();
+		foreach (var l in linesRaw)
+		{
+			_currentLines.Add((Godot.Collections.Dictionary)l);
+		}
+		
+		_currentIndex = 0;
+		_isActive = true;
+		if (DialoguePanel != null) DialoguePanel.Visible = true;
+		ShowNextLine();
+	}
+
+	private void PlayDefaultMessage(string npcName)
+	{
+		var dict = new Godot.Collections.Dictionary();
+		dict["name"] = npcName;
+		dict["text"] = "...";
+		
+		_currentLines.Clear();
+		_currentLines.Add(dict);
+		
+		_currentIndex = 0;
+		_isActive = true;
+		if (DialoguePanel != null) DialoguePanel.Visible = true;
 		ShowNextLine();
 	}
 
 	private void ShowNextLine()
-{
-	if (_currentLineIndex < _currentDialogueLines.Count)
 	{
-		var line = _currentDialogueLines[_currentLineIndex];
-		
-		// 1. Ustaw teksty
-		if (NameLabel != null) NameLabel.Text = (string)line.GetValueOrDefault("name", "???");
-		if (TextLabel != null) TextLabel.Text = (string)line.GetValueOrDefault("text", "...");
-		
-		// 2. Obsługa Portretu
-		if (PortraitRect != null)
+		if (_currentIndex < _currentLines.Count)
 		{
-			if (line.ContainsKey("portrait"))
+			var line = _currentLines[_currentIndex];
+			
+			// Teksty
+			if (NameLabel != null) NameLabel.Text = (string)line.GetValueOrDefault("name", "???");
+			if (TextLabel != null)
 			{
-				string imageName = (string)line["portrait"];
-				string fullPath = $"{PortraitsPath}{imageName}.png";
+				TextLabel.Text = (string)line.GetValueOrDefault("text", "...");
+				TextLabel.VisibleRatio = 0;
+			}
+			_visibleRatio = 0;
 
-				if (ResourceLoader.Exists(fullPath))
-				{
-					PortraitRect.Texture = ResourceLoader.Load<Texture2D>(fullPath);
-					PortraitRect.Visible = true;
-				}
-				else
-				{
-					GD.PrintErr($"Nie znaleziono pliku graficznego: {fullPath}");
-					PortraitRect.Visible = false;
-				}
-			}
-			else
+			// Portret
+			if (PortraitRect != null)
 			{
-				PortraitRect.Visible = false;
+				if (line.ContainsKey("portrait"))
+				{
+					string path = PortraitsPath + (string)line["portrait"] + ".png";
+					if (ResourceLoader.Exists(path))
+					{
+						PortraitRect.Texture = ResourceLoader.Load<Texture2D>(path);
+						PortraitRect.Visible = true;
+					}
+					else PortraitRect.Visible = false;
+				}
+				else PortraitRect.Visible = false;
 			}
+
+			// Komendy
+			if (line.ContainsKey("command"))
+			{
+				ExecuteDialogueCommand((string)line["command"]);
+			}
+
+			_currentIndex++;
 		}
-
-		// --- SPRAWDZANIE KOMEND ---
-		if (line.ContainsKey("command"))
+		else
 		{
-			ExecuteDialogueCommand((string)line["command"]);
+			EndDialogue();
 		}
-
-		// 3. Reset efektu pisania
-		if (TextLabel != null) TextLabel.VisibleRatio = 0;
-		_visibleRatio = 0;
-
-		_currentLineIndex++;
 	}
-	else
-	{
-		EndDialogue();
-	}
-}
-
-// TA METODA MUSI BYĆ POZA ShowNextLine, ALE WEWNĄTRZ KLASY DialogueManager
-private void ExecuteDialogueCommand(string commandRaw)
-{
-	// GD.Print($"Wykonywanie komendy: {commandRaw}");
-	var parts = commandRaw.Split(':');
-	string action = parts[0];
-
-	switch (action)
-	{
-		// start_quest:id_questa:Tytuł Zadania:Cel początkowy
-		case "start_quest":
-			if (parts.Length >= 4)
-				QuestManager.Instance?.StartQuest(parts[1], parts[2], parts[3]);
-			break;
-
-		// update_quest:id_questa:Nowy cel
-		case "update_quest":
-			 if (parts.Length >= 3)
-				QuestManager.Instance?.UpdateQuestObjective(parts[1], parts[2]);
-			break;
-
-		// finish_quest:id_questa
-		case "finish_quest":
-			QuestManager.Instance?.FinishQuest(parts[1]);
-			break;
-
-		case "unlock_machine":
-			MainGameManager.Instance?.UnlockMachine(parts[1]);
-			break;
-	}
-}
 
 	private void EndDialogue()
 	{
-		_isDialogueActive = false;
+		_isActive = false;
 		if (DialoguePanel != null) DialoguePanel.Visible = false;
+	}
+
+	private void ExecuteDialogueCommand(string commandRaw)
+	{
+		var parts = commandRaw.Split(':');
+		string action = parts[0];
+
+		switch (action)
+		{
+			case "start_quest":
+				if (parts.Length >= 2) QuestManager.Instance?.StartQuest(parts[1]);
+				break;
+			case "progress_quest":
+				if (parts.Length >= 2) 
+				{
+					int amt = 1;
+					if (parts.Length > 2) int.TryParse(parts[2], out amt);
+					QuestManager.Instance?.ProgressQuest(parts[1], amt);
+				}
+				break;
+			case "finish_quest":
+				if (parts.Length >= 2) QuestManager.Instance?.ForceCompleteQuest(parts[1]);
+				break;
+			case "give_item":
+				if (parts.Length >= 2) NotificationUI.Instance?.AddNotification("OTRZYMANO PRZEDMIOT", parts[1]);
+				break;
+			case "add_tag":
+				if (parts.Length >= 2) TagManager.Instance?.AddTag(parts[1]);
+				break;
+			case "unlock_machine":
+				if (parts.Length >= 2) MainGameManager.Instance?.UnlockMachine(parts[1]);
+				break;
+		}
 	}
 
 	public override void _Process(double delta)
 	{
-		if (!_isDialogueActive) return;
+		if (!_isActive) return;
 
 		// Efekt pisania
 		if (TextLabel != null && TextLabel.VisibleRatio < 1.0)
 		{
-			_visibleRatio += delta * _typeSpeed * 2.0;
+			_visibleRatio += delta * 2.0; 
 			TextLabel.VisibleRatio = (float)_visibleRatio;
 		}
 
-		// Obsługa klawiszy (Spacja lub E)
+		// Pomijanie / Następna linia
 		if (Input.IsActionJustPressed("ui_accept") || Input.IsActionJustPressed("interact"))
 		{
 			if (TextLabel != null && TextLabel.VisibleRatio < 1.0)
 			{
-				// Pokaż od razu całość
 				TextLabel.VisibleRatio = 1.0f;
 				_visibleRatio = 1.0;
 			}
 			else
 			{
-				// Następna linia
 				ShowNextLine();
 			}
 		}
