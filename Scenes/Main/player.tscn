@@ -1,13 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://chk6tdok8l6v2"]
+[gd_scene load_steps=6 format=3 uid="uid://chk6tdok8l6v2"]
 
 [ext_resource type="Script" uid="uid://44owpl4mrhhe" path="res://Scripts/Main/PlayerController.cs" id="1_hf81g"]
 [ext_resource type="SpriteFrames" uid="uid://4p1fyojv7p4w" path="res://Scenes/Main/Player_Male.tres" id="2_hf81g"]
 [ext_resource type="SpriteFrames" uid="uid://d3ee647rw22f2" path="res://Scenes/Main/Player_Female.tres" id="3_1xlrf"]
+[ext_resource type="Script" uid="uid://ryv30g65oexs" path="res://Scripts/Main/OcclusionManager.cs" id="4_nmmoa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hf81g"]
 radius = 32.01562
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_hf81g")
 MaleFrames = ExtResource("3_1xlrf")
 FemaleFrames = ExtResource("2_hf81g")
@@ -20,6 +21,8 @@ animation = &"walk_down"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_hf81g")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Target")]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
+script = ExtResource("4_nmmoa")
+Target = NodePath("..")

@@ -10,11 +10,12 @@ size = Vector2(69.5, 55.5)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8c1ej"]
 height = 59.0
 
-[node name="Machine" type="Area2D"]
+[node name="Machine_2" type="Area2D"]
 y_sort_enabled = true
 script = ExtResource("1_i6fsq")
-MachineID = "machine_2"
-LockedDialogueID = "system_locked_2"
+MachineName = "Maszyna 2"
+MinigameScenePath = "res://Scripts/Main/InstantFix.tscn"
+LockedDialogueID = ""
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_i6fsq")

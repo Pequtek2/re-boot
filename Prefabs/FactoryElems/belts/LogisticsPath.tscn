@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://ci6hf5av4uv7d"]
+
+[ext_resource type="Script" uid="uid://bojhjxhv2fwgb" path="res://Scripts/Main/machines/LogisticsPath.cs" id="1_0rbth"]
+[ext_resource type="Texture2D" uid="uid://bd4mebrintxpl" path="res://Prefabs/Download/factory/Items-Items Tiles/Materials/Copper/Ores/Ore-0002.png" id="2_3vw0s"]
+
+[sub_resource type="Curve2D" id="Curve2D_0120f"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 147, 46, 0, 0, 0, 0, 161, 39, 0, 0, 0, 0, 187, 26, 0, 0, 0, 0, 213, 13, 0, 0, 0, 0, 225, 7)
+}
+point_count = 5
+
+[node name="LogisticsPath" type="Node2D" node_paths=PackedStringArray("PathNode", "TemplateMover", "TemplateSprite", "BeltVisuals")]
+script = ExtResource("1_0rbth")
+ConnectedMachineID = "machine_1"
+ItemTexture = ExtResource("2_3vw0s")
+PathNode = NodePath("Path")
+TemplateMover = NodePath("Path/Hover")
+TemplateSprite = NodePath("Path/Hover/ItemSprite")
+BeltVisuals = []
+
+[node name="Path" type="Path2D" parent="."]
+curve = SubResource("Curve2D_0120f")
+
+[node name="Hover" type="PathFollow2D" parent="Path"]
+position = Vector2(147, 46)
+rotates = false
+loop = false
+
+[node name="ItemSprite" type="Sprite2D" parent="Path/Hover"]
+y_sort_enabled = true
+scale = Vector2(0.7, 0.7)

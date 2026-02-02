@@ -120,9 +120,9 @@ offset_bottom = 38.0
 
 [node name="BackButton" type="TextureButton" parent="JournalWindow/ViewsContainer/DetailsView"]
 layout_mode = 0
-offset_left = -148.0
+offset_left = -139.0
 offset_top = -133.0
-offset_right = -108.0
+offset_right = -99.0
 offset_bottom = -93.0
 scale = Vector2(2, 2)
 texture_normal = ExtResource("6_84xkm")

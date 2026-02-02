@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://0w6bhvnm0888"]
+
+[ext_resource type="Texture2D" uid="uid://bsaot27ej53t4" path="res://Prefabs/Download/factory/convoyer belt/north-east/belt-start.png" id="1_5my1g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mm7dy"]
+atlas = ExtResource("1_5my1g")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_top6n"]
+atlas = ExtResource("1_5my1g")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a08be"]
+atlas = ExtResource("1_5my1g")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1dpk"]
+atlas = ExtResource("1_5my1g")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hjvc5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mm7dy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_top6n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a08be")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1dpk")
+}],
+"loop": true,
+"name": &"working",
+"speed": 8.0
+}]
+
+[node name="Conveyorbelt1" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hjvc5")
+animation = &"working"
+autoplay = "working"
+frame_progress = 0.77023226
