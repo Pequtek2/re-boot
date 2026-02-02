@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://v267tgili0r0"]
+[gd_scene load_steps=29 format=3 uid="uid://v267tgili0r0"]
 
 [ext_resource type="Script" uid="uid://b4dnt2cymkjtd" path="res://Scripts/A_J/LogikaGry.cs" id="1_thju2"]
 [ext_resource type="Texture2D" uid="uid://d35mse3a41oil" path="res://IMG/MenuA_J/T_A_J.png" id="2_05xqw"]
@@ -12,6 +12,8 @@
 [ext_resource type="AudioStream" uid="uid://fkilmjgvopa6" path="res://Sounds/A_JGIGAMUZA/Success_AJ.mp3" id="8_57xd7"]
 [ext_resource type="AudioStream" uid="uid://vwdp54msfcxr" path="res://Sounds/A_JGIGAMUZA/WybuchA_J.mp3" id="9_cu5l3"]
 [ext_resource type="AudioStream" uid="uid://cwd527o8abhwe" path="res://Sounds/A_JGIGAMUZA/failA_J.mp3" id="10_k8gqs"]
+[ext_resource type="Texture2D" uid="uid://d2k5xqrluw22m" path="res://IMG/MenuA_J/piesekwow.jpg" id="13_alpbb"]
+[ext_resource type="AudioStream" uid="uid://5nnjywgqqg4w" path="res://Sounds/A_JGIGAMUZA/Ajaj_AJ.mp3" id="14_qt2i0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thju2"]
 
@@ -65,6 +67,7 @@ texture = ExtResource("2_05xqw")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="LineEdit" type="LineEdit" parent="CanvasLayer"]
+custom_minimum_size = Vector2(1400, 60)
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -251,4 +254,22 @@ text = "Pozostało prób: "
 
 [node name="Audio_Fail" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_k8gqs")
+volume_db = -20.037
+
+[node name="WarstwaPieska" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="WarstwaPieska"]
+offset_left = 208.0
+offset_top = 26.0
+offset_right = 1206.0
+offset_bottom = 747.0
+texture = ExtResource("13_alpbb")
+expand_mode = 1
+
+[node name="Audio_Piesek" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_qt2i0")
+volume_db = -20.037
+
+[node name="Audio_FinalBoss" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_iyo3i")
 volume_db = -20.037
