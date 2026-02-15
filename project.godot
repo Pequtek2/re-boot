@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="re-boot"
-run/main_scene="uid://cn5webe7bjsnt"
+run/main_scene="uid://crexulmvoa5t0"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -33,6 +33,15 @@ window/stretch/mode="viewport"
 [dotnet]
 
 project/assembly_name="re-boot"
+
+[file_customization]
+
+folder_colors={
+"res://IMG/MenuA_J/": "purple",
+"res://Scenes/A_J/": "purple",
+"res://Scripts/A_J/": "purple",
+"res://Sounds/A_JGIGAMUZA/": "purple"
+}
 
 [gui]
 

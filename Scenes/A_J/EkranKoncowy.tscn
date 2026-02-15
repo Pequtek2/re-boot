@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://rnnbgiwleman"]
+
+[ext_resource type="Texture2D" uid="uid://bljg6so4g0b8g" path="res://IMG/MenuA_J/Niewcisniety_AJ.png" id="1_t75ux"]
+[ext_resource type="Script" uid="uid://crxlfs3y8cbno" path="res://Scripts/A_J/EkranKoncowy.cs" id="1_v3kbm"]
+[ext_resource type="Texture2D" uid="uid://bo4n7qog0j6ki" path="res://IMG/MenuA_J/Wcisniety_AJ.png" id="2_v3kbm"]
+[ext_resource type="AudioStream" uid="uid://154vscc4xne6" path="res://Sounds/A_JGIGAMUZA/KoncowaA_J.mp3" id="4_v3kbm"]
+[ext_resource type="AudioStream" uid="uid://dvks0cdqltcj6" path="res://Sounds/A_JGIGAMUZA/Click_A_J.mp3" id="5_v3kbm"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nye4c"]
+texture = ExtResource("1_t75ux")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ft761"]
+texture = ExtResource("2_v3kbm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ivs0s"]
+texture = ExtResource("1_t75ux")
+modulate_color = Color(0.44705883, 0.44705883, 0.44705883, 0.88235295)
+
+[node name="EkranKoncowy" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_v3kbm")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 241.0
+offset_right = 993.0
+offset_bottom = 515.0
+theme_override_font_sizes/font_size = 40
+text = "Naprawiłeś maszynę!
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PrzyciskMenu" type="Button" parent="."]
+layout_mode = 0
+offset_left = 612.0
+offset_top = 464.0
+offset_right = 830.0
+offset_bottom = 546.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_nye4c")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ft761")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ivs0s")
+text = "Ukończ zadanie"
+
+[node name="WarstwaKurtyny" type="CanvasLayer" parent="."]
+
+[node name="Kurtyna" type="ColorRect" parent="WarstwaKurtyny"]
+offset_right = 1400.0
+offset_bottom = 780.0
+color = Color(0, 0, 0, 1)
+
+[node name="Audio_Koniec_Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_v3kbm")
+volume_db = -20.991
+autoplay = true
+
+[node name="audio_klikniecie" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_v3kbm")
+volume_db = -11.573
