@@ -23,6 +23,7 @@ shader_parameter/vignette_intensity = 0.4
 shader_parameter/distortion = 0.0
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("ShaderRect")]
+process_mode = 3
 script = ExtResource("1_m20gm")
 ItemPrefab = ExtResource("2_wfeed")
 SlotPrefab = ExtResource("3_6g2m7")

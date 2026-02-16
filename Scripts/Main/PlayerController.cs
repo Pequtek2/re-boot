@@ -28,6 +28,16 @@ public partial class PlayerController : CharacterBody2D
 			MainGameManager.Instance.OnSkinChanged += UpdateSkin;
 			UpdateSkin(); 
 		}
+		if (MainGameManager.Instance != null && MainGameManager.Instance.ShouldTeleportPlayer)
+	{
+		GD.Print($"[Player] Teleportacja na zapisaną pozycję: {MainGameManager.Instance.LastPlayerPosition}");
+		
+		// Ustawiamy pozycję
+		GlobalPosition = MainGameManager.Instance.LastPlayerPosition;
+		
+		// Resetujemy flagę, żeby przy normalnym restarcie gry nie teleportowało nas na środek
+		MainGameManager.Instance.ShouldTeleportPlayer = false;
+	}
 	}
 
 	public override void _ExitTree()
