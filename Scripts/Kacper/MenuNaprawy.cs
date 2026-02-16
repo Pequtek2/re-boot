@@ -9,6 +9,9 @@ public partial class MenuNaprawy : Control
 	private RichTextLabel _labelProtokol; 
 	private SoundManager _sound;
 
+	// DODANE: Zmienna eksportowana zgodnie ze screenem
+	
+
 	public override async void _Ready()
 	{
 		_sound = GetTree().Root.FindChild("SoundManager", true, false) as SoundManager;
@@ -26,8 +29,38 @@ public partial class MenuNaprawy : Control
 		_btnUstawienia = GetNodeOrNull<Button>("VBox/Ustawienia/BtnUstawienia");
 		_btnWyjdz = GetNodeOrNull<Button>("VBox/Wyjscie/BtnWyjdz");
 
+		if (_btnWyjdz != null) _btnWyjdz.Visible = false;
+
 		InicjalizujSuwaki();
 		await WykonajSekwencjeStartowa();
+		
+		SprawdzCzyMoznaWylogowac();
+	}
+
+	private void SprawdzCzyMoznaWylogowac()
+		{
+			if (Global.AntywirusZaliczony && Global.RekordyGotowe && Global.DaneGotowe)
+		{
+			string currentID = Global.CurrentMachineID; 
+
+			if (MainGameManager.Instance != null)
+			{
+				MainGameManager.Instance.SetMachineFixed(currentID);
+				QuestManager.Instance.ProgressQuest("main_quest_3", 1);
+				// Log od Adama nr 1:
+				GD.Print($"Minigra wygrana. Maszyna: {currentID}, Quest zaktualizowany.");
+			}
+	
+			if (_btnWyjdz != null && !_btnWyjdz.Visible) 
+			{
+				_btnWyjdz.Visible = true;
+				// Dodajemy animację pisania, żeby "WYLOGUJ" nie wskoczyło nagle
+				_ = WypiszTekst(_btnWyjdz, "> WYLOGUJ"); 
+			}
+
+			// Log od Adama nr 2:
+			GD.Print($"SUKCES! Maszyna {currentID} została naprawiona.");
+		}
 	}
 
 	private void InicjalizujSuwaki()
@@ -81,12 +114,11 @@ public partial class MenuNaprawy : Control
 		}
 
 		if (_btnUstawienia != null) await WypiszTekst(_btnUstawienia, "> USTAWIENIA");
-		if (_btnWyjdz != null) await WypiszTekst(_btnWyjdz, "> WYLOGUJ");
 	}
 
 	private async Task WypiszTekst(Button btn, string txt) 
 	{
-		btn.Text = ""; // Czyścimy puste nawiasy widoczne na screenach
+		btn.Text = ""; 
 		_sound?.StartTypingSound();
 		foreach (char c in txt) { 
 			if(!IsInsideTree()) break; 
