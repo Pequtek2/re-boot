@@ -10,6 +10,7 @@ public partial class EkranKoncowy : Control
 	private Button _btnMenu;
 	private AudioStreamPlayer _audioKlik;
 	private AudioStreamPlayer _audioKoniecMusic;
+	[Export] public string TargetMachineID = "machine_2";
 
 	// Zmienne do tła
 	private GradientTexture2D _tloTekstura;
@@ -149,6 +150,19 @@ public partial class EkranKoncowy : Control
 		
 		AddChild(visualTlo);
 		MoveChild(visualTlo, 0); 
+		if (MainGameManager.Instance != null)
+				{
+				// 1. Zapisz w globalnym stanie, że maszyna jest naprawiona
+				MainGameManager.Instance.SetMachineFixed(TargetMachineID);
+				
+				// 2. ZAKTUALIZUJ ZADANIE (Zamiast CompleteQuest)
+				// Używamy ID: "quest_" + ID_maszyny
+				// Cel: "Wróć do Kierownika/Inżyniera po nagrodę"
+				string questID = "quest_" + TargetMachineID; 
+				QuestManager.Instance.ProgressQuest("main_quest_2", 1);
+				
+				GD.Print($"Minigra wygrana. Maszyna: {TargetMachineID}, Quest zaktualizowany.");
+			}	GD.Print($"SUKCES! Maszyna {TargetMachineID} została naprawiona.");
 	}
 
 	private async void NaPrzyciskMenuPressed()
@@ -167,7 +181,7 @@ public partial class EkranKoncowy : Control
 			await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
 		}
 
-		GetTree().ChangeSceneToFile("res://Scenes/A_J/MenuGlowne.tscn");
+		GetTree().ChangeSceneToFile("res://Scenes/Main/FactoryHub.tscn");
 	}
 
 	private void UruchomPodskakiwanie()

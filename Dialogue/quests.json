@@ -34,5 +34,17 @@
 	  { "objective": "Napraw Maszynę 4", "amount": 1 },
 	  { "objective": "Wróć do Mućka", "amount": 1 }
 	]
+  },
+  {
+	"id": "story_main",
+	"title": "Napraw Fabryke",
+	"description": "Fabryka stanela, porozmawiaj z pracownikami aby naprawic odpowednie maszyny.",
+	"stages": [
+	  { "objective": "Napraw Maszynę 1", "amount": 1 },
+	  { "objective": "Napraw Maszynę 2", "amount": 1 },
+	  { "objective": "Napraw Maszynę 3", "amount": 1 },
+	  { "objective": "Napraw Maszynę 4", "amount": 1 },
+	  { "objective": "Gratki", "amount": 1 }
+	]
   }
 ]

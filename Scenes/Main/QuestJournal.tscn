@@ -106,7 +106,7 @@ layout_mode = 0
 offset_left = -136.0
 offset_top = -124.0
 offset_right = 181.0
-offset_bottom = -84.0
+offset_bottom = 237.0
 
 [node name="QuestListContainer" type="VBoxContainer" parent="JournalWindow/ViewsContainer/ListView/ScrollContainer"]
 layout_mode = 2

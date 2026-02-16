@@ -44,12 +44,19 @@ public partial class DialogueManager : CanvasLayer
 
 	private void LoadDatabase()
 	{
-		string path = "res://Dialogue/dialogues.json";
-		if (!FileAccess.FileExists(path)) return;
+		string path = "res://Dialogue/dialogues.json"; // Upewnij się co do ścieżki!
+		
+		if (!FileAccess.FileExists(path))
+		{
+			GD.PrintErr($"BŁĄD: Nie znaleziono pliku: {path}");
+			return;
+		}
 
 		using var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
 		var json = new Json();
-		if (json.Parse(file.GetAsText()) == Error.Ok)
+		var error = json.Parse(file.GetAsText());
+		
+		if (error == Error.Ok)
 		{
 			var rawData = (Godot.Collections.Dictionary)json.Data;
 			_dialogueDatabase = new Dictionary<string, Godot.Collections.Array>();
@@ -59,23 +66,43 @@ public partial class DialogueManager : CanvasLayer
 				string key = (string)keyVariant;
 				_dialogueDatabase.Add(key, (Godot.Collections.Array)rawData[key]);
 			}
+			GD.Print("Załadowano dialogi. Ilość wpisów: " + _dialogueDatabase.Count);
+		}
+		else
+		{
+			GD.PrintErr($"BŁĄD PARSOWANIA JSON: {json.GetErrorMessage()} w linii {json.GetErrorLine()}");
 		}
 	}
 
 	public void StartDialogue(string npcId)
 	{
-		if (_dialogueDatabase == null || !_dialogueDatabase.ContainsKey(npcId)) return;
+		// 1. Sprawdź, czy baza danych w ogóle się załadowała
+		if (_dialogueDatabase == null)
+		{
+			GD.PrintErr("BŁĄD: Baza dialogów jest pusta! Sprawdź plik dialogues.json.");
+			GetTree().Paused = false; // WAŻNE: Odpauzuj, żeby gra nie wisiała
+			return;
+		}
 
-		_currentNpcId = npcId; // Zapamiętaj z kim gadamy
+		// 2. Sprawdź, czy mamy dialog dla tego NPC/ID
+		if (!_dialogueDatabase.ContainsKey(npcId))
+		{
+			GD.PrintErr($"BŁĄD: Nie znaleziono dialogu o ID: '{npcId}'!");
+			GD.Print("Dostępne ID: " + string.Join(", ", _dialogueDatabase.Keys));
+			
+			GetTree().Paused = false; // WAŻNE: Odpauzuj grę!
+			return;
+		}
 
-		// --- AUTOMATYCZNE ŁADOWANIE GŁÓWNEGO PORTRETU ---
-		// Próbuje załadować np. "marek.png"
-		SetPortrait(npcId);
-		// ------------------------------------------------
+		_currentNpcId = npcId; 
+
+		// Automatyczne ładowanie portretu (opcjonalne, w tryku/catch żeby nie wywaliło)
+		try { SetPortrait(npcId); } catch { /* ignoruj błąd braku obrazka */ }
 
 		var variants = _dialogueDatabase[npcId];
 		Godot.Collections.Dictionary bestMatch = null;
 
+		// Szukamy pasującego wariantu dialogu
 		foreach (var variantObj in variants)
 		{
 			var variant = (Godot.Collections.Dictionary)variantObj;
@@ -86,10 +113,16 @@ public partial class DialogueManager : CanvasLayer
 			}
 		}
 
-		if (bestMatch != null)
+		// Jeśli znaleźliśmy pasujący - gramy go. Jeśli nie - default.
+		if (bestMatch != null && bestMatch.ContainsKey("lines"))
+		{
 			PlayLines((Godot.Collections.Array)bestMatch["lines"]);
+		}
 		else
+		{
+			// Jeśli jest wpis w bazie, ale żaden warunek nie pasuje (np. "requires" niespełnione)
 			PlayDefaultMessage(npcId);
+		}
 	}
 
 	private void SetPortrait(string imageName)
@@ -235,6 +268,12 @@ public partial class DialogueManager : CanvasLayer
 			case "give_item": if (parts.Length >= 2) NotificationUI.Instance?.AddNotification("OTRZYMANO PRZEDMIOT", parts[1]); break;
 			case "add_tag": if (parts.Length >= 2) TagManager.Instance?.AddTag(parts[1]); break;
 			case "unlock_machine": if (parts.Length >= 2) MainGameManager.Instance?.UnlockMachine(parts[1]); break;
+			case "show_controls":
+			if (ControlsWindow.Instance != null)
+			{
+				ControlsWindow.Instance.ForceShow();
+			}
+			break;
 		}
 	}
 

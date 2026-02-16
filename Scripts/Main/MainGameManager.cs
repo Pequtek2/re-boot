@@ -25,7 +25,27 @@ public partial class MainGameManager : Node
 	{
 		Instance = this;
 	}
+	// --- SYSTEM FLAG FABULARNYCH ---
+	// Słownik przechowujący stan gry: "intro_seen" -> true, "tutorial_done" -> false
+	private Dictionary<string, bool> _storyFlags = new Dictionary<string, bool>();
 
+	public bool CheckFlag(string flagName)
+	{
+		// Jeśli flagi nie ma w słowniku, uznajemy że jest false (nie zdarzyło się)
+		if (_storyFlags.ContainsKey(flagName))
+			return _storyFlags[flagName];
+		return false;
+	}
+
+	public void SetFlag(string flagName, bool value)
+	{
+		if (_storyFlags.ContainsKey(flagName))
+			_storyFlags[flagName] = value;
+		else
+			_storyFlags.Add(flagName, value);
+			
+		GD.Print($"[Manager] Flaga ustawiona: {flagName} = {value}");
+	}
 	// --- 1. PRZEJŚCIE DO MINIGRY ---
 	public void SwitchToMinigame(string machineId, string minigamePath, Vector2 playerPos, string currentScenePath)
 	{
