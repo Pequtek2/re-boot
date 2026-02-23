@@ -64,6 +64,9 @@ public partial class LogikaGry : Node2D
 	// Zmienne do skipowania tekstu spacją
 	private bool _czyPisanieTrwa = false;
 	private bool _skipujPisanie = false;
+	
+	// 0 = nieustalony, 1 = normalnie, -1 = odwrotnie
+	private int _kierunek = 0;
 
 
 	// ==========================================
@@ -272,11 +275,18 @@ public partial class LogikaGry : Node2D
 			_ostatniPunkt = nowy; 
 			
 			_wejscie.Clear(); 
+			_wejscie.CallDeferred(LineEdit.MethodName.GrabFocus);
 			DopasujKamere(); 
 			QueueRedraw(); 
 			
 			SprawdzPunkt(nowy);
 		}
+		else
+	{
+		// Opcjonalnie: Jeśli wpisali bzdury, też możemy wyczyścić i dać focus z powrotem
+		_wejscie.Clear();
+		_wejscie.CallDeferred(LineEdit.MethodName.GrabFocus);
+	}
 	}
 
 	private void ZresetujRysunek()
@@ -284,6 +294,7 @@ public partial class LogikaGry : Node2D
 		_wszystkiePunkty.Clear();
 		_ostatniPunkt = Vector2.Zero;
 		_ktoryPunktWzoru = 1;
+		_kierunek = 0;
 		QueueRedraw();
 		_wejscie.Clear();
 	}
@@ -301,51 +312,105 @@ public partial class LogikaGry : Node2D
 	private async void SprawdzPunkt(Vector2 punkt)
 	{
 		var wzor = _wszystkieZadania[_aktualneZadanieIndex];
-		if (_ktoryPunktWzoru >= wzor.Count) return;
+		if (wzor.Count < 2) return;
 
-		Vector2 celBaza = wzor[_ktoryPunktWzoru]; 
-		Vector2 celEkran = new Vector2(celBaza.X * _aktualnaSkalaX, celBaza.Y * _aktualnaSkalaY);
-		float dystans = punkt.DistanceTo(celEkran);
+		// ==============================
+		// 1️⃣ USTALENIE KIERUNKU
+		// ==============================
+		if (_kierunek == 0)
+		{
+			Vector2 drugi = new Vector2(
+				wzor[1].X * _aktualnaSkalaX,
+				wzor[1].Y * _aktualnaSkalaY
+			);
 
-		if (dystans < 50.0f) 
-		{ 
-			_ktoryPunktWzoru++; 
-			if (_ktoryPunktWzoru >= wzor.Count) 
+			Vector2 przedostatni = new Vector2(
+				wzor[wzor.Count - 2].X * _aktualnaSkalaX,
+				wzor[wzor.Count - 2].Y * _aktualnaSkalaY
+			);
+
+			if (punkt.IsEqualApprox(drugi))
+			{
+				_kierunek = 1;
+				_ktoryPunktWzoru = 2;
+				return;
+			}
+			else if (punkt.IsEqualApprox(przedostatni))
+			{
+				_kierunek = -1;
+				_ktoryPunktWzoru = wzor.Count - 3;
+				return;
+			}
+			else
+			{
+				await KaraZaBlad();
+				return;
+			}
+		}
+
+		// ==============================
+		// 2️⃣ NORMALNE SPRAWDZANIE
+		// ==============================
+		if (_ktoryPunktWzoru < 0 || _ktoryPunktWzoru >= wzor.Count)
+			return;
+
+		Vector2 celBaza = wzor[_ktoryPunktWzoru];
+		Vector2 celEkran = new Vector2(
+			celBaza.X * _aktualnaSkalaX,
+			celBaza.Y * _aktualnaSkalaY
+		);
+
+		if (punkt.IsEqualApprox(celEkran))
+		{
+			_ktoryPunktWzoru += _kierunek;
+
+			bool koniec =
+				(_kierunek == 1 && _ktoryPunktWzoru >= wzor.Count) ||
+				(_kierunek == -1 && _ktoryPunktWzoru < 0);
+
+			if (koniec)
 			{
 				if (_aktualneZadanieIndex >= _wszystkieZadania.Count - 1)
-				{
-					FinalneSciemnienie(); 
-				}
+					FinalneSciemnienie();
 				else
-				{
-					PokazMenuWygranej(true); 
-				}
+					PokazMenuWygranej(true);
 			}
 		}
 		else
 		{
-			_liczbaZyc--;
-			if (_audioFail != null) _audioFail.Play();
-			if (_labelZycia != null) { _labelZycia.Visible = true; AktualizujLicznikZyc(); }
-			
-			if (_kurtyna != null)
-			{
-				_kurtyna.Color = new Color(1, 0, 0, 0.5f); 
-				var tween = GetTree().CreateTween();
-				tween.TweenProperty(_kurtyna, "modulate:a", 1.0f, 0.1f);
-				tween.TweenProperty(_kurtyna, "modulate:a", 0.0f, 0.2f); 
-				await ToSignal(tween, "finished");
-				_kurtyna.Color = Colors.Black; 
-			}
-
-			if (_liczbaZyc <= 0) 
-			{
-				await PokazPieskaSmierci();
-				await OdpalamyWielkiWybuch(); 
-				PokazMenuWygranej(false); 
-			}
+			await KaraZaBlad();
 		}
+}
+
+private async Task KaraZaBlad()
+{
+	_liczbaZyc--;
+
+	if (_audioFail != null) _audioFail.Play();
+
+	if (_labelZycia != null)
+	{
+		_labelZycia.Visible = true;
+		AktualizujLicznikZyc();
 	}
+
+	if (_kurtyna != null)
+	{
+		_kurtyna.Color = new Color(1, 0, 0, 0.5f);
+		var tween = GetTree().CreateTween();
+		tween.TweenProperty(_kurtyna, "modulate:a", 1.0f, 0.1f);
+		tween.TweenProperty(_kurtyna, "modulate:a", 0.0f, 0.2f);
+		await ToSignal(tween, "finished");
+		_kurtyna.Color = Colors.Black;
+	}
+
+	if (_liczbaZyc <= 0)
+	{
+		await PokazPieskaSmierci();
+		await OdpalamyWielkiWybuch();
+		PokazMenuWygranej(false);
+	}
+}
 
 	private async Task PokazPieskaSmierci()
 	{
@@ -484,13 +549,13 @@ public partial class LogikaGry : Node2D
 				switch(_aktualneZadanieIndex)
 				{
 					case 0:
-						_napisWygranej.Text = "SYSTEM: ŚRUBA POPRAWNA!";
+						_napisWygranej.Text = "   SYSTEM: ŚRUBA POPRAWNA!";
 						break;
 					case 1:
-						_napisWygranej.Text = "SYSTEM: WSPORNIK POPRAWNY!";
+						_napisWygranej.Text = "   SYSTEM: WSPORNIK POPRAWNY!";
 						break;
 					default:
-						_napisWygranej.Text = "SYSTEM: ELEMENT POPRAWNY!";
+						_napisWygranej.Text = "   SYSTEM: ELEMENT POPRAWNY!";
 						break;
 				}
 				_btnDalej.Text = "NASTĘPNE ZADANIE"; 
@@ -499,7 +564,7 @@ public partial class LogikaGry : Node2D
 		}
 		else
 		{
-			_napisWygranej.Text = "BŁĄD KRYTYCZNY!";
+			_napisWygranej.Text = "       BŁĄD KRYTYCZNY!";
 			_btnDalej.Text = "RESTART SYSTEMU";
 			_aktualneZadanieIndex = -99; 
 

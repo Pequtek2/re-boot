@@ -173,7 +173,8 @@ text = "NASTĘPNE ZADANIE"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_iyo3i")
-volume_db = -20.528
+volume_db = -10.033
+parameters/looping = true
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="."]
 layer = -100
@@ -220,27 +221,27 @@ text = "Już biegnę!"
 
 [node name="Audio_MenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_jxn1b")
-volume_db = -21.945
+volume_db = -7.634
 
 [node name="Audio_Silnik" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_4p561")
-volume_db = -20.991
+volume_db = -6.679
 
 [node name="Audio_Bieg" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_b8wu5")
-volume_db = -22.899
+volume_db = -10.43
 
 [node name="Audio_Klik" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ovsjm")
-volume_db = -11.45
+volume_db = -4.771
 
 [node name="Audio_Win" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_57xd7")
-volume_db = -20.991
+volume_db = -4.771
 
 [node name="Audio_Wybuch" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_cu5l3")
-volume_db = -1.909
+volume_db = -9.542
 
 [node name="CanvasLayer5" type="CanvasLayer" parent="."]
 
@@ -254,7 +255,7 @@ text = "Pozostało prób: "
 
 [node name="Audio_Fail" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_k8gqs")
-volume_db = -20.037
+volume_db = -17.175
 
 [node name="WarstwaPieska" type="CanvasLayer" parent="."]
 
@@ -268,8 +269,8 @@ expand_mode = 1
 
 [node name="Audio_Piesek" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_qt2i0")
-volume_db = -20.037
+volume_db = -12.404
 
 [node name="Audio_FinalBoss" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_iyo3i")
-volume_db = -20.037
+volume_db = -10.496
