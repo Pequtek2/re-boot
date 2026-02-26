@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://crexulmvoa5t0"]
+
+[ext_resource type="Script" uid="uid://lfwdhxmkhbpb" path="res://Scripts/A_J/StartButton.cs" id="1_11fkk"]
+[ext_resource type="Script" uid="uid://c07uh0auf0v1n" path="res://Scripts/A_J/MenuSkrypt.cs" id="1_qyd44"]
+[ext_resource type="Texture2D" uid="uid://bljg6so4g0b8g" path="res://IMG/MenuA_J/Niewcisniety_AJ.png" id="2_qyd44"]
+[ext_resource type="Texture2D" uid="uid://bo4n7qog0j6ki" path="res://IMG/MenuA_J/Wcisniety_AJ.png" id="3_4p8lh"]
+[ext_resource type="AudioStream" uid="uid://3i1yqbuujecy" path="res://Sounds/A_JGIGAMUZA/MenuMusicA_J.mp3" id="4_dhkhg"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hwcvv"]
+texture = ExtResource("2_qyd44")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hl34u"]
+texture = ExtResource("3_4p8lh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tqn4w"]
+texture = ExtResource("2_qyd44")
+modulate_color = Color(0.44705883, 0.44705883, 0.44705883, 0.88235295)
+
+[node name="MenuGlowne" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_qyd44")
+
+[node name="Tlo" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(3000, 3000)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1480.0
+offset_top = -1480.0
+offset_right = 1520.0
+offset_bottom = 1520.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.22745098, 0.22745098, 0.22745098, 0)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 570.0
+offset_top = 503.0
+offset_right = 870.0
+offset_bottom = 703.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxTexture_hwcvv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hl34u")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tqn4w")
+text = "START"
+script = ExtResource("1_11fkk")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dhkhg")
+volume_db = -20.314
+autoplay = true
+
+[node name="Srubka_Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 386.0
+offset_top = 215.0
+offset_right = 1054.0
+offset_bottom = 353.0
+theme_override_font_sizes/font_size = 60
+text = "GDZIE JEST TA ŚRUBKA?"

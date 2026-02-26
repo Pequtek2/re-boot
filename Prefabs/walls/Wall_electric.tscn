@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6osc2er5151f"]
+
+[ext_resource type="Texture2D" uid="uid://bpucri2utuw1q" path="res://IMG/Main/wall_electric.png" id="1_627s3"]
+[ext_resource type="Script" uid="uid://clntplt67c1om" path="res://Prefabs/VisionBlocker.cs" id="2_71esr"]
+
+[node name="Wall" type="Node2D" groups=["Occluders"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, -31)
+texture = ExtResource("1_627s3")
+
+[node name="VisionBlocker" type="Area2D" parent="."]
+script = ExtResource("2_71esr")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionBlocker"]
+polygon = PackedVector2Array(0, 17, -32, 2, -32, -64, 0, -79, 32, -64, 32, 2, 0, 17)

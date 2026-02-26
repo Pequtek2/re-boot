@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://y00vm72ds2x1"]
+[gd_scene load_steps=14 format=3 uid="uid://y00vm72ds2x1"]
 
 [ext_resource type="Script" uid="uid://dgqm02j54re8p" path="res://Scripts/Adam/GameManager.cs" id="1_m20gm"]
 [ext_resource type="PackedScene" uid="uid://dwdkkivsor7o2" path="res://Scenes/Adam/DraggableItem.tscn" id="2_wfeed"]
@@ -13,16 +13,9 @@
 [ext_resource type="AudioStream" uid="uid://1x7aphv2ax72" path="res://Sounds/Adam/cyborg-ninja-kevin-macleod-main-version-7993-03-00.mp3" id="10_afp1c"]
 [ext_resource type="AudioStream" uid="uid://byrlitu58n2l1" path="res://Sounds/Adam/ready-set-drift-michael-grubb-main-version-24555-02-59.mp3" id="11_asx7a"]
 [ext_resource type="Script" uid="uid://dieafocers2h0" path="res://Scripts/Adam/BoardRenderer.cs" id="12_kqitr"]
-[ext_resource type="Shader" uid="uid://bls1tph3p66x3" path="res://Scenes/Menu/crt_glitch.gdshader" id="13_sj8dy"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yg2tm"]
-shader = ExtResource("13_sj8dy")
-shader_parameter/scanline_count = 540.0
-shader_parameter/glitch_intensity = 0.002
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/distortion = 0.0
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("ShaderRect")]
+process_mode = 3
 script = ExtResource("1_m20gm")
 ItemPrefab = ExtResource("2_wfeed")
 SlotPrefab = ExtResource("3_6g2m7")
@@ -48,10 +41,10 @@ script = ExtResource("12_kqitr")
 layer = 128
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_yg2tm")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(1, 1, 1, 0)

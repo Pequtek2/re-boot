@@ -1,0 +1,94 @@
+[gd_scene load_steps=13 format=3 uid="uid://dybvyk5nagsvg"]
+
+[ext_resource type="Script" uid="uid://2i5tsiywakd1" path="res://Scripts/Main/Machine.cs" id="1_djyw5"]
+[ext_resource type="Texture2D" uid="uid://b6i26aj1hbk4w" path="res://Prefabs/Download/Icons_Essential/v1.2/Icons/Keyboard.png" id="2_nn852"]
+[ext_resource type="Texture2D" uid="uid://76l4grqmhbv1" path="res://Prefabs/Download/factory v.2/building_1/building_1 sprite.png" id="3_bxnrs"]
+[ext_resource type="Texture2D" uid="uid://b6i0qntbfxj24" path="res://Prefabs/Download/factory v.2/building_1/building_1 animation.png" id="4_3odj5"]
+[ext_resource type="Script" uid="uid://ev7ndwyw8psr" path="res://Scripts/Main/machines/MachineAnimator.cs" id="5_vo8wq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ubw4"]
+atlas = ExtResource("4_3odj5")
+region = Rect2(0, 0, 92, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbrhn"]
+atlas = ExtResource("4_3odj5")
+region = Rect2(92, 0, 92, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20f0q"]
+atlas = ExtResource("4_3odj5")
+region = Rect2(184, 0, 92, 124)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxuf7"]
+atlas = ExtResource("4_3odj5")
+region = Rect2(276, 0, 92, 124)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_elpju"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_bxnrs")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ubw4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbrhn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20f0q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxuf7")
+}],
+"loop": true,
+"name": &"working",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8c1ej"]
+size = Vector2(69.5, 55.5)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8c1ej"]
+radius = 6.0494614
+height = 59.0
+
+[node name="Machine_3" type="Area2D"]
+y_sort_enabled = true
+scale = Vector2(2, 2)
+script = ExtResource("1_djyw5")
+MachineID = "machine_3"
+MachineName = "Maszyna 3"
+MinigameScenePath = "res://Scripts/Main/InstantFix.tscn"
+LockedDialogueID = ""
+
+[node name="IconE" type="Sprite2D" parent="."]
+visible = false
+z_index = 2
+position = Vector2(27, -26)
+texture = ExtResource("2_nn852")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_elpju")
+animation = &"idle"
+offset = Vector2(0, -45)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_8c1ej")
+
+[node name="InteractionZone" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
+position = Vector2(-2, 0.5)
+scale = Vector2(7.6039824, -1.1456976)
+shape = SubResource("CapsuleShape2D_8c1ej")
+
+[node name="AnimatorLogic" type="Node" parent="." node_paths=PackedStringArray("TargetSprite")]
+script = ExtResource("5_vo8wq")
+MachineID = "machine_1"
+TargetSprite = NodePath("../Sprite2D")
