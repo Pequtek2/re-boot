@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://o8h7djnfe1lx"]
+
+[ext_resource type="Script" uid="uid://cj2rrchvrb4bb" path="res://Scripts/Main/NPC.cs" id="1_t6kyo"]
+[ext_resource type="Texture2D" uid="uid://71xn4lrscqvg" path="res://Art/npc/dorota_2.png" id="2_t6kyo"]
+[ext_resource type="Texture2D" uid="uid://ia51j3dsml0s" path="res://Art/npc/dorota_1.png" id="3_35j0a"]
+[ext_resource type="Texture2D" uid="uid://bx4phus8vabr" path="res://Art/npc/dorota_4.png" id="4_ibv7y"]
+[ext_resource type="Texture2D" uid="uid://bclq2jrwhu4mr" path="res://Art/npc/dorota_3.png" id="5_0u2c2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lq7bo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_t6kyo")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_35j0a")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ibv7y")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_0u2c2")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oeoos"]
+size = Vector2(131, 127.5)
+
+[node name="NPC" type="Area2D" node_paths=PackedStringArray("NpcSprite")]
+script = ExtResource("1_t6kyo")
+NpcID = "dorota"
+NpcSprite = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lq7bo")
+animation = &"idle_up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0.25)
+shape = SubResource("RectangleShape2D_oeoos")

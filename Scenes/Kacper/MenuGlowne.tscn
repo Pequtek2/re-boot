@@ -1,0 +1,296 @@
+[gd_scene load_steps=18 format=3 uid="uid://c6hkunjo0nbl0"]
+
+[ext_resource type="Script" uid="uid://cegvowt8oxrhh" path="res://Scripts/Kacper/MenuNaprawy.cs" id="1_40t6x"]
+[ext_resource type="Shader" uid="uid://1eqkdng28p2j" path="res://Scenes/Kacper/CCTV ruszajacy sie.gdshader" id="2_5lr4b"]
+[ext_resource type="Shader" uid="uid://b57fhsep1xlea" path="res://Scenes/Kacper/glitch.gdshader" id="3_5lr4b"]
+[ext_resource type="Shader" uid="uid://vuh7he16kg12" path="res://Scenes/Kacper/winieta.gdshader" id="4_i1n2h"]
+[ext_resource type="PackedScene" uid="uid://dpm1sedyxbw36" path="res://Scenes/Kacper/Transitioner.tscn" id="5_i1n2h"]
+[ext_resource type="Script" uid="uid://dyknxnwgaoya8" path="res://Scripts/Kacper/SoundManager.cs" id="6_oak84"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5j3rw"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5lr4b"]
+bg_color = Color(0.83137256, 1, 0.7372549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1n2h"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oak84"]
+bg_color = Color(0.83137256, 1, 0.7372549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mp48f"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40t6x"]
+bg_color = Color(0.8300141, 1, 0.73543006, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hrawu"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6ma5"]
+bg_color = Color(0.83137256, 1, 0.7372549, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i1n2h"]
+shader = ExtResource("2_5lr4b")
+shader_parameter/curvature = 0.014000000665
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oak84"]
+shader = ExtResource("3_5lr4b")
+shader_parameter/shake_power = 0.03
+shader_parameter/shake_rate = 0.0770000036575
+shader_parameter/shake_speed = 2.0
+shader_parameter/shake_block_size = 30.5
+shader_parameter/shake_color_rate = 0.01
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hrawu"]
+shader = ExtResource("4_i1n2h")
+shader_parameter/zasieg = 0.71200003382
+shader_parameter/miekkosc = 0.3690000175275
+
+[node name="Minigra" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_40t6x")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1400.0
+offset_bottom = 780.0
+color = Color(0, 0, 0, 1)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+process_mode = 3
+layout_mode = 0
+offset_left = 61.0
+offset_top = 215.0
+offset_right = 603.0
+offset_bottom = 341.0
+
+[node name="SkanowanieWirusow" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="BtnKable" type="Button" parent="VBox/SkanowanieWirusow"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65882355, 1, 0.43137255, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_5j3rw")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5lr4b")
+
+[node name="Check1" type="Label" parent="VBox/SkanowanieWirusow"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="UsuniecieZepsutychDanych" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="BtnTabele" type="Button" parent="VBox/UsuniecieZepsutychDanych"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65882355, 1, 0.43137255, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_i1n2h")
+theme_override_styles/hover = SubResource("StyleBoxFlat_oak84")
+
+[node name="Check2" type="Label" parent="VBox/UsuniecieZepsutychDanych"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="WprowadzeniePonownieDanych" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="BtnDane" type="Button" parent="VBox/WprowadzeniePonownieDanych"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65882355, 1, 0.43137255, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_mp48f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_40t6x")
+
+[node name="Check3" type="Label" parent="VBox/WprowadzeniePonownieDanych"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+
+[node name="Ustawienia" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="Check4" type="Label" parent="VBox/Ustawienia"]
+layout_mode = 2
+
+[node name="BtnUstawienia" type="Button" parent="VBox/Ustawienia"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65882355, 1, 0.43137255, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_mp48f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_40t6x")
+
+[node name="Wyjscie" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="BtnWyjdz" type="Button" parent="VBox/Wyjscie"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65882355, 1, 0.43137255, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_hrawu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h6ma5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="CCTV nakldaka2" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_i1n2h")
+offset_left = -27.0
+offset_top = -14.0
+offset_right = 1434.0
+offset_bottom = 797.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="pasek" type="ColorRect" parent="CanvasLayer2"]
+offset_left = 61.0
+offset_top = 161.0
+offset_right = 1258.0
+offset_bottom = 165.0
+mouse_filter = 2
+color = Color(0.65882355, 1, 0.43137255, 1)
+
+[node name="glitch" type="ColorRect" parent="CanvasLayer2"]
+visible = false
+material = SubResource("ShaderMaterial_oak84")
+offset_left = -35.0
+offset_top = -20.0
+offset_right = 1429.0
+offset_bottom = 797.0
+mouse_filter = 2
+
+[node name="winieta" type="ColorRect" parent="CanvasLayer2"]
+visible = false
+material = SubResource("ShaderMaterial_hrawu")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 335.0
+offset_top = 62.0
+offset_right = 1053.0
+offset_bottom = 150.0
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/default_color = Color(0.65882355, 1, 0.43137255, 1)
+theme_override_font_sizes/normal_font_size = 47
+text = "PROTOKÓŁ NAPRAWY BAZY DANYCH
+"
+
+[node name="LewyDol" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="LewyDol"]
+offset_left = 18.0
+offset_top = 692.0
+offset_right = 171.0
+offset_bottom = 706.0
+text = "STATUS: USZKODZONY"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="LewyDol"]
+offset_left = 17.0
+offset_top = 719.0
+offset_right = 187.0
+offset_bottom = 733.0
+text = "SEKTOR: B-12 / 0X4F2A"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label3" type="Label" parent="LewyDol"]
+offset_left = 17.0
+offset_top = 749.0
+offset_right = 194.0
+offset_bottom = 763.0
+text = "ZASOBY SYSTEMOWE: 12%"
+metadata/_edit_use_anchors_ = true
+
+[node name="Transitioner" parent="." instance=ExtResource("5_i1n2h")]
+visible = false
+
+[node name="SoundManager" type="Node2D" parent="."]
+script = ExtResource("6_oak84")
+
+[node name="UstawieniaPanel" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_top = 2.0
+offset_right = 1400.0
+offset_bottom = 782.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UstawieniaPanel"]
+custom_minimum_size = Vector2(250, 150)
+layout_mode = 0
+offset_left = 500.0
+offset_top = 345.0
+offset_right = 856.0002
+offset_bottom = 672.00006
+
+[node name="Muzyka" type="Label" parent="UstawieniaPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "GŁOŚNOŚĆ MUZYKI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="UstawieniaPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 5
+value = 100.0
+
+[node name="SFX" type="Label" parent="UstawieniaPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 5
+theme_override_font_sizes/font_size = 28
+text = "GŁOŚNOŚĆ EFEKTÓW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="UstawieniaPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 5
+value = 100.0
+
+[node name="BtnPowrot" type="Button" parent="UstawieniaPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_font_sizes/font_size = 28
+text = "POWRÓT DO MENU GŁÓWNEGO"
+
+[node name="Label" type="Label" parent="UstawieniaPanel"]
+layout_mode = 0
+offset_right = 1396.0
+offset_bottom = 161.0
+theme_override_colors/font_color = Color(0.65882355, 1, 0.43137255, 1)
+theme_override_font_sizes/font_size = 50
+text = "USTAWIENIA DŹWIĘKU"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="VBox/SkanowanieWirusow/BtnKable" to="." method="_on_btn_kable_pressed"]
+[connection signal="pressed" from="VBox/UsuniecieZepsutychDanych/BtnTabele" to="." method="_on_btn_tabele_pressed"]
+[connection signal="pressed" from="VBox/WprowadzeniePonownieDanych/BtnDane" to="." method="_on_btn_dane_pressed"]
+[connection signal="pressed" from="VBox/Ustawienia/BtnUstawienia" to="." method="_on_btn_ustawienia_pressed"]
+[connection signal="pressed" from="VBox/Wyjscie/BtnWyjdz" to="." method="_on_btn_wyjdz_pressed"]

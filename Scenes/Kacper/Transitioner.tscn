@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=3 uid="uid://dpm1sedyxbw36"]
+
+[ext_resource type="Texture2D" uid="uid://4e6fuisumg4x" path="res://IMG/Kacper/koło.png" id="1_msnrx"]
+[ext_resource type="Script" uid="uid://b2f7pflmdhn7w" path="res://Scripts/Kacper/Transitioner.cs" id="1_reltn"]
+[ext_resource type="Texture2D" uid="uid://x0d6o4b7p6jj" path="res://IMG/Kacper/koło ładowanie.png" id="2_reltn"]
+[ext_resource type="Shader" uid="uid://1eqkdng28p2j" path="res://Scenes/Kacper/CCTV ruszajacy sie.gdshader" id="4_j4n80"]
+[ext_resource type="Shader" uid="uid://vuh7he16kg12" path="res://Scenes/Kacper/winieta.gdshader" id="5_gg3bv"]
+[ext_resource type="Shader" uid="uid://b57fhsep1xlea" path="res://Scenes/Kacper/glitch.gdshader" id="6_gg3bv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qcymt"]
+shader = ExtResource("4_j4n80")
+shader_parameter/curvature = 0.0210000009975
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nn1ut"]
+shader = ExtResource("5_gg3bv")
+shader_parameter/zasieg = 0.70800003363
+shader_parameter/miekkosc = 0.3450000163875
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dscqb"]
+shader = ExtResource("6_gg3bv")
+shader_parameter/shake_power = 0.03
+shader_parameter/shake_rate = 0.2
+shader_parameter/shake_speed = 3.0
+shader_parameter/shake_block_size = 30.5
+shader_parameter/shake_color_rate = 0.01
+
+[node name="Transitioner" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_reltn")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = 591.99994
+offset_top = 588.0
+offset_right = 3073.0
+offset_bottom = 2345.1436
+scale = Vector2(0.07, 0.07)
+texture_under = ExtResource("1_msnrx")
+texture_progress = ExtResource("2_reltn")
+metadata/_edit_use_anchors_ = true
+
+[node name="StatusLabel" type="Label" parent="."]
+offset_left = 585.0
+offset_top = 721.00006
+offset_right = 777.0
+offset_bottom = 746.00006
+theme_override_font_sizes/font_size = 27
+text = "LOADING DATA..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="CCTVnakldaka" type="ColorRect" parent="CanvasLayer"]
+visible = false
+z_index = 2
+material = SubResource("ShaderMaterial_qcymt")
+offset_left = -27.0
+offset_top = -14.0
+offset_right = 1434.0
+offset_bottom = 797.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_nn1ut")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Glitch" type="ColorRect" parent="."]
+z_index = 2
+material = SubResource("ShaderMaterial_dscqb")
+offset_left = -35.0
+offset_top = -20.0
+offset_right = 1429.0
+offset_bottom = 797.0
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true

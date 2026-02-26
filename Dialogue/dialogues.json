@@ -1,9 +1,9 @@
 {
-"marek": [
+  "marek": [
 	{
 	  "requires": "quest_done:main_quest_1",
 	  "lines": [
-		{ "name": "Marek", "text": "Dzięki za pomoc z komputerem. Nie trać czasu, Piotr na produkcji już na Ciebie czeka.", "portrait": "marek_normal" }
+		{ "name": "Marek", "text": "Dzięki za pomoc. Nie trać czasu, Piotr na produkcji już na Ciebie czeka.", "portrait": "marek_normal" }
 	  ]
 	},
 	{
@@ -39,7 +39,7 @@
 	  "comment": "START",
 	  "lines": [
 		{ "name": "Marek", "text": "Siemasz. Jestem Marek. Krótka piłka – mamy awarię.", "portrait": "marek_normal" },
-		{ "name": "Marek", "text": "Główny komputer we Wschodniej Hali świruje. Trzeba tam podejść i zrestartować układy.", "portrait": "marek_normal" },
+		{ "name": "Marek", "text": "Główny komputer świruje. Trzeba tam podejść i zrestartować układy.", "portrait": "marek_normal" },
 		{ "name": "Marek", "text": "Masz uprawnienia admina. Zrób to szybko.", "portrait": "marek_normal", "command": "unlock_machine:machine_1" },
 		{ "name": "Marek", "text": "Powodzenia.", "command": "start_quest:main_quest_1" }
 	  ]
@@ -50,7 +50,7 @@
 	{
 	  "requires": "quest_done:main_quest_2",
 	  "lines": [
-		{ "name": "Piotr", "text": "Laser działa, więc nie mam do ciebie pytań. Zgłoś się do Zarządcy.", "portrait": "piotr_normal" }
+		{ "name": "Piotr", "text": "Laser działa. Nie mam pytań. Idź do Doroty.", "portrait": "piotr_normal" }
 	  ]
 	},
 	{
@@ -65,12 +65,12 @@
 		},
 		{ 
 		  "name": "Piotr", 
-		  "text": "Jesteś użyteczny. Idź teraz na górę, do biura. Zarządca chce z tobą mówić.", 
+		  "text": "Jesteś użyteczny. Idź teraz do Doroty. Jest w sekcji chemicznej i panikuje.", 
 		  "portrait": "piotr_normal"
 		},
 		{ 
 		  "name": "Piotr", 
-		  "text": "Tylko nie każ mu czekać.", 
+		  "text": "Tylko szybko, zanim zaleje fabrykę.", 
 		  "portrait": "piotr_angry"
 		}
 	  ]
@@ -87,15 +87,227 @@
 	  "requires": "quest_done:main_quest_1",
 	  "lines": [
 		{ "name": "Piotr", "text": "Ty jesteś ten nowy od Marka? Spóźniłeś się.", "portrait": "piotr_angry" },
-		{ "name": "Piotr", "text": "Wycinarka laserowa niszczy materiał. Ktoś ją źle ustawił. Pewnie ty.", "portrait": "piotr_normal" },
-		{ "name": "Piotr", "text": "Masz dostęp do panelu. Skalibruj soczewki. Precyzyjnie.", "portrait": "piotr_normal", "command": "unlock_machine:machine_2" },
-		{ "name": "Piotr", "text": "Bez dyskusji. Do roboty.", "command": "start_quest:main_quest_2" }
+		{ "name": "Piotr", "text": "Wycinarka laserowa niszczy materiał. Masz dostęp do panelu (Maszyna 2).", "portrait": "piotr_normal", "command": "unlock_machine:machine_2" },
+		{ "name": "Piotr", "text": "Skalibruj soczewki. Bez dyskusji. Do roboty.", "command": "start_quest:main_quest_2" }
 	  ]
 	},
 	{
 	  "comment": "LOCKED - Jeśli nie zrobiłeś zadania Marka",
 	  "lines": [
 		{ "name": "Piotr", "text": "Zajęty jestem. Nie mam czasu na oprowadzanie wycieczek. Idź do Marka.", "portrait": "piotr_angry" }
+	  ]
+	}
+  ],
+
+  "dorota": [
+	{
+	  "requires": "quest_done:main_quest_3",
+	  "lines": [
+		{ "name": "Dorota", "text": "Dzięki Bogu za pomoc! Idź teraz do Mućka, on jest przy reaktorze.", "portrait": "dorota_happy" }
+	  ]
+	},
+	{
+	  "comment": "SUKCES - Zadanie aktywne + Maszyna naprawiona",
+	  "requires": "quest_active:main_quest_3, machine_fixed:machine_3",
+	  "lines": [
+		{ 
+		  "name": "Dorota", 
+		  "text": "Uff! Ciśnienie spadło! Uratowałeś nas przed katastrofą!", 
+		  "portrait": "dorota_happy",
+		  "command": "finish_quest:main_quest_3"
+		},
+		{ 
+		  "name": "Dorota", 
+		  "text": "Słuchaj, jest jeszcze Muciek... ten leniuch przy reaktorze.", 
+		  "portrait": "dorota_normal"
+		},
+		{ 
+		  "name": "Dorota", 
+		  "text": "Idź do niego i sprawdź, czy nie zasnął. Maszyna 4 podobno dziwnie buczy.", 
+		  "portrait": "dorota_normal"
+		}
+	  ]
+	},
+	{
+	  "comment": "REMINDER - Zadanie w toku",
+	  "requires": "quest_active:main_quest_3",
+	  "lines": [
+		{ "name": "Dorota", "text": "Na co czekasz?! Zawory zaraz strzelą! Napraw Maszynę nr 3!", "portrait": "dorota_scared" }
+	  ]
+	},
+	{
+	  "comment": "START - Wymaga ukończenia zadania Piotra",
+	  "requires": "quest_done:main_quest_2",
+	  "lines": [
+		{ "name": "Dorota", "text": "O rany, o rany... Piotr cię przysłał? Dzięki niebiosom!", "portrait": "dorota_scared" },
+		{ "name": "Dorota", "text": "Mamy krytyczny wyciek w Mieszalniku (Maszyna 3). Zaraz zalejemy całą halę!", "portrait": "dorota_scared" },
+		{ "name": "Dorota", "text": "Daję ci dostęp awaryjny. Błagam, uszczelnij to!", "portrait": "dorota_normal", "command": "unlock_machine:machine_3" },
+		{ "name": "Dorota", "text": "Pospiesz się!", "command": "start_quest:main_quest_3" }
+	  ]
+	},
+	{
+	  "comment": "LOCKED - Jeśli nie zrobiłeś zadania Piotra",
+	  "lines": [
+		{ "name": "Dorota", "text": "Przepraszam, nie mam teraz czasu! Wszystko się wali! Gdzie jest Piotr?!", "portrait": "dorota_scared" }
+	  ]
+	}
+  ],
+
+  "muciek": [
+	{
+	  "requires": "quest_done:main_quest_4",
+	  "lines": [
+		{ "name": "Muciek", "text": "Fajnie, że to naprawiłeś. Mogę wrócić do drzemki. Nara.", "portrait": "muciek_chill" }
+	  ]
+	},
+	{
+	  "comment": "SUKCES - Zadanie aktywne + Maszyna naprawiona",
+	  "requires": "quest_active:main_quest_4, machine_fixed:machine_4",
+	  "lines": [
+		{ 
+		  "name": "Muciek", 
+		  "text": "O, przestało piszczeć. Elegancko.", 
+		  "portrait": "muciek_chill",
+		  "command": "finish_quest:main_quest_4"
+		},
+		{ 
+		  "name": "Muciek", 
+		  "text": "Dzięki, stary. Szefowa by mi głowę urwała. A tak to spokój.", 
+		  "portrait": "muciek_chill"
+		},
+		{ 
+		  "name": "Muciek", 
+		  "text": "Chyba zrobiłeś już wszystko w tej fabryce. Jesteś wolny!", 
+		  "portrait": "muciek_happy"
+		}
+	  ]
+	},
+	{
+	  "comment": "REMINDER - Zadanie w toku",
+	  "requires": "quest_active:main_quest_4",
+	  "lines": [
+		{ "name": "Muciek", "text": "Weź to napraw, co? Mi się nie chce wstawać.", "portrait": "muciek_chill" }
+	  ]
+	},
+	{
+	  "comment": "START - Wymaga ukończenia zadania Doroty",
+	  "requires": "quest_done:main_quest_3",
+	  "lines": [
+		{ "name": "Muciek", "text": "Ziew... Cześć. Dorota cię nasłała, co?", "portrait": "muciek_chill" },
+		{ "name": "Muciek", "text": "No, Reaktor (Maszyna 4) trochę się grzeje. W sumie to bardzo się grzeje.", "portrait": "muciek_chill" },
+		{ "name": "Muciek", "text": "Masz, tu jest klucz. Weź to ogarnij, a ja dokończę kanapkę.", "portrait": "muciek_happy", "command": "unlock_machine:machine_4" },
+		{ "name": "Muciek", "text": "Tylko nie wysadź nas w powietrze, spoko?", "command": "start_quest:main_quest_4" }
+	  ]
+	},
+	{
+	  "comment": "LOCKED - Jeśli nie zrobiłeś zadania Doroty",
+	  "lines": [
+		{ "name": "Muciek", "text": "Zzz... jeszcze 5 minut... nie przeszkadzaj...", "portrait": "muciek_chill" }
+	  ]
+	}
+  ],
+
+  "intro_game": [
+	{
+	  "lines": [
+		{
+		  "name": "BAZA",
+		  "text": "Tu Centrala. Słyszysz mnie? Mamy awarię stopnia krytycznego w Sektorze 7."
+		},
+		{
+		  "name": "TY",
+		  "text": "Głośno i wyraźnie. Co się stało? Ciemno tu jak w kopalni."
+		},
+		{
+		  "name": "BAZA",
+		  "text": "Główny generator padł. Systemy podtrzymywania produkcji stoją. Musisz ręcznie zrestartować cztery kluczowe jednostki."
+		},
+		{
+		  "name": "BAZA",
+		  "text": "Zacznij od Terminala Sieciowego, potem zajmij się Laserem i Mieszalnikiem. Na końcu uruchom Reaktor.",
+		  "command": "start_quest:story_main"
+		},
+		{
+		  "name": "TY",
+		  "text": "Zrozumiałem. Biorę skrzynkę z narzędziami i ruszam do roboty.",
+		  "command": "show_controls"
+		}
+	  ]
+	}
+  ],
+
+  "dialog_fix_computer": [
+	{
+	  "lines": [
+		{
+		  "name": "SYSTEM",
+		  "text": "RESTART SYSTEMU... ZAKOŃCZONY. POŁĄCZENIE SIECIOWE PRZYWRÓCONE."
+		},
+		{
+		  "name": "TY",
+		  "text": "Uff... w końcu przestał wywalać te błędy krytyczne."
+		},
+		{
+		  "name": "TY",
+		  "text": "Wygląda na to, że Marek znowu ściągał filmy na serwerze firmowym i zapchał łącze. Ale już wyczyszczone."
+		}
+	  ]
+	}
+  ],
+
+  "dialog_fix_laser": [
+	{
+	  "lines": [
+		{
+		  "name": "SYSTEM",
+		  "text": "KALIBRACJA SOCZEWKI: 100%. RAMIĘ ROBOTA W POZYCJI SPOCZYNKOWEJ."
+		},
+		{
+		  "name": "TY",
+		  "text": "Działa. Ramię chodzi gładko, nic nie skrzypi."
+		},
+		{
+		  "name": "TY",
+		  "text": "Dobrze, że zdążyłem to wyrównać. Jeszcze chwila i ten laser wypaliłby dziurę w podłodze... albo we mnie."
+		}
+	  ]
+	}
+  ],
+
+  "dialog_fix_mixer": [
+	{
+	  "lines": [
+		{
+		  "name": "SYSTEM",
+		  "text": "CIŚNIENIE W ZAWORACH USTABILIZOWANE. POMPY CZYNNE."
+		},
+		{
+		  "name": "TY",
+		  "text": "Słyszysz to? Cisza. Żadnego syczenia pary."
+		},
+		{
+		  "name": "TY",
+		  "text": "Mieszanka wreszcie ma ten dziwny, zielony kolor... dokładnie taki, o jaki prosiła Dorota. Chyba nie wybuchnie."
+		}
+	  ]
+	}
+  ],
+
+  "dialog_fix_reactor": [
+	{
+	  "lines": [
+		{
+		  "name": "SYSTEM",
+		  "text": "OSTRZEŻENIE: POZIOM MOCY ROŚNIE. RDZEŃ STABILNY. MOC WYJŚCIOWA: 100%."
+		},
+		{
+		  "name": "TY",
+		  "text": "Jest! Turbiny wchodzą na obroty. Czujesz jak podłoga wibruje? To słodkie buczenie działającej elektrowni."
+		},
+		{
+		  "name": "BAZA",
+		  "text": "Dobra robota, techniku! Odczyty wracają do normy. Fabryka uratowana. Możesz wracać na przerwę."
+		}
 	  ]
 	}
   ]

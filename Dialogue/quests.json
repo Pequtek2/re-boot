@@ -2,19 +2,49 @@
   {
 	"id": "main_quest_1",
 	"title": "Awaria Logiki",
-	"description": "Marek prosił o szybką akcję we Wschodniej Hali. Główny komputer ma awarię. Jak to naprawię, Marek pewnie powie mi co dalej.",
+	"description": "Marek potrzebuje pomocy przy Głównym Komputerze (Maszyna 1).",
 	"stages": [
-	  { "objective": "Napraw Komputer Główny (Wschód)", "amount": 1 },
-	  { "objective": "Zamelduj wykonanie Markowi", "amount": 1 }
+	  { "objective": "Napraw Maszynę 1", "amount": 1 },
+	  { "objective": "Wróć do Marka", "amount": 1 }
 	]
   },
   {
 	"id": "main_quest_2",
 	"title": "Korekta Lasera",
-	"description": "Marek wysłał mnie do Piotra. Gość jest oschły i twierdzi, że wycinarka laserowa jest rozkalibrowana. Muszę to naprawić, zanim kogoś zwolni.",
+	"description": "Piotr kazał skalibrować Wycinarkę Laserową (Maszyna 2).",
 	"stages": [
-	  { "objective": "Skalibruj Wycinarkę Laserową", "amount": 1 },
-	  { "objective": "Zamelduj wykonanie Piotrowi", "amount": 1 }
+	  { "objective": "Napraw Maszynę 2", "amount": 1 },
+	  { "objective": "Wróć do Piotra", "amount": 1 }
+	]
+  },
+  {
+	"id": "main_quest_3",
+	"title": "Ciśnienie w Normie",
+	"description": "Dorota panikuje. Mieszalnik Chemiczny (Maszyna 3) zaraz wybuchnie. Trzeba to uszczelnić.",
+	"stages": [
+	  { "objective": "Napraw Maszynę 3", "amount": 1 },
+	  { "objective": "Wróć do Doroty", "amount": 1 }
+	]
+  },
+  {
+	"id": "main_quest_4",
+	"title": "Leniwy Reaktor",
+	"description": "Muciek woli jeść kanapkę niż pracować. Muszę naprawić Reaktor (Maszyna 4) za niego.",
+	"stages": [
+	  { "objective": "Napraw Maszynę 4", "amount": 1 },
+	  { "objective": "Wróć do Mućka", "amount": 1 }
+	]
+  },
+  {
+	"id": "story_main",
+	"title": "Napraw Fabryke",
+	"description": "Fabryka stanela, porozmawiaj z pracownikami aby naprawic odpowednie maszyny.",
+	"stages": [
+	  { "objective": "Napraw Maszynę 1", "amount": 1 },
+	  { "objective": "Napraw Maszynę 2", "amount": 1 },
+	  { "objective": "Napraw Maszynę 3", "amount": 1 },
+	  { "objective": "Napraw Maszynę 4", "amount": 1 },
+	  { "objective": "Gratki", "amount": 1 }
 	]
   }
 ]
