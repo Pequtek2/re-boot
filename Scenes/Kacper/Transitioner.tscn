@@ -13,8 +13,8 @@ shader_parameter/curvature = 0.0210000009975
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nn1ut"]
 shader = ExtResource("5_gg3bv")
-shader_parameter/zasieg = 1.0
-shader_parameter/miekkosc = 0.0
+shader_parameter/zasieg = 0.70800003363
+shader_parameter/miekkosc = 0.3450000163875
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dscqb"]
 shader = ExtResource("6_gg3bv")
@@ -63,6 +63,7 @@ metadata/_edit_use_anchors_ = true
 layer = 2
 
 [node name="CCTVnakldaka" type="ColorRect" parent="CanvasLayer"]
+visible = false
 z_index = 2
 material = SubResource("ShaderMaterial_qcymt")
 offset_left = -27.0
