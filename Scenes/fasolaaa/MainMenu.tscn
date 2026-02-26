@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://dulerf4y5fq42"]
+
+[ext_resource type="Script" uid="uid://b8avhyh5cxto1" path="res://Scripts/fasolaaa/MainMenu.cs" id="1_4tnm7"]
+[ext_resource type="Texture2D" uid="uid://oc1euyy5b6tu" path="res://menu.png" id="1_7j4uj"]
+[ext_resource type="Texture2D" uid="uid://553oyj1jbjek" path="res://start.png" id="3_2hh4r"]
+[ext_resource type="Texture2D" uid="uid://b2o8bopcqh8cj" path="res://Wyjscie.png" id="4_tlnqt"]
+[ext_resource type="PackedScene" uid="uid://c6y67tqyhy5n6" path="res://UI/FaderLayer.tscn" id="5_tlnqt"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_4tnm7")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 1536.0
+offset_bottom = 1024.0
+scale = Vector2(0.91881406, 0.77078336)
+texture = ExtResource("1_7j4uj")
+
+[node name="MenuBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 390.0
+offset_top = 250.00002
+offset_right = 1223.0
+offset_bottom = 677.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.6711048, 0.6110194)
+theme_override_constants/separation = 45
+
+[node name="StartButton" type="Button" parent="MenuBox"]
+layout_mode = 2
+icon = ExtResource("3_2hh4r")
+
+[node name="ExitButton" type="Button" parent="MenuBox"]
+layout_mode = 2
+icon = ExtResource("4_tlnqt")
+
+[node name="FaderLayer" parent="." instance=ExtResource("5_tlnqt")]

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6y67tqyhy5n6"]
+
+[ext_resource type="Script" uid="uid://vo5jmnx6cd20" path="res://UI/FaderLayer.cs" id="1_swt5k"]
+
+[node name="FaderLayer" type="CanvasLayer"]
+script = ExtResource("1_swt5k")
+
+[node name="FadeRect" type="ColorRect" parent="."]
+offset_right = 1448.0
+offset_bottom = 821.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
