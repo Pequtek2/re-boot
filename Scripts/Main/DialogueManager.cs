@@ -251,32 +251,39 @@ public partial class DialogueManager : CanvasLayer
 		if (DialoguePanel != null) DialoguePanel.Visible = false;
 	}
 
-	private void ExecuteDialogueCommand(string commandRaw)
+private void ExecuteDialogueCommand(string commandsRaw)
 	{
-		var parts = commandRaw.Split(':');
-		string action = parts[0];
+		// Dzielimy ciąg po przecinkach, aby uzyskać listę pojedynczych komend
+		var commands = commandsRaw.Split(',');
 
-		switch (action)
+		foreach (var cmd in commands)
 		{
-			case "start_quest": if (parts.Length >= 2) QuestManager.Instance?.StartQuest(parts[1]); break;
-			case "progress_quest": 
-				int amt = 1;
-				if (parts.Length > 2) int.TryParse(parts[2], out amt);
-				if (parts.Length >= 2) QuestManager.Instance?.ProgressQuest(parts[1], amt); 
-				break;
-			case "finish_quest": if (parts.Length >= 2) QuestManager.Instance?.ForceCompleteQuest(parts[1]); break;
-			case "give_item": if (parts.Length >= 2) NotificationUI.Instance?.AddNotification("OTRZYMANO PRZEDMIOT", parts[1]); break;
-			case "add_tag": if (parts.Length >= 2) TagManager.Instance?.AddTag(parts[1]); break;
-			case "show_ending": 
-			EndingScreen.Instance.StartEndingSequence(); 
-			break;
-			case "unlock_machine": if (parts.Length >= 2) MainGameManager.Instance?.UnlockMachine(parts[1]); break;
-			case "show_controls":
-			if (ControlsWindow.Instance != null)
+			// Usuwamy białe znaki (np. spacje po przecinku) i dzielimy po dwukropku
+			var parts = cmd.Trim().Split(':');
+			string action = parts[0];
+
+			switch (action)
 			{
-				ControlsWindow.Instance.ForceShow();
+				case "start_quest": if (parts.Length >= 2) QuestManager.Instance?.StartQuest(parts[1]); break;
+				case "progress_quest": 
+					int amt = 1;
+					if (parts.Length > 2) int.TryParse(parts[2], out amt);
+					if (parts.Length >= 2) QuestManager.Instance?.ProgressQuest(parts[1], amt); 
+					break;
+				case "finish_quest": if (parts.Length >= 2) QuestManager.Instance?.ForceCompleteQuest(parts[1]); break;
+				case "give_item": if (parts.Length >= 2) NotificationUI.Instance?.AddNotification("OTRZYMANO PRZEDMIOT", parts[1]); break;
+				case "add_tag": if (parts.Length >= 2) TagManager.Instance?.AddTag(parts[1]); break;
+				case "show_ending": 
+					EndingScreen.Instance.StartEndingSequence(); 
+					break;
+				case "unlock_machine": if (parts.Length >= 2) MainGameManager.Instance?.UnlockMachine(parts[1]); break;
+				case "show_controls":
+					if (ControlsWindow.Instance != null)
+					{
+						ControlsWindow.Instance.ForceShow();
+					}
+					break;
 			}
-			break;
 		}
 	}
 

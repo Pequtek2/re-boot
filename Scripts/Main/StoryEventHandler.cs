@@ -10,10 +10,10 @@ public partial class StoryEventHandler : Node
 	private string _introFlagName = "intro_game_finished_v1";
 
 	[ExportGroup("Dialogi po Naprawie")]
-	[Export] public string DialogMachine1 = "dialog_fix_computer";
-	[Export] public string DialogMachine2 = "dialog_fix_laser";
-	[Export] public string DialogMachine3 = "dialog_fix_mixer";
-	[Export] public string DialogMachine4 = "dialog_fix_reactor";
+	[Export] public string DialogMachine1 = "dialog_fix_1";
+	[Export] public string DialogMachine2 = "dialog_fix_2";
+	[Export] public string DialogMachine3 = "dialog_fix_3";
+	[Export] public string DialogMachine4 = "dialog_fix_4";
 
 	public override void _Ready()
 	{

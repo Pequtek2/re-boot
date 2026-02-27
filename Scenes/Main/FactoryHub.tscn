@@ -101,10 +101,12 @@ texture = ExtResource("4_a7u1l")
 [node name="NPC" parent="." instance=ExtResource("7_uchr4")]
 y_sort_enabled = true
 position = Vector2(6, -109)
+NpcID = "mareczek"
 
 [node name="NPC2" parent="." instance=ExtResource("9_ddwxy")]
 y_sort_enabled = true
 position = Vector2(-28, -31)
+NpcID = "negan"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -210,7 +212,8 @@ layout_mode = 0
 offset_left = -56.5
 offset_top = -56.0
 offset_right = 287.5
-offset_bottom = 196.0
+offset_bottom = 247.0
+theme_override_font_sizes/normal_font_size = 20
 text = "Poruszaj sie klikajac w dane pole LPM
 
 Interkacja z NPC - nacisnij klawisz E
@@ -219,7 +222,11 @@ Interakcja z maszyną -nacisnij klawisz E
 
 Dziennik Zadań - J
 
-Menu Pauzy i ustawienia - ESC"
+Sterowanie - K
+
+Menu Pauzy i ustawienia - ESC
+
+Jeżeli nie wiesz co robi dalej szukaj złotej gwiazdu, to jest twój obceny cel."
 
 [node name="TextureButton" type="TextureButton" parent="UI_Layer/Tuorial"]
 layout_mode = 0
@@ -241,9 +248,11 @@ text = "Zaczynamy"
 
 [node name="NPC3" parent="." instance=ExtResource("16_7fom3")]
 position = Vector2(-287, 97)
+NpcID = "dorotka"
 
 [node name="NPC4" parent="." instance=ExtResource("17_bcd2x")]
 position = Vector2(34, 196)
+NpcID = "muciak"
 
 [node name="Machine_1" parent="." node_paths=PackedStringArray("ConfirmPanel", "MessageLabel", "YesButton", "NoButton") instance=ExtResource("4_o0e8j")]
 position = Vector2(-140, -100)
