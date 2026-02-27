@@ -19,10 +19,18 @@ public partial class StoryEventHandler : Node
 	{
 		// Czekamy klatkę, aż systemy (Manager, Singletony) wstaną
 		CallDeferred(nameof(CheckStoryEvents));
+		GD.Print("[Story] Skrypt StoryEventHandler załadowany do drzewa sceny!");
 	}
 
-	private void CheckStoryEvents()
+private void CheckStoryEvents()
+{
+	GD.Print("[Story] Uruchamiam sprawdzanie zdarzeń..."); // Dodaj to!
+
+	if (MainGameManager.Instance == null) 
 	{
+		GD.PrintErr("[Story] BŁĄD: MainGameManager.Instance jest null!");
+		return;
+	}
 		if (MainGameManager.Instance == null) return;
 
 		// --- 1. INTRO ---

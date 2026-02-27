@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://lc54a50wctt4"]
+[gd_scene load_steps=11 format=3 uid="uid://lc54a50wctt4"]
 
 [ext_resource type="Script" uid="uid://cj2rrchvrb4bb" path="res://Scripts/Main/NPC.cs" id="1_daw8u"]
 [ext_resource type="Texture2D" uid="uid://bjq21783057hn" path="res://Art/npc/marek_2.png" id="2_wqout"]
 [ext_resource type="Texture2D" uid="uid://dsfeynsw5o83v" path="res://Art/npc/marek_1.png" id="3_aktt6"]
 [ext_resource type="Texture2D" uid="uid://te8vwl1bmnyh" path="res://Art/npc/marek_4.png" id="4_t2n8v"]
 [ext_resource type="Texture2D" uid="uid://hnxr0v7jjobn" path="res://Art/npc/marek_3.png" id="5_3kuoc"]
+[ext_resource type="Texture2D" uid="uid://dkpofl5l5g0x0" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_09.png" id="6_aktt6"]
+[ext_resource type="Script" uid="uid://c30jl7oxnjksi" path="res://Scripts/Main/ObjectiveMarker.cs" id="7_t2n8v"]
+[ext_resource type="Texture2D" uid="uid://csj3conwpcfu3" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_24.png" id="8_3kuoc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lq7bo"]
 animations = [{
@@ -42,17 +45,35 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oeoos"]
-size = Vector2(131, 127.5)
+size = Vector2(60, 33.5)
 
-[node name="NPC" type="Area2D" node_paths=PackedStringArray("NpcSprite")]
+[node name="NPC" type="Area2D" node_paths=PackedStringArray("NpcSprite", "InteractionIcon")]
 script = ExtResource("1_daw8u")
 NpcID = "marek"
 NpcSprite = NodePath("AnimatedSprite2D")
+InteractionIcon = NodePath("Sprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lq7bo")
 animation = &"idle_right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 0.25)
+position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_oeoos")
+
+[node name="QuestMarker2" type="Sprite2D" parent="."]
+position = Vector2(13, -24)
+texture = ExtResource("6_aktt6")
+script = ExtResource("7_t2n8v")
+RequiredTag = "machine_1_fixed"
+HidingTag = "quest_1_completed"
+
+[node name="QuestMarker" type="Sprite2D" parent="."]
+position = Vector2(13, -24)
+texture = ExtResource("6_aktt6")
+script = ExtResource("7_t2n8v")
+HidingTag = "talked_to_npc_1"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(18, -11)
+texture = ExtResource("8_3kuoc")

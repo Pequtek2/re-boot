@@ -9,6 +9,15 @@ public partial class Machine : Area2D
 	[Export] public string MinigameScenePath = "res://Scenes/Minigames/InstantFix.tscn"; 
 	[Export] public string LockedDialogueID = "system_locked_2"; 
 
+	[ExportGroup("Visuals & Textures")]
+	[Export] public Texture2D BrokenTexture; 
+	[Export] public Texture2D FixedTexture;  
+	[Export] public string FloatingDescription = "Krótki opis maszyny"; 
+	
+	[ExportGroup("Floating Text Animation")]
+	[Export] public float FloatAmplitude = 5.0f; 
+	[Export] public float FloatSpeed = 3.0f;     
+
 	[ExportGroup("UI References")]
 	[Export] public Control ConfirmPanel; 
 	[Export] public Label MessageLabel; 
@@ -17,16 +26,28 @@ public partial class Machine : Area2D
 
 	private Sprite2D _iconE;
 	private Sprite2D _machineSprite;
+	private Label _floatingLabel; 
+	
 	private bool _isPlayerNearby = false;
 	private bool _isUIOpen = false;
 	
 	private bool _isLocked = true; 
 	private bool _isFixed = false;
 
+	private float _originalLabelY;
+	private double _timePassed = 0.0;
+
 	public override void _Ready()
 	{
 		_iconE = GetNodeOrNull<Sprite2D>("IconE");
 		_machineSprite = GetNodeOrNull<Sprite2D>("Sprite2D");
+		_floatingLabel = GetNodeOrNull<Label>("FloatingLabel"); 
+
+		if (_floatingLabel != null)
+		{
+			_floatingLabel.Text = FloatingDescription;
+			_originalLabelY = _floatingLabel.Position.Y; 
+		}
 
 		var interactionZone = GetNodeOrNull<Area2D>("InteractionZone");
 		if (interactionZone != null)
@@ -50,12 +71,20 @@ public partial class Machine : Area2D
 	public override void _Process(double delta)
 	{
 		CheckLockState();
+
+		if (_floatingLabel != null && _floatingLabel.Visible)
+		{
+			_timePassed += delta;
+			float newY = _originalLabelY + Mathf.Sin((float)_timePassed * FloatSpeed) * FloatAmplitude;
+			_floatingLabel.Position = new Vector2(_floatingLabel.Position.X, newY);
+		}
 	}
 
 	private void CheckLockState()
 	{
 		if (MainGameManager.Instance == null) return;
 		_isFixed = MainGameManager.Instance.IsMachineFixed(MachineID);
+		
 		bool unlockedByNPC = MainGameManager.Instance.IsMachineUnlocked(MachineID);
 		
 		if (_isFixed) _isLocked = false; 
@@ -66,13 +95,41 @@ public partial class Machine : Area2D
 
 	private void UpdateVisuals()
 	{
+		// --- Aktualizacja Grafiki Maszyny ---
 		if (_machineSprite != null)
 		{
-			if (_isFixed) _machineSprite.Modulate = Colors.Green;       
-			else if (_isLocked) _machineSprite.Modulate = Colors.Gray;  
-			else _machineSprite.Modulate = Colors.White;                
+			if (_isFixed)
+			{
+				if (FixedTexture != null) _machineSprite.Texture = FixedTexture;
+				_machineSprite.Modulate = Colors.White; 
+			}
+			else
+			{
+				if (BrokenTexture != null) _machineSprite.Texture = BrokenTexture;
+				
+				if (_isLocked) _machineSprite.Modulate = Colors.Gray;  
+				else _machineSprite.Modulate = Colors.White;                
+			}
 		}
 
+		// --- Aktualizacja Lewitującego Tekstu ---
+		if (_floatingLabel != null)
+		{
+			if (_isFixed)
+			{
+				// Zmiana tekstu i koloru na zielony po naprawie
+				_floatingLabel.Text = $"{FloatingDescription} ✓";
+				_floatingLabel.Modulate = Colors.LimeGreen; // LimeGreen jest zazwyczaj jaśniejszy i czytelniejszy niż zwykły Green
+			}
+			else
+			{
+				// Powrót do standardowego wyglądu, jeśli maszyna jest zepsuta
+				_floatingLabel.Text = FloatingDescription;
+				_floatingLabel.Modulate = Colors.White; 
+			}
+		}
+
+		// --- Aktualizacja Ikonki 'E' ---
 		if (_iconE != null)
 			_iconE.Visible = _isPlayerNearby && !_isFixed && !_isUIOpen;
 	}
@@ -111,25 +168,14 @@ public partial class Machine : Area2D
 
 	private void OnYesPressed() 
 	{ 
-		// --- POPRAWKA KRYTYCZNA ---
-		// Jeśli panel nie został otwarty przez TĘ KONKRETNĄ maszynę, ignoruj kliknięcie.
-		// Dzięki temu, mimo że 4 maszyny słuchają przycisku, zareaguje tylko ta jedna aktywna.
 		if (!_isUIOpen) return;
-		
 		if (MainGameManager.Instance == null) return;
-		
-		// Zabezpieczenie przed błędem "tree is null"
 		if (GetTree() == null) return;
 
 		ClosePanel();
-
-		// --- DIAGNOSTYKA ---
 		GD.Print($"[MACHINE] Kliknięto TAK dla maszyny: {MachineID}");
 
-		// --- SZUKANIE GRACZA ---
 		Node2D player = GetTree().GetFirstNodeInGroup("Player") as Node2D;
-		
-		// Fallback (szukanie po nazwie)
 		if (player == null && GetTree().CurrentScene != null)
 		{
 			player = GetTree().CurrentScene.FindChild("Player", true, false) as Node2D;
@@ -139,16 +185,12 @@ public partial class Machine : Area2D
 		if (player != null) playerPos = player.GlobalPosition;
 
 		string currentScene = GetTree().CurrentScene.SceneFilePath;
-
-		// Zmiana sceny
 		MainGameManager.Instance.SwitchToMinigame(MachineID, MinigameScenePath, playerPos, currentScene);
 	}
 
 	private void OnNoPressed() 
 	{ 
-		// Tutaj też to dodajemy, żeby inne maszyny nie zamykały panelu "wirtualnie"
 		if (!_isUIOpen) return;
-		
 		ClosePanel(); 
 	}
 }

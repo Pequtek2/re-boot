@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfhbpht5hvf61"]
+[gd_scene load_steps=11 format=3 uid="uid://dfhbpht5hvf61"]
 
 [ext_resource type="Script" uid="uid://cj2rrchvrb4bb" path="res://Scripts/Main/NPC.cs" id="1_ek34j"]
 [ext_resource type="Texture2D" uid="uid://dl2m11xiv8jqq" path="res://Art/npc/muciek_2.png" id="2_ek34j"]
 [ext_resource type="Texture2D" uid="uid://sw3yxkd1rwbs" path="res://Art/npc/muciek_1.png" id="3_x3nrd"]
 [ext_resource type="Texture2D" uid="uid://wea0qi6bn8qn" path="res://Art/npc/muciek_4.png" id="4_13fn8"]
 [ext_resource type="Texture2D" uid="uid://dtnfbujua5mvi" path="res://Art/npc/muciek_3.png" id="5_yrsy8"]
+[ext_resource type="Texture2D" uid="uid://dkpofl5l5g0x0" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_09.png" id="6_13fn8"]
+[ext_resource type="Script" uid="uid://c30jl7oxnjksi" path="res://Scripts/Main/ObjectiveMarker.cs" id="7_yrsy8"]
+[ext_resource type="Texture2D" uid="uid://csj3conwpcfu3" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_24.png" id="8_yrsy8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_lq7bo"]
 animations = [{
@@ -42,17 +45,36 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oeoos"]
-size = Vector2(131, 127.5)
+size = Vector2(72, 45)
 
-[node name="NPC" type="Area2D" node_paths=PackedStringArray("NpcSprite")]
+[node name="NPC" type="Area2D" node_paths=PackedStringArray("NpcSprite", "InteractionIcon")]
 script = ExtResource("1_ek34j")
 NpcID = "muciek"
 NpcSprite = NodePath("AnimatedSprite2D")
+InteractionIcon = NodePath("Sprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lq7bo")
 animation = &"idle_up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 0.25)
+position = Vector2(0, 12)
 shape = SubResource("RectangleShape2D_oeoos")
+
+[node name="QuestMarker" type="Sprite2D" parent="."]
+position = Vector2(13, -24)
+texture = ExtResource("6_13fn8")
+script = ExtResource("7_yrsy8")
+RequiredTag = "quest_3_completed"
+HidingTag = "talked_to_npc_4"
+
+[node name="QuestMarker2" type="Sprite2D" parent="."]
+position = Vector2(13, -24)
+texture = ExtResource("6_13fn8")
+script = ExtResource("7_yrsy8")
+RequiredTag = "machine_4_fixed"
+HidingTag = "quest_4_completed"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(18, -11)
+texture = ExtResource("8_yrsy8")

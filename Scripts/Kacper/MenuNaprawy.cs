@@ -47,6 +47,8 @@ public partial class MenuNaprawy : Control
 			{
 				MainGameManager.Instance.SetMachineFixed(currentID);
 				QuestManager.Instance.ProgressQuest("main_quest_3", 1);
+				QuestManager.Instance.ProgressQuest("story_main", 1);
+				TagManager.Instance.AddTag("machine_3_fixed");
 				// Log od Adama nr 1:
 				GD.Print($"Minigra wygrana. Maszyna: {currentID}, Quest zaktualizowany.");
 			}

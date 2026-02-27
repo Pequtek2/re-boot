@@ -160,6 +160,8 @@ public partial class EkranKoncowy : Control
 				// Cel: "Wróć do Kierownika/Inżyniera po nagrodę"
 				string questID = "quest_" + TargetMachineID; 
 				QuestManager.Instance.ProgressQuest("main_quest_2", 1);
+				QuestManager.Instance.ProgressQuest("story_main", 1);
+				TagManager.Instance.AddTag("machine_2_fixed");
 				
 				GD.Print($"Minigra wygrana. Maszyna: {TargetMachineID}, Quest zaktualizowany.");
 			}	GD.Print($"SUKCES! Maszyna {TargetMachineID} została naprawiona.");

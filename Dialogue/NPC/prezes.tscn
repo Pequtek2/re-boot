@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://cnvbwjhcpv6ge"]
+
+[ext_resource type="Script" uid="uid://cj2rrchvrb4bb" path="res://Scripts/Main/NPC.cs" id="1_7ioo5"]
+[ext_resource type="Texture2D" uid="uid://oqbtcoo0llre" path="res://Art/npc/stropek_2.png" id="2_ttshf"]
+[ext_resource type="Texture2D" uid="uid://cb4d2d18kyf5e" path="res://Art/npc/stropek_1.png" id="3_c4et2"]
+[ext_resource type="Texture2D" uid="uid://di8xfeoef2aoy" path="res://Art/npc/stropek_4.png" id="4_k13qm"]
+[ext_resource type="Texture2D" uid="uid://cojrwoy5epkdk" path="res://Art/npc/stropek_3.png" id="5_i0ow1"]
+[ext_resource type="Texture2D" uid="uid://dkpofl5l5g0x0" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_09.png" id="6_wgn82"]
+[ext_resource type="Script" uid="uid://c30jl7oxnjksi" path="res://Scripts/Main/ObjectiveMarker.cs" id="7_f88gm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3yqel"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ttshf")
+}],
+"loop": true,
+"name": &"idle_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_c4et2")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_k13qm")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_i0ow1")
+}],
+"loop": true,
+"name": &"idle_up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oeoos"]
+size = Vector2(72, 45)
+
+[node name="NPC" type="Area2D" node_paths=PackedStringArray("NpcSprite")]
+script = ExtResource("1_7ioo5")
+NpcID = "piotr"
+NpcSprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3yqel")
+animation = &"idle_right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 12)
+shape = SubResource("RectangleShape2D_oeoos")
+
+[node name="QuestMarker" type="Sprite2D" parent="."]
+position = Vector2(13, -24)
+texture = ExtResource("6_wgn82")
+script = ExtResource("7_f88gm")
+RequiredTag = "quest_4_completed"

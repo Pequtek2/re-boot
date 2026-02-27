@@ -267,6 +267,9 @@ public partial class DialogueManager : CanvasLayer
 			case "finish_quest": if (parts.Length >= 2) QuestManager.Instance?.ForceCompleteQuest(parts[1]); break;
 			case "give_item": if (parts.Length >= 2) NotificationUI.Instance?.AddNotification("OTRZYMANO PRZEDMIOT", parts[1]); break;
 			case "add_tag": if (parts.Length >= 2) TagManager.Instance?.AddTag(parts[1]); break;
+			case "show_ending": 
+			EndingScreen.Instance.StartEndingSequence(); 
+			break;
 			case "unlock_machine": if (parts.Length >= 2) MainGameManager.Instance?.UnlockMachine(parts[1]); break;
 			case "show_controls":
 			if (ControlsWindow.Instance != null)

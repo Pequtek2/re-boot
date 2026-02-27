@@ -1,57 +1,21 @@
-[gd_scene load_steps=13 format=3 uid="uid://bth2nuny7s0cg"]
+[gd_scene load_steps=11 format=3 uid="uid://bth2nuny7s0cg"]
 
 [ext_resource type="Script" uid="uid://2i5tsiywakd1" path="res://Scripts/Main/Machine.cs" id="1_8c1ej"]
-[ext_resource type="Texture2D" uid="uid://76l4grqmhbv1" path="res://Prefabs/Download/factory v.2/building_1/building_1 sprite.png" id="1_rq0t2"]
-[ext_resource type="Texture2D" uid="uid://b6i0qntbfxj24" path="res://Prefabs/Download/factory v.2/building_1/building_1 animation.png" id="2_v0j2a"]
+[ext_resource type="Texture2D" uid="uid://bn7r2y0a6isdh" path="res://IMG/Main/Table_grey_2.png" id="2_0nwfl"]
+[ext_resource type="Texture2D" uid="uid://d2kmu4vowj0af" path="res://IMG/Main/Table_grey_3.png" id="2_ilb7x"]
+[ext_resource type="Texture2D" uid="uid://c8kxd7vf1x0lu" path="res://IMG/Main/Table_grey.png" id="3_2smxw"]
 [ext_resource type="Texture2D" uid="uid://b6i26aj1hbk4w" path="res://Prefabs/Download/Icons_Essential/v1.2/Icons/Keyboard.png" id="3_v0j2a"]
-[ext_resource type="Script" uid="uid://ev7ndwyw8psr" path="res://Scripts/Main/machines/MachineAnimator.cs" id="5_rbrhn"]
+[ext_resource type="Texture2D" uid="uid://dkpofl5l5g0x0" path="res://Prefabs/Download/cyperpunk_gui/3 Icons/Icons/Icon_09.png" id="5_ilb7x"]
+[ext_resource type="Script" uid="uid://c30jl7oxnjksi" path="res://Scripts/Main/ObjectiveMarker.cs" id="6_2smxw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7ubw4"]
-atlas = ExtResource("2_v0j2a")
-region = Rect2(0, 0, 92, 124)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rbrhn"]
-atlas = ExtResource("2_v0j2a")
-region = Rect2(92, 0, 92, 124)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_20f0q"]
-atlas = ExtResource("2_v0j2a")
-region = Rect2(184, 0, 92, 124)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hxuf7"]
-atlas = ExtResource("2_v0j2a")
-region = Rect2(276, 0, 92, 124)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_elpju"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_rq0t2")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7ubw4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rbrhn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_20f0q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hxuf7")
-}],
-"loop": true,
-"name": &"working",
-"speed": 5.0
-}]
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_urfj5"]
+frames = 2
+frame_0/texture = ExtResource("2_0nwfl")
+frame_1/texture = ExtResource("2_ilb7x")
+frame_1/duration = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8c1ej"]
-size = Vector2(69.5, 55.5)
+size = Vector2(51.75, 35.25)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8c1ej"]
 radius = 5.9179516
@@ -59,36 +23,47 @@ height = 59.0
 
 [node name="Machine_1" type="Area2D"]
 y_sort_enabled = true
-scale = Vector2(2, 2)
+scale = Vector2(0.6, 0.6)
 script = ExtResource("1_8c1ej")
 MachineID = "machine_1"
 MachineName = "Maszyna 1"
 MinigameScenePath = "res://Scenes/Adam/MiniGame.tscn"
 LockedDialogueID = ""
+BrokenTexture = SubResource("AnimatedTexture_urfj5")
+FixedTexture = ExtResource("3_2smxw")
+FloatingDescription = "Maszyna 1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -34)
+shape = SubResource("RectangleShape2D_8c1ej")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_2smxw")
+offset = Vector2(0, -45)
+
+[node name="FloatingLabel" type="Label" parent="."]
+z_index = 100
+y_sort_enabled = true
+offset_left = -55.0
+offset_top = -128.5
+offset_right = 55.0
+offset_bottom = -93.0
+horizontal_alignment = 1
 
 [node name="IconE" type="Sprite2D" parent="."]
 visible = false
 z_index = 2
-position = Vector2(27, -26)
+position = Vector2(31.5, -83.5)
 texture = ExtResource("3_v0j2a")
-
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_elpju")
-animation = &"idle"
-offset = Vector2(0, -45)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -3)
-shape = SubResource("RectangleShape2D_8c1ej")
 
 [node name="InteractionZone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
-position = Vector2(-2, 0.5)
+position = Vector2(19, -24)
 scale = Vector2(7.6039824, -1.1456976)
 shape = SubResource("CapsuleShape2D_8c1ej")
 
-[node name="AnimatorLogic" type="Node" parent="." node_paths=PackedStringArray("TargetSprite")]
-script = ExtResource("5_rbrhn")
-MachineID = "machine_1"
-TargetSprite = NodePath("../Sprite2D")
+[node name="QuestMarker" type="Sprite2D" parent="."]
+position = Vector2(20, -94)
+texture = ExtResource("5_ilb7x")
+script = ExtResource("6_2smxw")

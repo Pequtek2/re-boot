@@ -99,6 +99,7 @@ public partial class DebugConsole : CanvasLayer
 					LogToConsole("dialogue [npc_id] - Odpala rozmowę", Colors.White);
 					LogToConsole("item [name] - Daje przedmiot (powiadomienie)", Colors.White);
 					LogToConsole("list_machines - Wypisuje stany maszyn", Colors.White);
+					LogToConsole("endgame - Kończy gre", Colors.White);
 					break;
 
 				case "repair":
@@ -122,7 +123,18 @@ public partial class DebugConsole : CanvasLayer
 					MainGameManager.Instance.UnlockMachine(args[0]);
 					LogToConsole($"Maszyna '{args[0]}' odblokowana.", Colors.Cyan);
 					break;
-
+				case "endgame":
+					if (EndingScreen.Instance != null)
+					{
+						EndingScreen.Instance.StartEndingSequence();
+						// Opcjonalnie: ukryj/zamknij konsolę po wywołaniu tej komendy
+						// np. this.Visible = false;
+					}
+					else
+					{
+						GD.PrintErr("[DebugConsole] Nie znaleziono węzła EndingScreen na scenie!");
+					}
+					break;
 				case "quest_start":
 					if (args.Length < 1) { LogToConsole("Błąd: Podaj ID questa.", Colors.Red); return; }
 					QuestManager.Instance.StartQuest(args[0]);

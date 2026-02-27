@@ -3,53 +3,72 @@ using System;
 
 public partial class NPC : Area2D
 {
+	[ExportGroup("Ustawienia NPC")]
 	[Export] public string NpcID = "npc_name";
-	
-	// Pamiętaj, żeby przypisać AnimatedSprite2D w Inspektorze!
 	[Export] public AnimatedSprite2D NpcSprite; 
 
+	[ExportGroup("Ikonka Interakcji")]
+	[Export] public Sprite2D InteractionIcon; // Przeciągnij tutaj swoją ikonkę "E"
+	[Export] public float FloatAmplitude = 3.0f; // Jak wysoko ma skakać ikonka
+	[Export] public float FloatSpeed = 4.0f;     // Jak szybko ma lewitować
+
 	private Node2D _playerBody = null;
+	private float _originalIconY;
+	private double _timePassed = 0.0;
 
 	public override void _Ready()
 	{
-		// Wykrywanie wejścia/wyjścia gracza ze strefy
+		// Zapamiętujemy startową pozycję ikonki
+		if (InteractionIcon != null)
+		{
+			_originalIconY = InteractionIcon.Position.Y;
+			InteractionIcon.Visible = false; // Ukrywamy na start
+		}
+
 		BodyEntered += (body) => 
 		{ 
-			if (body.Name == "Player") 
+			if (body.Name == "Player" || body.IsInGroup("Player")) 
+			{
 				_playerBody = body as Node2D; 
+				if (InteractionIcon != null) InteractionIcon.Visible = true; // Pokazujemy ikonkę
+			}
 		};
 		
 		BodyExited += (body) => 
 		{ 
-			if (body.Name == "Player") 
+			if (body.Name == "Player" || body.IsInGroup("Player")) 
 			{
 				_playerBody = null; 
-				// Opcjonalnie: Po wyjściu gracza ustaw NPC prosto
-				// if (NpcSprite != null) NpcSprite.Play("idle_down");
+				if (InteractionIcon != null) InteractionIcon.Visible = false; // Ukrywamy ikonkę
 			}
 		};
 
-		// Domyślna animacja na start
 		if (NpcSprite != null) 
 			NpcSprite.Play("idle_down");
 	}
 
-	// --- TO JEST NOWOŚĆ: Śledzenie w czasie rzeczywistym ---
 	public override void _Process(double delta)
 	{
-		// Jeśli gracz jest w pobliżu (_playerBody nie jest null), aktualizuj kierunek co klatkę
 		if (_playerBody != null)
 		{
-			TurnTowardsPlayer();
+			TurnTowardsPlayer(); // NPC obraca się w stronę gracza
+
+			// Animacja lewitowania ikonki
+			if (InteractionIcon != null && InteractionIcon.Visible)
+			{
+				_timePassed += delta;
+				float newY = _originalIconY + Mathf.Sin((float)_timePassed * FloatSpeed) * FloatAmplitude;
+				InteractionIcon.Position = new Vector2(InteractionIcon.Position.X, newY);
+			}
 		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
 	{
-		// Interakcja tylko odpala dialog
 		if (_playerBody != null && Input.IsActionJustPressed("interact"))
 		{
-			DialogueManager.Instance.StartDialogue(NpcID);
+			if (DialogueManager.Instance != null)
+				DialogueManager.Instance.StartDialogue(NpcID); // Uruchomienie dialogu
 		}
 	}
 
@@ -57,25 +76,15 @@ public partial class NPC : Area2D
 	{
 		if (NpcSprite == null || _playerBody == null) return;
 
-		// Oblicz wektor różnicy
 		Vector2 direction = _playerBody.GlobalPosition - GlobalPosition;
-
-		// Wybór animacji na podstawie kierunku
+		
 		if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
 		{
-			// Poziomo (Lewo/Prawo)
-			if (direction.X > 0)
-				NpcSprite.Play("idle_right");
-			else
-				NpcSprite.Play("idle_left");
+			NpcSprite.Play(direction.X > 0 ? "idle_right" : "idle_left");
 		}
 		else
 		{
-			// Pionowo (Góra/Dół)
-			if (direction.Y > 0)
-				NpcSprite.Play("idle_down");
-			else
-				NpcSprite.Play("idle_up");
+			NpcSprite.Play(direction.Y > 0 ? "idle_down" : "idle_up");
 		}
 	}
 }

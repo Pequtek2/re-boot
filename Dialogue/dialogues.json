@@ -24,6 +24,7 @@
 		{ 
 		  "name": "Marek", 
 		  "text": "Idź do niego. Powiedz, że ja Cię przysyłam.", 
+		  "command": "add_tag:quest_1_completed",
 		  "portrait": "marek_normal" 
 		}
 	  ]
@@ -39,7 +40,7 @@
 	  "comment": "START",
 	  "lines": [
 		{ "name": "Marek", "text": "Siemasz. Jestem Marek. Krótka piłka – mamy awarię.", "portrait": "marek_normal" },
-		{ "name": "Marek", "text": "Główny komputer świruje. Trzeba tam podejść i zrestartować układy.", "portrait": "marek_normal" },
+		{ "name": "Marek", "text": "Główny komputer świruje. Trzeba tam podejść i zrestartować układy.", "portrait": "marek_normal", "command": "add_tag:talked_to_npc_1" },
 		{ "name": "Marek", "text": "Masz uprawnienia admina. Zrób to szybko.", "portrait": "marek_normal", "command": "unlock_machine:machine_1" },
 		{ "name": "Marek", "text": "Powodzenia.", "command": "start_quest:main_quest_1" }
 	  ]
@@ -66,6 +67,7 @@
 		{ 
 		  "name": "Piotr", 
 		  "text": "Jesteś użyteczny. Idź teraz do Doroty. Jest w sekcji chemicznej i panikuje.", 
+		  "command": "add_tag:quest_2_completed",
 		  "portrait": "piotr_normal"
 		},
 		{ 
@@ -86,7 +88,7 @@
 	  "comment": "START - Wymaga ukończenia zadania Marka",
 	  "requires": "quest_done:main_quest_1",
 	  "lines": [
-		{ "name": "Piotr", "text": "Ty jesteś ten nowy od Marka? Spóźniłeś się.", "portrait": "piotr_angry" },
+		{ "name": "Piotr", "text": "Ty jesteś ten nowy od Marka? Spóźniłeś się.", "portrait": "piotr_angry", "command": "add_tag:talked_to_npc_2" },
 		{ "name": "Piotr", "text": "Wycinarka laserowa niszczy materiał. Masz dostęp do panelu (Maszyna 2).", "portrait": "piotr_normal", "command": "unlock_machine:machine_2" },
 		{ "name": "Piotr", "text": "Skalibruj soczewki. Bez dyskusji. Do roboty.", "command": "start_quest:main_quest_2" }
 	  ]
@@ -124,6 +126,7 @@
 		{ 
 		  "name": "Dorota", 
 		  "text": "Idź do niego i sprawdź, czy nie zasnął. Maszyna 4 podobno dziwnie buczy.", 
+		  "command": "add_tag:quest_3_completed",
 		  "portrait": "dorota_normal"
 		}
 	  ]
@@ -140,7 +143,7 @@
 	  "requires": "quest_done:main_quest_2",
 	  "lines": [
 		{ "name": "Dorota", "text": "O rany, o rany... Piotr cię przysłał? Dzięki niebiosom!", "portrait": "dorota_scared" },
-		{ "name": "Dorota", "text": "Mamy krytyczny wyciek w Mieszalniku (Maszyna 3). Zaraz zalejemy całą halę!", "portrait": "dorota_scared" },
+		{ "name": "Dorota", "text": "Mamy krytyczny wyciek w Mieszalniku (Maszyna 3). Zaraz zalejemy całą halę!", "portrait": "dorota_scared", "command": "add_tag:talked_to_npc_3" },
 		{ "name": "Dorota", "text": "Daję ci dostęp awaryjny. Błagam, uszczelnij to!", "portrait": "dorota_normal", "command": "unlock_machine:machine_3" },
 		{ "name": "Dorota", "text": "Pospiesz się!", "command": "start_quest:main_quest_3" }
 	  ]
@@ -178,6 +181,7 @@
 		{ 
 		  "name": "Muciek", 
 		  "text": "Chyba zrobiłeś już wszystko w tej fabryce. Jesteś wolny!", 
+		  "command": "add_tag:quest_4_completed",
 		  "portrait": "muciek_happy"
 		}
 	  ]
@@ -194,7 +198,7 @@
 	  "requires": "quest_done:main_quest_3",
 	  "lines": [
 		{ "name": "Muciek", "text": "Ziew... Cześć. Dorota cię nasłała, co?", "portrait": "muciek_chill" },
-		{ "name": "Muciek", "text": "No, Reaktor (Maszyna 4) trochę się grzeje. W sumie to bardzo się grzeje.", "portrait": "muciek_chill" },
+		{ "name": "Muciek", "text": "No, Reaktor (Maszyna 4) trochę się grzeje. W sumie to bardzo się grzeje.", "portrait": "muciek_chill", "command": "add_tag:talked_to_npc_4" },
 		{ "name": "Muciek", "text": "Masz, tu jest klucz. Weź to ogarnij, a ja dokończę kanapkę.", "portrait": "muciek_happy", "command": "unlock_machine:machine_4" },
 		{ "name": "Muciek", "text": "Tylko nie wysadź nas w powietrze, spoko?", "command": "start_quest:main_quest_4" }
 	  ]
@@ -307,6 +311,36 @@
 		{
 		  "name": "BAZA",
 		  "text": "Dobra robota, techniku! Odczyty wracają do normy. Fabryka uratowana. Możesz wracać na przerwę."
+		}
+	  ]
+	}
+  ],
+"prezes": [
+	{
+	  "comment": "SUKCES - Wszystkie 4 maszyny naprawione",
+	  "requires": "machine_fixed:machine_1, machine_fixed:machine_2, machine_fixed:machine_3, machine_fixed:machine_4",
+	  "lines": [
+		{
+		  "name": "Prezes",
+		  "text": "Widzę, że wszystkie maszyny w fabryce znów działają bez zarzutu."
+		},
+		{
+		  "name": "Prezes",
+		  "text": "Świetna robota! Uratowałeś nas przed ogromnymi stratami. Wiedziałem, kogo zatrudniam."
+		},
+		{
+		  "name": "Prezes",
+		  "text": "Firma jest ci dłużna. Przyjmij to w dowód uznania.",
+		  "command": "show_ending"
+		}
+	  ]
+	},
+	{
+	  "comment": "DOMYŚLNY - Gdy gracz nie naprawił jeszcze wszystkiego",
+	  "lines": [
+		{
+		  "name": "Prezes",
+		  "text": "Nie mamy teraz czasu na pogaduszki. Fabryka sama się nie naprawi! Wracaj do pracy."
 		}
 	  ]
 	}
