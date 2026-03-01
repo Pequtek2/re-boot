@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://tl3m2ua6xmyl"]
+[gd_scene load_steps=47 format=4 uid="uid://tl3m2ua6xmyl"]
 
 [ext_resource type="Texture2D" uid="uid://cy54wgvivkgex" path="res://IMG/Main/New Piskel.png" id="1_c83pb"]
 [ext_resource type="Texture2D" uid="uid://rju5arb1y05q" path="res://IMG/Main/deski.png" id="1_fvuah"]
@@ -34,6 +34,10 @@
 [ext_resource type="Texture2D" uid="uid://n0yc4sn44ovv" path="res://Art/obj/beczka1.png" id="32_23tco"]
 [ext_resource type="Texture2D" uid="uid://b2anr8bni0grp" path="res://Art/obj/beczka.png" id="33_20nm2"]
 [ext_resource type="Texture2D" uid="uid://bx2yqoiqlp176" path="res://Art/obj/kart_zamkniety1.png" id="34_uen2t"]
+[ext_resource type="Texture2D" uid="uid://drxtxn27adovh" path="res://Art/obj/unnamed_3.png" id="35_35ker"]
+[ext_resource type="Texture2D" uid="uid://dkrrd5os3uasm" path="res://Art/obj/kart_otwary.png" id="36_25vko"]
+[ext_resource type="Texture2D" uid="uid://b7u44f637tes6" path="res://Art/obj/kart_otwartw1.png" id="37_ibqak"]
+[ext_resource type="Texture2D" uid="uid://dsf2rfo5sfgbu" path="res://Art/obj/kart_zamkniety.png" id="38_ykyeg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8lm2p"]
 texture = ExtResource("1_fvuah")
@@ -104,7 +108,7 @@ texture = ExtResource("4_a7u1l")
 
 [node name="NPC" parent="." instance=ExtResource("7_uchr4")]
 y_sort_enabled = true
-position = Vector2(6, -109)
+position = Vector2(226, 65)
 NpcID = "mareczek"
 
 [node name="NPC2" parent="." instance=ExtResource("9_ddwxy")]
@@ -270,7 +274,8 @@ position = Vector2(34, 196)
 NpcID = "muciak"
 
 [node name="Machine_1" parent="." node_paths=PackedStringArray("ConfirmPanel", "MessageLabel", "YesButton", "NoButton") instance=ExtResource("4_o0e8j")]
-position = Vector2(-140, -100)
+position = Vector2(444.00003, 102)
+scale = Vector2(-0.8, 0.8)
 FloatAmplitude = 3.0
 ConfirmPanel = NodePath("../CanvasLayer/ConfirmPanel")
 MessageLabel = NodePath("../CanvasLayer/ConfirmPanel/MessageLabel")
@@ -395,6 +400,55 @@ texture = ExtResource("33_20nm2")
 
 [node name="KartZamkniety1" type="Sprite2D" parent="."]
 position = Vector2(-150, -194)
+texture = ExtResource("34_uen2t")
+
+[node name="Unnamed3" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(292, -15)
+scale = Vector2(-0.3, 0.3)
+texture = ExtResource("35_35ker")
+
+[node name="KartZamkniety2" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(326, 18)
+texture = ExtResource("34_uen2t")
+
+[node name="KartOtwary" type="Sprite2D" parent="."]
+z_index = 11
+position = Vector2(326, 0)
+texture = ExtResource("36_25vko")
+
+[node name="Paleta2" type="Sprite2D" parent="."]
+position = Vector2(167, 218)
+texture = ExtResource("31_vn1bv")
+
+[node name="Beczka2" type="Sprite2D" parent="."]
+position = Vector2(194, 234)
+texture = ExtResource("33_20nm2")
+
+[node name="Beczka3" type="Sprite2D" parent="."]
+position = Vector2(164, 223)
+texture = ExtResource("32_23tco")
+
+[node name="Beczka4" type="Sprite2D" parent="."]
+position = Vector2(166, 247)
+texture = ExtResource("32_23tco")
+
+[node name="KartOtwary2" type="Sprite2D" parent="."]
+position = Vector2(142, 236)
+texture = ExtResource("36_25vko")
+
+[node name="KartOtwartw1" type="Sprite2D" parent="."]
+position = Vector2(130, 273)
+texture = ExtResource("37_ibqak")
+
+[node name="KartZamkniety" type="Sprite2D" parent="."]
+position = Vector2(98, 288)
+texture = ExtResource("38_ykyeg")
+
+[node name="KartZamkniety3" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(98, 271)
 texture = ExtResource("34_uen2t")
 
 [connection signal="pressed" from="CanvasLayer/Btn_ShowControls" to="UI_Layer/Tuorial" method="ToggleWindow"]
