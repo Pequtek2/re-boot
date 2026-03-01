@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgx37we8vcwia"
-path="res://.godot/imported/marek.png-a56fb59111854156a9661593b90a99cf.ctex"
+uid="uid://gqd2as6c57sq"
+path="res://.godot/imported/negan.png-593a4f7adac1109eac4d78143f365204.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Portraits/marek.png"
-dest_files=["res://.godot/imported/marek.png-a56fb59111854156a9661593b90a99cf.ctex"]
+source_file="res://Art/Portraits/negan.png"
+dest_files=["res://.godot/imported/negan.png-593a4f7adac1109eac4d78143f365204.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://tl3m2ua6xmyl"]
+[gd_scene load_steps=43 format=4 uid="uid://tl3m2ua6xmyl"]
 
 [ext_resource type="Texture2D" uid="uid://cy54wgvivkgex" path="res://IMG/Main/New Piskel.png" id="1_c83pb"]
 [ext_resource type="Texture2D" uid="uid://rju5arb1y05q" path="res://IMG/Main/deski.png" id="1_fvuah"]
@@ -30,6 +30,10 @@
 [ext_resource type="PackedScene" uid="uid://douud8avi7gf3" path="res://Prefabs/walls/Wall_went.tscn" id="27_qurmt"]
 [ext_resource type="PackedScene" uid="uid://rt83j0sy07nb" path="res://Scenes/Main/EndingScreen.tscn" id="29_jke5b"]
 [ext_resource type="PackedScene" uid="uid://cnvbwjhcpv6ge" path="res://Dialogue/NPC/prezes.tscn" id="30_fwoua"]
+[ext_resource type="Texture2D" uid="uid://c0j5p7ra31yuc" path="res://Art/obj/paleta.png" id="31_vn1bv"]
+[ext_resource type="Texture2D" uid="uid://n0yc4sn44ovv" path="res://Art/obj/beczka1.png" id="32_23tco"]
+[ext_resource type="Texture2D" uid="uid://b2anr8bni0grp" path="res://Art/obj/beczka.png" id="33_20nm2"]
+[ext_resource type="Texture2D" uid="uid://bx2yqoiqlp176" path="res://Art/obj/kart_zamkniety1.png" id="34_uen2t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8lm2p"]
 texture = ExtResource("1_fvuah")
@@ -123,35 +127,45 @@ offset_bottom = 96.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ConfirmPanel"]
+layout_mode = 0
+offset_top = -2.0
+offset_right = 331.0
+offset_bottom = 192.0
+texture = ExtResource("12_qurmt")
+expand_mode = 1
+
 [node name="Label" type="Label" parent="CanvasLayer/ConfirmPanel"]
 layout_mode = 0
 offset_left = 87.0
-offset_top = 14.0
-offset_right = 240.0
-offset_bottom = 37.0
+offset_top = 10.0
+offset_right = 245.0
+offset_bottom = 33.0
 text = "Naprawić Maszyne?"
+horizontal_alignment = 1
 
 [node name="MessageLabel" type="Label" parent="CanvasLayer/ConfirmPanel"]
 layout_mode = 0
-offset_left = 83.0
-offset_top = 47.0
-offset_right = 245.0
-offset_bottom = 70.0
+offset_left = 84.0
+offset_top = 51.0
+offset_right = 246.0
+offset_bottom = 74.0
+horizontal_alignment = 1
 
 [node name="YesButton" type="Button" parent="CanvasLayer/ConfirmPanel"]
 layout_mode = 0
-offset_left = 110.0
-offset_top = 90.0
+offset_left = 66.0
+offset_top = 108.0
 offset_right = 146.0
-offset_bottom = 121.0
+offset_bottom = 138.0
 text = "Tak"
 
 [node name="NoButton" type="Button" parent="CanvasLayer/ConfirmPanel"]
 layout_mode = 0
-offset_left = 187.0
-offset_top = 90.0
-offset_right = 222.0
-offset_bottom = 121.0
+offset_left = 181.0
+offset_top = 108.0
+offset_right = 261.0
+offset_bottom = 138.0
 text = "Nie"
 
 [node name="Btn_ShowControls" type="TextureButton" parent="CanvasLayer"]
@@ -159,6 +173,7 @@ offset_left = 10.0
 offset_top = 7.0
 offset_right = 50.0
 offset_bottom = 47.0
+scale = Vector2(2, 2)
 texture_normal = ExtResource("10_vn1bv")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Btn_ShowControls"]
@@ -365,6 +380,22 @@ script = ExtResource("12_n58r8")
 [node name="NPC5" parent="." instance=ExtResource("30_fwoua")]
 position = Vector2(-478, -191)
 NpcID = "prezes"
+
+[node name="Paleta" type="Sprite2D" parent="."]
+position = Vector2(-125, -212)
+texture = ExtResource("31_vn1bv")
+
+[node name="Beczka1" type="Sprite2D" parent="."]
+position = Vector2(-123, -208)
+texture = ExtResource("32_23tco")
+
+[node name="Beczka" type="Sprite2D" parent="."]
+position = Vector2(-98, -196)
+texture = ExtResource("33_20nm2")
+
+[node name="KartZamkniety1" type="Sprite2D" parent="."]
+position = Vector2(-150, -194)
+texture = ExtResource("34_uen2t")
 
 [connection signal="pressed" from="CanvasLayer/Btn_ShowControls" to="UI_Layer/Tuorial" method="ToggleWindow"]
 [connection signal="pressed" from="UI_Layer/Tuorial/TextureButton" to="UI_Layer/Tuorial" method="ToggleWindow"]

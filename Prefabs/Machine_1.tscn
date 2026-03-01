@@ -23,7 +23,7 @@ height = 59.0
 
 [node name="Machine_1" type="Area2D"]
 y_sort_enabled = true
-scale = Vector2(0.6, 0.6)
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_8c1ej")
 MachineID = "machine_1"
 MachineName = "Maszyna 1"

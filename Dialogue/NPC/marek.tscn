@@ -77,3 +77,11 @@ HidingTag = "talked_to_npc_1"
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(18, -11)
 texture = ExtResource("8_3kuoc")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -29.0
+offset_top = -46.0
+offset_right = 29.0
+offset_bottom = -32.0
+text = "Mareczek"
+horizontal_alignment = 1

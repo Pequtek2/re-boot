@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gqd2as6c57sq"
-path="res://.godot/imported/piotr.png-5144043a8d05415f247b880440739b7b.ctex"
+uid="uid://dash51gx5c6yi"
+path="res://.godot/imported/dorotka.png-3d8f2747378fae46b7588f452f6297ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Portraits/piotr.png"
-dest_files=["res://.godot/imported/piotr.png-5144043a8d05415f247b880440739b7b.ctex"]
+source_file="res://Art/Portraits/dorotka.png"
+dest_files=["res://.godot/imported/dorotka.png-3d8f2747378fae46b7588f452f6297ac.ctex"]
 
 [params]
 

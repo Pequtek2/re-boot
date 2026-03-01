@@ -78,3 +78,11 @@ HidingTag = "quest_4_completed"
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(18, -11)
 texture = ExtResource("8_yrsy8")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -29.0
+offset_top = -46.0
+offset_right = 29.0
+offset_bottom = -32.0
+text = "Muciak"
+horizontal_alignment = 1

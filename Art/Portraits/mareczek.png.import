@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dash51gx5c6yi"
-path="res://.godot/imported/dorota.png-977b436c482816f5647586f8ca2eff01.ctex"
+uid="uid://dgx37we8vcwia"
+path="res://.godot/imported/mareczek.png-f0b902785b90ce738c50e31c85c84889.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Portraits/dorota.png"
-dest_files=["res://.godot/imported/dorota.png-977b436c482816f5647586f8ca2eff01.ctex"]
+source_file="res://Art/Portraits/mareczek.png"
+dest_files=["res://.godot/imported/mareczek.png-f0b902785b90ce738c50e31c85c84889.ctex"]
 
 [params]
 
