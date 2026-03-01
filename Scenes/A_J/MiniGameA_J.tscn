@@ -1,0 +1,276 @@
+[gd_scene load_steps=29 format=3 uid="uid://v267tgili0r0"]
+
+[ext_resource type="Script" uid="uid://b4dnt2cymkjtd" path="res://Scripts/A_J/LogikaGry.cs" id="1_thju2"]
+[ext_resource type="Texture2D" uid="uid://d35mse3a41oil" path="res://IMG/MenuA_J/T_A_J.png" id="2_05xqw"]
+[ext_resource type="AudioStream" uid="uid://66q5k7dbpxth" path="res://Sounds/A_JGIGAMUZA/LastBossMusicA_J.mp3" id="3_iyo3i"]
+[ext_resource type="Texture2D" uid="uid://bljg6so4g0b8g" path="res://IMG/MenuA_J/Niewcisniety_AJ.png" id="3_pvxna"]
+[ext_resource type="Texture2D" uid="uid://bo4n7qog0j6ki" path="res://IMG/MenuA_J/Wcisniety_AJ.png" id="4_alpbb"]
+[ext_resource type="AudioStream" uid="uid://3i1yqbuujecy" path="res://Sounds/A_JGIGAMUZA/MenuMusicA_J.mp3" id="4_jxn1b"]
+[ext_resource type="AudioStream" uid="uid://duycrgbahcku1" path="res://Sounds/A_JGIGAMUZA/EngineKaput_A_J.mp3" id="5_4p561"]
+[ext_resource type="AudioStream" uid="uid://b34j3vko6wjje" path="res://Sounds/A_JGIGAMUZA/biegiemA_J.mp3" id="6_b8wu5"]
+[ext_resource type="AudioStream" uid="uid://dvks0cdqltcj6" path="res://Sounds/A_JGIGAMUZA/Click_A_J.mp3" id="7_ovsjm"]
+[ext_resource type="AudioStream" uid="uid://fkilmjgvopa6" path="res://Sounds/A_JGIGAMUZA/Success_AJ.mp3" id="8_57xd7"]
+[ext_resource type="AudioStream" uid="uid://vwdp54msfcxr" path="res://Sounds/A_JGIGAMUZA/WybuchA_J.mp3" id="9_cu5l3"]
+[ext_resource type="AudioStream" uid="uid://cwd527o8abhwe" path="res://Sounds/A_JGIGAMUZA/failA_J.mp3" id="10_k8gqs"]
+[ext_resource type="Texture2D" uid="uid://d2k5xqrluw22m" path="res://IMG/MenuA_J/piesekwow.jpg" id="13_alpbb"]
+[ext_resource type="AudioStream" uid="uid://5nnjywgqqg4w" path="res://Sounds/A_JGIGAMUZA/Ajaj_AJ.mp3" id="14_qt2i0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thju2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qt2i0"]
+texture = ExtResource("3_pvxna")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5g77d"]
+texture = ExtResource("4_alpbb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bm7tv"]
+texture = ExtResource("3_pvxna")
+modulate_color = Color(0.37791896, 0.37791884, 0.37791884, 0.88235295)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pqvkc"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pvxna"]
+texture = ExtResource("3_pvxna")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_alpbb"]
+texture = ExtResource("4_alpbb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pqvkc"]
+texture = ExtResource("3_pvxna")
+modulate_color = Color(0.44705883, 0.44705883, 0.44705883, 0.88235295)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3dsmi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxn1b"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3dsmi"]
+texture = ExtResource("3_pvxna")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tu7r1"]
+texture = ExtResource("4_alpbb")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4ry7o"]
+texture = ExtResource("3_pvxna")
+modulate_color = Color(0.44705883, 0.44705883, 0.44705883, 0.88235295)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pvxna"]
+
+[node name="MiniGameAJ" type="Node2D"]
+script = ExtResource("1_thju2")
+
+[node name="PodkladSruby" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.20392157)
+offset_right = 910.0
+offset_bottom = 643.0
+texture = ExtResource("2_05xqw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer"]
+custom_minimum_size = Vector2(1400, 60)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+placeholder_text = "Wpisz X,Y lub @X,Y (R - reset)"
+alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(702, 392)
+
+[node name="CanvasLayer4" type="CanvasLayer" parent="."]
+layer = 300
+
+[node name="Kurtyna" type="ColorRect" parent="CanvasLayer4"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -696.0
+offset_top = -385.0
+offset_right = 704.0
+offset_bottom = 392.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_thju2")
+
+[node name="Button" type="Button" parent="CanvasLayer2/Panel"]
+layout_mode = 0
+offset_left = 591.0
+offset_top = 545.0
+offset_right = 790.0
+offset_bottom = 606.0
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxTexture_qt2i0")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5g77d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bm7tv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pqvkc")
+text = "GOTOWY!"
+
+[node name="Label" type="Label" parent="CanvasLayer2/Panel"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 41.0
+offset_right = 1898.0
+offset_bottom = 856.0
+theme_override_font_sizes/font_size = 35
+text = "                                        Instrukcja:
+
+-> Wpisz współrzędne bezwzględne X,Y
+ (np. 100,5 aby przesunąć się na dan punkt)
+-> Wpisz współrzędne względne @X,Y 
+(np. @0,50 aby przesunąć się np. o 50 w górę od miejsca w którym jesteś)
+
+-> Aby poruszać się po ukosie podaj dwie współrzędne różne od zera 
+(np. 10,30 aby przesunąć się przykładowo o 10 w prawy i 30 w górę, po ukosie)
+
+-> Aby zacząć rysunek od nowa wpisz \"R\" i kliknij enter
+
+! Jeśli zadanie jest dla ciebie za trudne, poproś głównych inżynierów o pomoc ;) !"
+
+[node name="WarstwaWygranej" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="WarstwaWygranej"]
+offset_left = 518.0
+offset_top = 301.0
+offset_right = 919.0
+offset_bottom = 463.0
+
+[node name="Label" type="Label" parent="WarstwaWygranej/Panel"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 63.0
+offset_right = 318.0
+offset_bottom = 158.0
+text = "ŚRUBA WYKONANA POPRAWNIE!"
+
+[node name="PrzyciskDalej" type="Button" parent="WarstwaWygranej/Panel"]
+layout_mode = 0
+offset_left = 134.0
+offset_top = 120.0
+offset_right = 283.0
+offset_bottom = 142.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_pvxna")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_alpbb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_pqvkc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3dsmi")
+text = "NASTĘPNE ZADANIE"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_iyo3i")
+volume_db = -10.033
+parameters/looping = true
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer3"]
+offset_left = -158204.0
+offset_top = -93806.0
+offset_right = 165841.0
+offset_bottom = 101620.0
+color = Color(0.17324057, 0.17662653, 0.18339911, 1)
+
+[node name="WarstwaFabuly" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="WarstwaFabuly"]
+offset_right = 1402.0
+offset_bottom = 784.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jxn1b")
+
+[node name="Label" type="Label" parent="WarstwaFabuly"]
+offset_left = 362.0
+offset_top = 206.0
+offset_right = 1045.0
+offset_bottom = 443.0
+theme_override_font_sizes/font_size = 35
+text = "Uciekła gdzieś śrubka… gdzie jest wspornik!? 
+Co my zrobimy?! 
+
+Biegnij szybko zrób cos! 
+
+Napraw to!"
+horizontal_alignment = 1
+
+[node name="PrzyciskMisji" type="Button" parent="WarstwaFabuly"]
+offset_left = 584.0
+offset_top = 551.0
+offset_right = 803.0
+offset_bottom = 611.0
+theme_override_font_sizes/font_size = 35
+theme_override_styles/normal = SubResource("StyleBoxTexture_3dsmi")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tu7r1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_4ry7o")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pvxna")
+text = "Już biegnę!"
+
+[node name="Audio_MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jxn1b")
+volume_db = -7.634
+
+[node name="Audio_Silnik" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_4p561")
+volume_db = -6.679
+
+[node name="Audio_Bieg" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_b8wu5")
+volume_db = -10.43
+
+[node name="Audio_Klik" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_ovsjm")
+volume_db = -4.771
+
+[node name="Audio_Win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_57xd7")
+volume_db = -4.771
+
+[node name="Audio_Wybuch" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_cu5l3")
+volume_db = -9.542
+
+[node name="CanvasLayer5" type="CanvasLayer" parent="."]
+
+[node name="LabelZycia" type="Label" parent="CanvasLayer5"]
+offset_left = 1021.0
+offset_top = 23.0
+offset_right = 1327.0
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 35
+text = "Pozostało prób: "
+
+[node name="Audio_Fail" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_k8gqs")
+volume_db = -17.175
+
+[node name="WarstwaPieska" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="WarstwaPieska"]
+offset_left = 208.0
+offset_top = 26.0
+offset_right = 1206.0
+offset_bottom = 747.0
+texture = ExtResource("13_alpbb")
+expand_mode = 1
+
+[node name="Audio_Piesek" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_qt2i0")
+volume_db = -12.404
+
+[node name="Audio_FinalBoss" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_iyo3i")
+volume_db = -10.496
