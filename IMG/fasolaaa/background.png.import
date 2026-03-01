@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2o8bopcqh8cj"
-path="res://.godot/imported/Wyjscie.png-0521e3acbf0997e14c19e29f66b34f32.ctex"
+uid="uid://c0da13cqnryvv"
+path="res://.godot/imported/background.png-256482f15658213084f936b37b04611d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Wyjscie.png"
-dest_files=["res://.godot/imported/Wyjscie.png-0521e3acbf0997e14c19e29f66b34f32.ctex"]
+source_file="res://IMG/fasolaaa/background.png"
+dest_files=["res://.godot/imported/background.png-256482f15658213084f936b37b04611d.ctex"]
 
 [params]
 

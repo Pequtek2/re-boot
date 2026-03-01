@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dulerf4y5fq42"]
 
 [ext_resource type="Script" uid="uid://b8avhyh5cxto1" path="res://Scripts/fasolaaa/MainMenu.cs" id="1_4tnm7"]
-[ext_resource type="Texture2D" uid="uid://oc1euyy5b6tu" path="res://menu.png" id="1_7j4uj"]
-[ext_resource type="Texture2D" uid="uid://553oyj1jbjek" path="res://start.png" id="3_2hh4r"]
-[ext_resource type="Texture2D" uid="uid://b2o8bopcqh8cj" path="res://Wyjscie.png" id="4_tlnqt"]
+[ext_resource type="Texture2D" uid="uid://oc1euyy5b6tu" path="res://IMG/fasolaaa/menu.png" id="1_7j4uj"]
+[ext_resource type="Texture2D" uid="uid://553oyj1jbjek" path="res://IMG/fasolaaa/start.png" id="3_2hh4r"]
+[ext_resource type="Texture2D" uid="uid://b2o8bopcqh8cj" path="res://IMG/fasolaaa/Wyjscie.png" id="4_tlnqt"]
 [ext_resource type="PackedScene" uid="uid://c6y67tqyhy5n6" path="res://UI/FaderLayer.tscn" id="5_tlnqt"]
 
 [node name="MainMenu" type="Control"]
@@ -43,3 +43,12 @@ layout_mode = 2
 icon = ExtResource("4_tlnqt")
 
 [node name="FaderLayer" parent="." instance=ExtResource("5_tlnqt")]
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 464.0
+offset_top = 92.0
+offset_right = 878.0
+offset_bottom = 191.0
+theme_override_font_sizes/font_size = 51
+text = "C++ Quiz Challenge"
