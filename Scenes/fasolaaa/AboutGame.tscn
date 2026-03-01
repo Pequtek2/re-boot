@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://chtl603nyaa35"]
 
 [ext_resource type="Script" uid="uid://cspacdmbht4sw" path="res://Scripts/fasolaaa/AboutGame.cs" id="1_4l86a"]
-[ext_resource type="Texture2D" uid="uid://oc1euyy5b6tu" path="res://menu.png" id="1_8jfhg"]
-[ext_resource type="VideoStream" uid="uid://db8pglpkj3xj4" path="res://filmik_na_gre.ogv" id="2_8jfhg"]
+[ext_resource type="Texture2D" uid="uid://oc1euyy5b6tu" path="res://IMG/fasolaaa/menu.png" id="1_8jfhg"]
+[ext_resource type="VideoStream" uid="uid://db8pglpkj3xj4" path="res://IMG/fasolaaa/filmik_na_gre.ogv" id="2_8jfhg"]
 [ext_resource type="PackedScene" uid="uid://c6y67tqyhy5n6" path="res://UI/FaderLayer.tscn" id="4_leqlc"]
 
 [node name="AboutGame" type="Control"]

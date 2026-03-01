@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dsf2rfo5sfgbu"
-path="res://.godot/imported/kart_zamkniety.png-178c9d6d9c8823419471de67659bd18c.ctex"
+path="res://.godot/imported/kart_zamkniety.png-644280ce971829dfc7d9def6650c0772.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/obj/kart_zamkniety.png"
-dest_files=["res://.godot/imported/kart_zamkniety.png-178c9d6d9c8823419471de67659bd18c.ctex"]
+source_file="res://Art/Objects/kart_zamkniety.png"
+dest_files=["res://.godot/imported/kart_zamkniety.png-644280ce971829dfc7d9def6650c0772.ctex"]
 
 [params]
 

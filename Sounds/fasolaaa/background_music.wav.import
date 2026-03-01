@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://d286nkdwklhob"
-path="res://.godot/imported/background_music.wav-7b93ea3762ac963c67ceb1c0ea19400e.sample"
+path="res://.godot/imported/background_music.wav-12acb00969bb2955151ba51cb5432c0a.sample"
 
 [deps]
 
-source_file="res://background_music.wav"
-dest_files=["res://.godot/imported/background_music.wav-7b93ea3762ac963c67ceb1c0ea19400e.sample"]
+source_file="res://Sounds/fasolaaa/background_music.wav"
+dest_files=["res://.godot/imported/background_music.wav-12acb00969bb2955151ba51cb5432c0a.sample"]
 
 [params]
 

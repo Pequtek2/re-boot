@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bbb7u5fmwjwth"]
 
-[ext_resource type="Texture2D" uid="uid://c0da13cqnryvv" path="res://background.png" id="1_8lma5"]
+[ext_resource type="Texture2D" uid="uid://c0da13cqnryvv" path="res://IMG/fasolaaa/background.png" id="1_8lma5"]
 [ext_resource type="Script" uid="uid://opapry5xsllp" path="res://Scripts/fasolaaa/Okej.cs" id="1_mx42k"]
-[ext_resource type="AudioStream" uid="uid://d286nkdwklhob" path="res://background_music.wav" id="3_fefj4"]
-[ext_resource type="AudioStream" uid="uid://j2u5brd5n1k0" path="res://click.wav" id="4_8jnv3"]
+[ext_resource type="AudioStream" uid="uid://d286nkdwklhob" path="res://Sounds/fasolaaa/background_music.wav" id="3_fefj4"]
+[ext_resource type="AudioStream" uid="uid://j2u5brd5n1k0" path="res://Sounds/fasolaaa/click.wav" id="4_8jnv3"]
 [ext_resource type="PackedScene" uid="uid://c6y67tqyhy5n6" path="res://UI/FaderLayer.tscn" id="5_8jnv3"]
 
 [node name="Okej" type="Control"]
@@ -23,14 +23,15 @@ texture = ExtResource("1_8lma5")
 
 [node name="QuestionLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 304.0
-offset_top = 68.0
-offset_right = 748.02405
-offset_bottom = 116.97958
+offset_left = 273.0
+offset_top = 46.0
+offset_right = 702.9198
+offset_bottom = 94.97958
 scale = Vector2(1.9143107, 1.9600003)
 theme_override_colors/font_color = Color(0.16078432, 1, 1, 1)
 theme_override_font_sizes/font_size = 32
 text = "Question"
+horizontal_alignment = 1
 
 [node name="CounterLabel" type="Label" parent="."]
 layout_mode = 1
@@ -46,13 +47,14 @@ text = "1/10"
 
 [node name="FeedbackLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 303.00003
+offset_left = 272.00003
 offset_top = 196.0
-offset_right = 469.00003
+offset_right = 632.5261
 offset_bottom = 212.07144
 scale = Vector2(2.2800012, 2.7999992)
 theme_override_colors/font_color = Color(1, 0.007843138, 0.011764706, 1)
 text = "Feedback"
+horizontal_alignment = 1
 
 [node name="SettingsButton" type="Button" parent="."]
 layout_mode = 0
@@ -61,6 +63,25 @@ offset_top = 46.0
 offset_right = 124.0
 offset_bottom = 101.0
 text = "⚙"
+
+[node name="HintButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 48.0
+offset_right = 241.0
+offset_bottom = 102.0
+theme_override_font_sizes/font_size = 26
+text = "?"
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 548.0
+offset_right = 1395.0
+offset_bottom = 636.0
+theme_override_colors/font_color = Color(0.47164232, 0.9999998, 0.31630805, 1)
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
 
 [node name="AnswersBox" type="VBoxContainer" parent="."]
 layout_mode = 0

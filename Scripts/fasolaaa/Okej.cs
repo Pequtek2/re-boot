@@ -9,12 +9,14 @@ public partial class Okej : Control
 		public string Text;
 		public string[] Answers; // zawsze 4
 		public int CorrectIndex; // 0..3
+		public string Hint;
 
-		public Question(string text, string[] answers, int correctIndex)
+		public Question(string text, string[] answers, int correctIndex, string hint)
 		{
 			Text = text;
 			Answers = answers;
 			CorrectIndex = correctIndex;
+			Hint = hint;
 		}
 	}
 
@@ -33,6 +35,10 @@ public partial class Okej : Control
 	private HSlider _sfxSlider;
 	private Button[] _answerButtons;
 	private FaderLayer _fader;
+	private Button _hintButton;
+	private Label _hintLabel;
+	private bool _hintUsedThisQuestion = false;
+	private Vector2 _hintBasePos;
 
 	private List<Question> _questions;
 	private int _current = 0;
@@ -84,6 +90,12 @@ public partial class Okej : Control
 		_musicPlayer.Finished += () => _musicPlayer.Play();
 		
 		_fader = GetNodeOrNull<FaderLayer>("FaderLayer");
+		
+		_hintButton = GetNode<Button>("HintButton");
+		_hintLabel = GetNode<Label>("HintLabel");
+		_hintBasePos = _hintLabel.Position;
+
+		_hintButton.Pressed += OnHintPressed;
 	}
 
 	private void BuildQuestions()
@@ -93,52 +105,52 @@ public partial class Okej : Control
 			new Question(
 				"1) What does 'int' represent in C++?",
 				new[] { "A floating-point number", "An integer number", "A string", "A boolean" },
-				1),
+				1,"Think whole numbers — no dots, no fractions."),
 
 			new Question(
 				"2) Which symbol is used to end a\nstatement in C++?",
 				new[] { ":", ";", ".", "!" },
-				1),
+				1,"It’s a tiny mark you’ll type at the end of almost every line."),
 
 			new Question(
 				"3) What is the correct way to\noutput text to the console in C++?",
 				new[] { "print(\"Hello\")", "Console.WriteLine(\"Hello\")", "cout << \"Hello\";", "echo \"Hello\"" },
-				2),
+				2,"It uses a double arrow operator pointing left."),
 
 			new Question(
 				"4) Which of these creates a\nvariable named x with value 5?",
 				new[] { "int x = 5;", "x := 5", "var x == 5", "int = x 5" },
-				0),
+				0,"First you declare the type, then assign the value."),
 
 			new Question(
 				"5) What does '==' mean in C++?",
 				new[] { "Assignment", "Equality comparison", "Not equal", "Greater than" },
-				1),
+				1,"It checks something, it doesn’t assign it."),
 
 			new Question(
 				"6) Which header is commonly used\nfor input/output with cout/cin?",
 				new[] { "<stdio.h>", "<iostream>", "<vector>", "<string>" },
-				1),
+				1,"“io” stands for input/output — look for that inside angle brackets."),
 
 			new Question(
 				"7) What is a 'for' loop used for?",
 				new[] { "Storing text", "Repeating a block of code", "Defining a class", "Stopping the program" },
-				1),
+				1,"When you need something to happen again… and again… and again."),
 
 			new Question(
 				"8) What does 'std' refer to in C++\n(like std::cout)?",
 				new[] { "A graphics library", "The standard namespace", "A type of variable", "A compiler setting" },
-				1),
+				1,"It’s the default home for many built-in tools in C++."),
 
 			new Question(
 				"9) Which type is best for\ntrue/false values?",
 				new[] { "int", "float", "bool", "char" },
-				2),
+				2,"It can only hold two states: true or false."),
 
 			new Question(
 				"10) What does 'return 0;' usually\nmean at the end of main()?",
 				new[] { "The program crashed", "The program ended successfully", "Repeat the program", "Print zero" },
-				1),
+				1,"Zero here is actually good news."),
 		};
 	}
 
@@ -153,6 +165,7 @@ public partial class Okej : Control
 		for (int i = 0; i < 4; i++)
 			_answerButtons[i].Text = q.Answers[i];
 			AnimateQuestionIn();
+			
 	}
 
 	private async void OnAnswerPressed(int index)
@@ -179,6 +192,13 @@ public partial class Okej : Control
 			b.Disabled = false;
 			
 			_current++;
+			
+			_hintUsedThisQuestion = false;
+			_hintLabel.Text = "";
+			_hintButton.Disabled = false;
+			
+			_hintLabel.Position = _hintBasePos + new Vector2(0, 8);
+			_hintLabel.Modulate = new Color(1, 1, 1, 0);
 			
 			if (_current >= _questions.Count)
 			{
@@ -286,5 +306,33 @@ public partial class Okej : Control
 	{
 		int busIndex = AudioServer.GetBusIndex("SFX");
 		AudioServer.SetBusVolumeDb(busIndex, (float)value);
+	}
+	
+	private void OnHintPressed()
+	{
+		if (_hintUsedThisQuestion) return;
+
+		var q = _questions[_current];
+		_hintLabel.Text = "Hint: " + q.Hint;
+
+		_hintUsedThisQuestion = true;
+		_hintButton.Disabled = true;
+		AnimateHintIn();
+	}
+	
+	private void AnimateHintIn()
+	{
+		// start: lekko niżej i przezroczyste
+		_hintLabel.Position = _hintBasePos + new Vector2(0, 8);
+		_hintLabel.Modulate = new Color(1, 1, 1, 0);
+
+		var t = CreateTween();
+		t.SetParallel(true);
+
+		t.TweenProperty(_hintLabel, "position", _hintBasePos, 0.18f)
+			.SetTrans(Tween.TransitionType.Cubic)
+			.SetEase(Tween.EaseType.Out);
+
+		t.TweenProperty(_hintLabel, "modulate", new Color(1, 1, 1, 1), 0.18f);
 	}
 }

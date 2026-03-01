@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b2anr8bni0grp"
-path="res://.godot/imported/beczka.png-fac87607257384c0ed1d46b589ba23b0.ctex"
+path="res://.godot/imported/beczka.png-2e73b2e139fc08c93a6ee58c37623180.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/obj/beczka.png"
-dest_files=["res://.godot/imported/beczka.png-fac87607257384c0ed1d46b589ba23b0.ctex"]
+source_file="res://Art/Objects/beczka.png"
+dest_files=["res://.godot/imported/beczka.png-2e73b2e139fc08c93a6ee58c37623180.ctex"]
 
 [params]
 

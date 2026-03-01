@@ -15,6 +15,10 @@ run/main_scene="uid://cn5webe7bjsnt"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://Sounds/fasolaaa/default_bus_layout.tres"
+
 [autoload]
 
 MainGameManager="*res://Scripts/Main/MainGameManager.cs"

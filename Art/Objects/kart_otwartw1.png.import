@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b7u44f637tes6"
-path="res://.godot/imported/kart_otwartw1.png-df33b5af565ea265f66c78589e076c7c.ctex"
+path="res://.godot/imported/kart_otwartw1.png-26c3056143e79044315323f9eea71785.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/obj/kart_otwartw1.png"
-dest_files=["res://.godot/imported/kart_otwartw1.png-df33b5af565ea265f66c78589e076c7c.ctex"]
+source_file="res://Art/Objects/kart_otwartw1.png"
+dest_files=["res://.godot/imported/kart_otwartw1.png-26c3056143e79044315323f9eea71785.ctex"]
 
 [params]
 
