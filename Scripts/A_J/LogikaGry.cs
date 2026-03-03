@@ -595,50 +595,69 @@ private async Task KaraZaBlad()
 	}
 
 	private void PrzejdzDoNastepnejSruby()
-	{
-		if (_aktualneZadanieIndex == -99 || _aktualneZadanieIndex >= _wszystkieZadania.Count - 1) 
-		{ 
-			GetTree().ChangeSceneToFile("res://Scenes/A_J/MenuGlowne.tscn"); 
-			return; 
-		}
-
-		_aktualneZadanieIndex++; 
-		_panelWygranej.Visible = false; 
-		_wejscie.Editable = true; 
-		
-		if (_labelZycia != null) 
-		{
-			_labelZycia.Visible = false;
-			_liczbaZyc = _maxZyc;
-			AktualizujLicznikZyc();
-		}
-
-		_ktoryPunktWzoru = 1;
-
-		if (_aktualneZadanieIndex < _wszystkieZadania.Count)
-		{
-			if (_aktualneZadanieIndex < _skalePoziomow.Count)
-			{
-				_aktualnaSkalaX = _skalePoziomow[_aktualneZadanieIndex].X;
-				_aktualnaSkalaY = _skalePoziomow[_aktualneZadanieIndex].Y;
-			}
-			
-			if (_aktualneZadanieIndex == _wszystkieZadania.Count - 1) 
-			{
-				if (_audioSilnik != null) _audioSilnik.Stop(); 
-				if (_audioFinalBoss != null) _audioFinalBoss.Play(); 
-			}
-			
-			ZresetujRysunek();
-			_kamera.Zoom = Vector2.One;
-			_kamera.Position = _srodek;
-			var podklad = GetNode<TextureRect>("PodkladSruby"); 
-			string nazwaPliku = _nazwyObrazkow[_aktualneZadanieIndex];
-			string sciezka = $"res://IMG/MenuA_J/{nazwaPliku}.png";
-			if (FileAccess.FileExists(sciezka)) podklad.Texture = GD.Load<Texture2D>(sciezka);
-			QueueRedraw(); 
-		}
+{
+	// Jeśli nie ma już zadań lub gra została zresetowana, wracamy do menu.
+	if (_aktualneZadanieIndex == -99 || _aktualneZadanieIndex >= _wszystkieZadania.Count - 1)
+	{ 
+		GetTree().ChangeSceneToFile("res://Scenes/A_J/MenuGlowne.tscn"); 
+		return; 
 	}
+
+	_aktualneZadanieIndex++; // Przechodzimy do następnego zadania w liście.
+	_panelWygranej.Visible = false; // Chowamy panel wygranej.
+	_wejscie.Editable = true; // Włączamy pole tekstowe.
+
+	_wejscie.GrabFocus();
+
+	if (_labelZycia != null)
+	{
+		_labelZycia.Visible = false;
+		_liczbaZyc = _maxZyc;
+		AktualizujLicznikZyc();
+	}
+
+	_ktoryPunktWzoru = 1; // Resetujemy licznik punktów wzoru do pierwszego punktu (0,0 jest pomijany).
+
+	if (_aktualneZadanieIndex < _wszystkieZadania.Count)
+	{
+		// Ustawiamy odpowiednią skalę dla danego poziomu.
+		if (_aktualneZadanieIndex < _skalePoziomow.Count)
+		{
+			_aktualnaSkalaX = _skalePoziomow[_aktualneZadanieIndex].X;
+			_aktualnaSkalaY = _skalePoziomow[_aktualneZadanieIndex].Y;
+		}
+		
+		if (_aktualneZadanieIndex == _wszystkieZadania.Count - 1)
+		{
+			if (_audioSilnik != null) _audioSilnik.Stop();
+			if (_audioFinalBoss != null) _audioFinalBoss.Play(); 
+		}
+		
+		// Resetujemy widok.
+		ZresetujRysunek();
+		_kamera.Zoom = Vector2.One;
+		_kamera.Position = _srodek;
+		
+		var podklad = GetNode<TextureRect>("PodkladSruby"); 
+		string nazwaPliku = _nazwyObrazkow[_aktualneZadanieIndex]; 
+		string sciezka = $"res://IMG/MenuA_J/{nazwaPliku}.png"; 
+
+		Texture2D nowaTekstura = GD.Load<Texture2D>(sciezka);
+		
+		if (nowaTekstura != null)
+		{
+			podklad.Texture = nowaTekstura;
+		}
+		else
+		{
+
+			GD.PrintErr($"Nie udało się załadować tekstury ze ścieżki: {sciezka}");
+		}
+		// ---------------------------------------------
+		
+		QueueRedraw(); 
+	}
+}
 
 	public override void _Input(InputEvent @event)
 	{
