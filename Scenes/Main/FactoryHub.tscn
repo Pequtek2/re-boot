@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://tl3m2ua6xmyl"]
+[gd_scene load_steps=56 format=4 uid="uid://tl3m2ua6xmyl"]
 
 [ext_resource type="Texture2D" uid="uid://cy54wgvivkgex" path="res://IMG/Main/New Piskel.png" id="1_c83pb"]
 [ext_resource type="Texture2D" uid="uid://rju5arb1y05q" path="res://IMG/Main/deski.png" id="1_fvuah"]
@@ -30,14 +30,23 @@
 [ext_resource type="PackedScene" uid="uid://douud8avi7gf3" path="res://Prefabs/walls/Wall_went.tscn" id="27_qurmt"]
 [ext_resource type="PackedScene" uid="uid://rt83j0sy07nb" path="res://Scenes/Main/EndingScreen.tscn" id="29_jke5b"]
 [ext_resource type="PackedScene" uid="uid://cnvbwjhcpv6ge" path="res://Dialogue/NPC/prezes.tscn" id="30_fwoua"]
-[ext_resource type="Texture2D" uid="uid://c0j5p7ra31yuc" path="res://Art/obj/paleta.png" id="31_vn1bv"]
-[ext_resource type="Texture2D" uid="uid://n0yc4sn44ovv" path="res://Art/obj/beczka1.png" id="32_23tco"]
-[ext_resource type="Texture2D" uid="uid://b2anr8bni0grp" path="res://Art/obj/beczka.png" id="33_20nm2"]
-[ext_resource type="Texture2D" uid="uid://bx2yqoiqlp176" path="res://Art/obj/kart_zamkniety1.png" id="34_uen2t"]
-[ext_resource type="Texture2D" uid="uid://drxtxn27adovh" path="res://Art/obj/unnamed_3.png" id="35_35ker"]
-[ext_resource type="Texture2D" uid="uid://dkrrd5os3uasm" path="res://Art/obj/kart_otwary.png" id="36_25vko"]
-[ext_resource type="Texture2D" uid="uid://b7u44f637tes6" path="res://Art/obj/kart_otwartw1.png" id="37_ibqak"]
-[ext_resource type="Texture2D" uid="uid://dsf2rfo5sfgbu" path="res://Art/obj/kart_zamkniety.png" id="38_ykyeg"]
+[ext_resource type="Texture2D" uid="uid://c0j5p7ra31yuc" path="res://Art/Objects/paleta.png" id="31_vn1bv"]
+[ext_resource type="Texture2D" uid="uid://n0yc4sn44ovv" path="res://Art/Objects/beczka1.png" id="32_23tco"]
+[ext_resource type="Texture2D" uid="uid://b2anr8bni0grp" path="res://Art/Objects/beczka.png" id="33_20nm2"]
+[ext_resource type="Texture2D" uid="uid://bx2yqoiqlp176" path="res://Art/Objects/kart_zamkniety1.png" id="34_uen2t"]
+[ext_resource type="Texture2D" uid="uid://drxtxn27adovh" path="res://Art/Objects/unnamed_3.png" id="35_35ker"]
+[ext_resource type="Texture2D" uid="uid://dkrrd5os3uasm" path="res://Art/Objects/kart_otwary.png" id="36_25vko"]
+[ext_resource type="Texture2D" uid="uid://b7u44f637tes6" path="res://Art/Objects/kart_otwartw1.png" id="37_ibqak"]
+[ext_resource type="Texture2D" uid="uid://dsf2rfo5sfgbu" path="res://Art/Objects/kart_zamkniety.png" id="38_ykyeg"]
+[ext_resource type="PackedScene" uid="uid://ddnw38h77u2dk" path="res://Prefabs/walls/Wall_paper.tscn" id="39_25vko"]
+[ext_resource type="Texture2D" uid="uid://bv63ebgv00x0v" path="res://Art/Objects/Green_cabinet.png" id="40_ykyeg"]
+[ext_resource type="Texture2D" uid="uid://ky6hk0llswn4" path="res://Art/Objects/Wood_Biurko.png" id="41_koe3t"]
+[ext_resource type="PackedScene" uid="uid://b1hfc1h8owae6" path="res://Prefabs/walls/Wall_office.tscn" id="42_koe3t"]
+[ext_resource type="Texture2D" uid="uid://3mml3vrqge5q" path="res://Art/Objects/Kfitek.png" id="43_r15t8"]
+[ext_resource type="Texture2D" uid="uid://bo122jgpphj6p" path="res://IMG/Main/wuda.png" id="44_vthvy"]
+[ext_resource type="Texture2D" uid="uid://dhnam3o04f2kd" path="res://IMG/Main/serwer.png" id="45_hiewo"]
+[ext_resource type="Texture2D" uid="uid://dncvogohdc6cv" path="res://IMG/Main/pachoł.png" id="46_whaxy"]
+[ext_resource type="Texture2D" uid="uid://pw5b7opipo55" path="res://Art/Objects/Gasnica.png" id="47_hiewo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8lm2p"]
 texture = ExtResource("1_fvuah")
@@ -113,7 +122,7 @@ NpcID = "mareczek"
 
 [node name="NPC2" parent="." instance=ExtResource("9_ddwxy")]
 y_sort_enabled = true
-position = Vector2(-28, -31)
+position = Vector2(-70, -126)
 NpcID = "negan"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -266,7 +275,7 @@ theme_override_font_sizes/font_size = 32
 text = "Zaczynamy"
 
 [node name="NPC3" parent="." instance=ExtResource("16_7fom3")]
-position = Vector2(-287, 97)
+position = Vector2(-224, 31)
 NpcID = "dorotka"
 
 [node name="NPC4" parent="." instance=ExtResource("17_bcd2x")]
@@ -282,12 +291,19 @@ MessageLabel = NodePath("../CanvasLayer/ConfirmPanel/MessageLabel")
 YesButton = NodePath("../CanvasLayer/ConfirmPanel/YesButton")
 NoButton = NodePath("../CanvasLayer/ConfirmPanel/NoButton")
 
+[node name="FloatingLabel" parent="Machine_1" index="2"]
+offset_left = 53.750015
+offset_top = -123.75
+offset_right = 163.75
+offset_bottom = -88.25
+scale = Vector2(-1, 1)
+
 [node name="QuestMarker" parent="Machine_1" index="5"]
 RequiredTag = "talked_to_npc_1"
 HidingTag = "machine_1_fixed"
 
 [node name="Machine_2" parent="." node_paths=PackedStringArray("ConfirmPanel", "MessageLabel", "YesButton", "NoButton") instance=ExtResource("4_o0e8j")]
-position = Vector2(114, 28)
+position = Vector2(114, 27)
 MachineID = "machine_2"
 MachineName = "Maszyna 2"
 MinigameScenePath = "res://Scenes/A_J/MenuGlowne.tscn"
@@ -297,6 +313,9 @@ ConfirmPanel = NodePath("../CanvasLayer/ConfirmPanel")
 MessageLabel = NodePath("../CanvasLayer/ConfirmPanel/MessageLabel")
 YesButton = NodePath("../CanvasLayer/ConfirmPanel/YesButton")
 NoButton = NodePath("../CanvasLayer/ConfirmPanel/NoButton")
+
+[node name="CollisionShape2D" parent="Machine_2/InteractionZone" index="0"]
+position = Vector2(6.250004, -28.75)
 
 [node name="QuestMarker" parent="Machine_2" index="5"]
 RequiredTag = "talked_to_npc_2"
@@ -329,6 +348,12 @@ ConfirmPanel = NodePath("../CanvasLayer/ConfirmPanel")
 MessageLabel = NodePath("../CanvasLayer/ConfirmPanel/MessageLabel")
 YesButton = NodePath("../CanvasLayer/ConfirmPanel/YesButton")
 NoButton = NodePath("../CanvasLayer/ConfirmPanel/NoButton")
+
+[node name="FloatingLabel" parent="Machine_4" index="2"]
+offset_left = 51.25
+offset_top = 141.24998
+offset_right = 161.25
+offset_bottom = 176.74998
 
 [node name="QuestMarker" parent="Machine_4" index="5"]
 RequiredTag = "talked_to_npc_4"
@@ -383,7 +408,7 @@ visible = false
 script = ExtResource("12_n58r8")
 
 [node name="NPC5" parent="." instance=ExtResource("30_fwoua")]
-position = Vector2(-478, -191)
+position = Vector2(-476, -193)
 NpcID = "prezes"
 
 [node name="Paleta" type="Sprite2D" parent="."]
@@ -395,15 +420,15 @@ position = Vector2(-123, -208)
 texture = ExtResource("32_23tco")
 
 [node name="Beczka" type="Sprite2D" parent="."]
-position = Vector2(-98, -196)
+position = Vector2(-95, -193)
 texture = ExtResource("33_20nm2")
 
 [node name="KartZamkniety1" type="Sprite2D" parent="."]
-position = Vector2(-150, -194)
+position = Vector2(-148, -193)
 texture = ExtResource("34_uen2t")
 
 [node name="Unnamed3" type="Sprite2D" parent="."]
-z_index = 10
+z_index = 2
 position = Vector2(292, -15)
 scale = Vector2(-0.3, 0.3)
 texture = ExtResource("35_35ker")
@@ -423,7 +448,7 @@ position = Vector2(167, 218)
 texture = ExtResource("31_vn1bv")
 
 [node name="Beczka2" type="Sprite2D" parent="."]
-position = Vector2(194, 234)
+position = Vector2(191, 235)
 texture = ExtResource("33_20nm2")
 
 [node name="Beczka3" type="Sprite2D" parent="."]
@@ -447,9 +472,336 @@ position = Vector2(98, 288)
 texture = ExtResource("38_ykyeg")
 
 [node name="KartZamkniety3" type="Sprite2D" parent="."]
-z_index = 10
+z_index = 1
 position = Vector2(98, 271)
 texture = ExtResource("34_uen2t")
+
+[node name="Wall" parent="." instance=ExtResource("24_n58r8")]
+position = Vector2(36, -146)
+
+[node name="Wall2" parent="." instance=ExtResource("25_jke5b")]
+position = Vector2(67, -130)
+
+[node name="Wall3" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(99, -114)
+
+[node name="Wall4" parent="." instance=ExtResource("27_qurmt")]
+position = Vector2(131, -98)
+
+[node name="Wall5" parent="." instance=ExtResource("26_fwoua")]
+position = Vector2(195, -66)
+
+[node name="Wall6" parent="." instance=ExtResource("23_xcwdf")]
+position = Vector2(163, -82)
+
+[node name="Wall7" parent="." instance=ExtResource("23_xcwdf")]
+position = Vector2(4, -162)
+
+[node name="Wall8" parent="." instance=ExtResource("39_25vko")]
+position = Vector2(-28, -178)
+
+[node name="Wall9" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-60, -194)
+
+[node name="Wall10" parent="." instance=ExtResource("26_fwoua")]
+position = Vector2(-92, -210)
+
+[node name="Wall11" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-124, -226)
+
+[node name="Wall12" parent="." instance=ExtResource("23_xcwdf")]
+position = Vector2(-156, -210)
+
+[node name="Wall13" parent="." instance=ExtResource("27_qurmt")]
+position = Vector2(-188, -194)
+
+[node name="Wall14" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-220, -178)
+
+[node name="Wall15" parent="." instance=ExtResource("39_25vko")]
+position = Vector2(-252, -162)
+
+[node name="Wall16" parent="." instance=ExtResource("23_xcwdf")]
+position = Vector2(-284, -146)
+
+[node name="Wall17" parent="." instance=ExtResource("23_xcwdf")]
+position = Vector2(-540, -18)
+
+[node name="Wall18" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-476, -50)
+
+[node name="Wall21" parent="." instance=ExtResource("39_25vko")]
+position = Vector2(-508, -34)
+
+[node name="Wall19" parent="." instance=ExtResource("24_n58r8")]
+position = Vector2(-412, -82)
+
+[node name="Wall20" parent="." instance=ExtResource("25_jke5b")]
+position = Vector2(-444, -66)
+
+[node name="Wall22" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-572, -2)
+
+[node name="Wall23" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-540, 14)
+
+[node name="Wall24" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-508, 30)
+
+[node name="Wall25" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-476, 46)
+
+[node name="Wall26" parent="." instance=ExtResource("27_qurmt")]
+position = Vector2(-444, 62)
+
+[node name="Wall27" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-412, 78)
+
+[node name="Wall28" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-380, 94)
+
+[node name="Wall29" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-348, 110)
+
+[node name="Wall30" parent="." instance=ExtResource("27_qurmt")]
+position = Vector2(-316, 126)
+
+[node name="Wall31" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(515, 125)
+
+[node name="Wall32" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-284, 142)
+
+[node name="Wall33" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-252, 158)
+
+[node name="Wall34" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-220, 174)
+
+[node name="Wall35" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-156, 206)
+
+[node name="Wall36" parent="." instance=ExtResource("27_qurmt")]
+position = Vector2(-188, 190)
+
+[node name="Wall37" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-124, 222)
+
+[node name="Wall38" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-92, 238)
+
+[node name="Wall39" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(-28, 270)
+
+[node name="Wall40" parent="." instance=ExtResource("26_fwoua")]
+position = Vector2(36, 302)
+
+[node name="Wall41" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(4, 286)
+
+[node name="Wall42" parent="." instance=ExtResource("27_qurmt")]
+position = Vector2(-60, 254)
+
+[node name="Wall43" parent="." instance=ExtResource("19_p10su")]
+z_index = 1
+position = Vector2(68, 318)
+
+[node name="Wall44" parent="." instance=ExtResource("19_p10su")]
+z_index = 2
+position = Vector2(99, 333)
+
+[node name="Wall45" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(483, 141)
+
+[node name="Wall46" parent="." instance=ExtResource("27_qurmt")]
+position = Vector2(451, 157)
+
+[node name="Wall47" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(419, 173)
+
+[node name="Wall48" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(387, 189)
+
+[node name="Wall49" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(355, 205)
+
+[node name="Wall50" parent="." instance=ExtResource("27_qurmt")]
+position = Vector2(323, 221)
+
+[node name="Wall51" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(291, 237)
+
+[node name="Wall52" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(259, 253)
+
+[node name="Wall53" parent="." instance=ExtResource("24_n58r8")]
+position = Vector2(227, 269)
+
+[node name="Wall54" parent="." instance=ExtResource("25_jke5b")]
+position = Vector2(195, 285)
+
+[node name="Wall55" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(163, 301)
+
+[node name="Wall56" parent="." instance=ExtResource("19_p10su")]
+position = Vector2(131, 317)
+
+[node name="GreenCabinet" type="Sprite2D" parent="."]
+position = Vector2(-405, -228)
+texture = ExtResource("40_ykyeg")
+
+[node name="GreenCabinet2" type="Sprite2D" parent="."]
+position = Vector2(-388, -219)
+texture = ExtResource("40_ykyeg")
+
+[node name="WoodBiurko" type="Sprite2D" parent="."]
+position = Vector2(-544, -207)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("41_koe3t")
+
+[node name="GreenCabinet3" type="Sprite2D" parent="."]
+position = Vector2(-422, -237)
+texture = ExtResource("40_ykyeg")
+
+[node name="GreenCabinet4" type="Sprite2D" parent="."]
+position = Vector2(-371, -210)
+texture = ExtResource("40_ykyeg")
+
+[node name="Wall57" parent="." instance=ExtResource("42_koe3t")]
+z_index = -1
+position = Vector2(-475, -274)
+
+[node name="Wall58" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-284, -178)
+
+[node name="Wall59" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-316, -194)
+
+[node name="Wall60" parent="." instance=ExtResource("42_koe3t")]
+z_index = -1
+position = Vector2(-347, -210)
+
+[node name="Wall61" parent="." instance=ExtResource("42_koe3t")]
+z_index = -1
+position = Vector2(-379, -226)
+
+[node name="Wall62" parent="." instance=ExtResource("42_koe3t")]
+z_index = -1
+position = Vector2(-411, -242)
+
+[node name="Wall63" parent="." instance=ExtResource("42_koe3t")]
+z_index = -1
+position = Vector2(-443, -258)
+
+[node name="Wall64" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-507, -258)
+
+[node name="Wall65" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-539, -242)
+
+[node name="Wall66" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-571, -226)
+
+[node name="Wall67" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-603, -210)
+
+[node name="Wall68" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-635, -194)
+
+[node name="Wall69" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-667, -178)
+
+[node name="Wall70" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-635, -162)
+
+[node name="Wall71" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-603, -146)
+
+[node name="Wall72" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-571, -130)
+
+[node name="Wall73" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-539, -114)
+
+[node name="Wall74" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-507, -98)
+
+[node name="Wall75" parent="." instance=ExtResource("42_koe3t")]
+position = Vector2(-475, -82)
+
+[node name="Kfitek" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-387, -278)
+texture = ExtResource("43_r15t8")
+
+[node name="Kfitek2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-576, -245)
+texture = ExtResource("43_r15t8")
+
+[node name="Wuda" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(203, -71)
+texture = ExtResource("44_vthvy")
+
+[node name="Serwer" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(35, -145)
+texture = ExtResource("45_hiewo")
+
+[node name="Serwer2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(67, -129)
+texture = ExtResource("45_hiewo")
+
+[node name="Serwer3" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(99, -113)
+texture = ExtResource("45_hiewo")
+
+[node name="Pachoł" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(299, 65)
+texture = ExtResource("46_whaxy")
+
+[node name="Pachoł2" type="Sprite2D" parent="."]
+z_index = 2
+position = Vector2(257, 60)
+texture = ExtResource("46_whaxy")
+
+[node name="Pachoł3" type="Sprite2D" parent="."]
+position = Vector2(222, 37)
+texture = ExtResource("46_whaxy")
+
+[node name="Pachoł4" type="Sprite2D" parent="."]
+position = Vector2(-182, -140)
+texture = ExtResource("46_whaxy")
+
+[node name="Pachoł5" type="Sprite2D" parent="."]
+position = Vector2(-76, -131)
+texture = ExtResource("46_whaxy")
+
+[node name="Pachoł6" type="Sprite2D" parent="."]
+position = Vector2(-140, -118)
+texture = ExtResource("46_whaxy")
+
+[node name="Gasnica" type="Sprite2D" parent="."]
+position = Vector2(-359, -210)
+texture = ExtResource("47_hiewo")
+
+[node name="Gasnica2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(131, -98)
+texture = ExtResource("47_hiewo")
+
+[node name="Gasnica3" type="Sprite2D" parent="."]
+position = Vector2(-144, 100)
+texture = ExtResource("47_hiewo")
+
+[node name="Wuda2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-335, -213)
+texture = ExtResource("44_vthvy")
 
 [connection signal="pressed" from="CanvasLayer/Btn_ShowControls" to="UI_Layer/Tuorial" method="ToggleWindow"]
 [connection signal="pressed" from="UI_Layer/Tuorial/TextureButton" to="UI_Layer/Tuorial" method="ToggleWindow"]

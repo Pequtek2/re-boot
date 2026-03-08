@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0peutura5q0f"
-path="res://.godot/imported/IMG_0766.jpg-905a58a736dc6ca25b445ba702d89a6d.ctex"
+uid="uid://djb8jmd2yqbx6"
+path="res://.godot/imported/Prezes_tyllewo.png-6ba37a6ffea7f8b0a38fe83720edfba6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://IMG/Main/IMG_0766.jpg"
-dest_files=["res://.godot/imported/IMG_0766.jpg-905a58a736dc6ca25b445ba702d89a6d.ctex"]
+source_file="res://Art/npc/Prezes_tyllewo.png"
+dest_files=["res://.godot/imported/Prezes_tyllewo.png-6ba37a6ffea7f8b0a38fe83720edfba6.ctex"]
 
 [params]
 
