@@ -2,48 +2,48 @@
   {
 	"id": "main_quest_1",
 	"title": "Awaria Logiki",
-	"description": "Marek potrzebuje pomocy przy Głównym Komputerze (Maszyna 1).",
+	"description": "Mareczek potrzebuje pomocy przy Głównym Komputerze.",
 	"stages": [
-	  { "objective": "Napraw Maszynę 1", "amount": 1 },
-	  { "objective": "Wróć do Marka", "amount": 1 }
+	  { "objective": "Napraw układy scalone", "amount": 1 },
+	  { "objective": "Wróć do Mareczka", "amount": 1 }
 	]
   },
   {
 	"id": "main_quest_2",
-	"title": "Korekta Lasera",
-	"description": "Piotr kazał skalibrować Wycinarkę Laserową (Maszyna 2).",
+	"title": "Korekta wycinarki",
+	"description": "Gerwazy kazał skalibrować wycinarkę.",
 	"stages": [
-	  { "objective": "Napraw Maszynę 2", "amount": 1 },
-	  { "objective": "Wróć do Piotra", "amount": 1 }
+	  { "objective": "Napraw wycinarkę", "amount": 1 },
+	  { "objective": "Wróć do Gerwazego", "amount": 1 }
 	]
   },
   {
 	"id": "main_quest_3",
-	"title": "Ciśnienie w Normie",
-	"description": "Dorota panikuje. Mieszalnik Chemiczny (Maszyna 3) zaraz wybuchnie. Trzeba to uszczelnić.",
+	"title": "Baza kaput",
+	"description": "Jadwiga poprosiła o pomoc przy naprawie bazy danych.",
 	"stages": [
-	  { "objective": "Napraw Maszynę 3", "amount": 1 },
-	  { "objective": "Wróć do Doroty", "amount": 1 }
+	  { "objective": "Odzyskaj dane z bazy danych", "amount": 1 },
+	  { "objective": "Wróć do Jadwigi", "amount": 1 }
 	]
   },
   {
 	"id": "main_quest_4",
-	"title": "Leniwy Reaktor",
-	"description": "Muciek woli jeść kanapkę niż pracować. Muszę naprawić Reaktor (Maszyna 4) za niego.",
+	"title": "Robota dla Robota",
+	"description": "Muszę naprawić tego robota jak najszybciej, żeby nikogo nie rozjechał.",
 	"stages": [
-	  { "objective": "Napraw Maszynę 4", "amount": 1 },
-	  { "objective": "Wróć do Mućka", "amount": 1 }
+	  { "objective": "Zaprogramuj robota", "amount": 1 },
+	  { "objective": "Wróć do Johnnego", "amount": 1 }
 	]
   },
   {
 	"id": "story_main",
-	"title": "Napraw Fabryke",
-	"description": "Fabryka stanela, porozmawiaj z pracownikami aby naprawic odpowednie maszyny.",
+	"title": "Awaria fabryki",
+	"description": "Produkcja stanęła. Porozmawiaj z pracownikami i pomóż wznowić pracę na hali.",
 	"stages": [
-	  { "objective": "Napraw Maszynę 1", "amount": 1 },
-	  { "objective": "Napraw Maszynę 2", "amount": 1 },
-	  { "objective": "Napraw Maszynę 3", "amount": 1 },
-	  { "objective": "Napraw Maszynę 4", "amount": 1 },
+	  { "objective": "Napraw obwody", "amount": 1 },
+	  { "objective": "Skalibruj wycinarkę", "amount": 1 },
+	  { "objective": "Ocal bazę danych", "amount": 1 },
+	  { "objective": "Zaprogramuj robota", "amount": 1 },
 	  { "objective": "Porozmawiaj z Prezesem", "amount": 1 }
 	]
   }

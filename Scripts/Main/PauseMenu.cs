@@ -3,14 +3,15 @@ using System;
 
 public partial class PauseMenu : CanvasLayer
 {
-	[Export] public Button ResumeButton;
-	[Export] public Button SettingsButton; // Nowy guzik "Ustawienia"
-	[Export] public Button QuitButton;
+	[Export] public TextureButton ResumeButton;
+	[Export] public TextureButton SettingsButton; // Nowy guzik "Ustawienia"
+	[Export] public TextureButton QuitButton;
 	[Export] public Control MainMenuContainer; // Kontener z guzikami głównymi
 
 	[Export] public Control SettingsContainer; // Kontener z ustawieniami (domyślnie ukryty)
-	[Export] public Button GenderButton;       // Guzik zmiany płci
-	[Export] public Button BackButton;         // Guzik powrotu
+	[Export] public TextureButton GenderButton;   
+	[Export] public Label GednerLabel;    // Guzik zmiany płci
+	[Export] public TextureButton BackButton;         // Guzik powrotu
 
 	private bool _isPaused = false;
 
@@ -100,6 +101,6 @@ public partial class PauseMenu : CanvasLayer
 	{
 		if (MainGameManager.Instance == null || GenderButton == null) return;
 		string txt = MainGameManager.Instance.IsMale ? "Płeć: Mężczyzna" : "Płeć: Kobieta";
-		GenderButton.Text = txt;
+		GednerLabel.Text = txt;
 	}
 }

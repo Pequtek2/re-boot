@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://rt83j0sy07nb"]
 
 [ext_resource type="Script" uid="uid://duqakjxd2ckoq" path="res://Scripts/Main/EndingScreen.cs" id="1_ndug5"]
-[ext_resource type="Texture2D" uid="uid://c8kxd7vf1x0lu" path="res://IMG/Main/Table_grey.png" id="2_e5m8c"]
+[ext_resource type="Texture2D" uid="uid://cpmju2yiqff2h" path="res://IMG/Main/uscisk_dloni.png" id="2_a1tk1"]
 [ext_resource type="AudioStream" uid="uid://crqis5g0td5is" path="res://Sounds/Adam/win.mp3" id="3_a1tk1"]
 [ext_resource type="AudioStream" uid="uid://d1ql78e63wib2" path="res://Sounds/Main/endscreensound.mp3" id="4_8wfnp"]
 
@@ -25,13 +25,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -220.0
+offset_top = -232.0
+offset_right = 2596.0
+offset_bottom = 1304.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_e5m8c")
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_a1tk1")
 
 [node name="CongratsText" type="Label" parent="."]
 offset_left = 417.0
@@ -39,7 +40,13 @@ offset_top = 122.0
 offset_right = 958.0
 offset_bottom = 159.0
 theme_override_font_sizes/font_size = 42
-text = "Gratulacje, oto Twoja nagroda!"
+text = "Gratulacje, oto Twoja nagroda!
+
+
+
+
+
+      Uścisk dłoni prezesa"
 
 [node name="CreditsText" type="Label" parent="."]
 offset_left = 300.0
@@ -64,20 +71,32 @@ Adam Latała
 Minigra 2 (\"Gdzie jest ta śrubka\")
 Anna Bork, Julia Rzeźnik
 
-Minigra 3 ()
+Minigra 3 (\"Naprawa bazy danych\")
 Kacper Sidor
 
-Minigra 4 ()
+Minigra 4 (\"Test po angielsku\")
 Jan Mazurek
 
 Dialogi
-Anna Bork
+Zaangażowaniem Julia Rzeźnik, 
+chęciami i duszą Karwat Mateusz 
 
-Dziękujemy za grę!
+Grafika 
+Anna Bork, Adam Latała, Julia Rzeźnik
+
+Wizualizacja postaci
+Juleczka Rzeźnik 
+
+
+
+
+Dziękujemy za grę! :) 
+Liczymy na to, że spotkamy się na uczelni!
 Projekt Studenckiego Koła Naukowego Informatyków
 SKNI UP Lublin"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="CongratsSoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_a1tk1")

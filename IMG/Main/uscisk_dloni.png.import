@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cd56grm5y8gtn"
-path="res://.godot/imported/Table_blue.png-c23e8d14e9e65d51e1af40ef6084a2ee.ctex"
+uid="uid://cpmju2yiqff2h"
+path="res://.godot/imported/uscisk_dloni.png-8888b29bc03163c7e4184efaff9dba99.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Table_blue.png"
-dest_files=["res://.godot/imported/Table_blue.png-c23e8d14e9e65d51e1af40ef6084a2ee.ctex"]
+source_file="res://IMG/Main/uscisk_dloni.png"
+dest_files=["res://.godot/imported/uscisk_dloni.png-8888b29bc03163c7e4184efaff9dba99.ctex"]
 
 [params]
 

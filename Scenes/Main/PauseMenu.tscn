@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c758wkgspnld8"]
+[gd_scene load_steps=5 format=3 uid="uid://c758wkgspnld8"]
 
 [ext_resource type="Script" uid="uid://bh7fbhvdklj6u" path="res://Scripts/Main/PauseMenu.cs" id="1_07u4n"]
+[ext_resource type="Texture2D" uid="uid://cw28vbpio2yf0" path="res://UI/QuestJournal.png" id="2_4eyme"]
+[ext_resource type="Texture2D" uid="uid://dkn0f1frmtvql" path="res://UI/questbutton1.png" id="3_0rjpt"]
+[ext_resource type="Texture2D" uid="uid://bll77j1cq1mau" path="res://UI/questbutton2.png" id="4_1udlr"]
 
-[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("ResumeButton", "SettingsButton", "QuitButton", "MainMenuContainer", "SettingsContainer", "GenderButton", "BackButton")]
+[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("ResumeButton", "SettingsButton", "QuitButton", "MainMenuContainer", "SettingsContainer", "GenderButton", "GednerLabel", "BackButton")]
 process_mode = 3
 script = ExtResource("1_07u4n")
 ResumeButton = NodePath("MainMenuContainer/MainMenuContainer/ResumeButton")
@@ -11,6 +14,7 @@ QuitButton = NodePath("MainMenuContainer/MainMenuContainer/QuitButton")
 MainMenuContainer = NodePath("MainMenuContainer")
 SettingsContainer = NodePath("SettingsContainer")
 GenderButton = NodePath("SettingsContainer/SettingsContainer/GenderButton")
+GednerLabel = NodePath("SettingsContainer/SettingsContainer/GenderButton/Label")
 BackButton = NodePath("SettingsContainer/SettingsContainer/BackButton")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -27,6 +31,23 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="TextureRect" type="TextureRect" parent="MainMenuContainer"]
+layout_mode = 0
+offset_left = 591.0
+offset_top = 253.0
+offset_right = 797.0
+offset_bottom = 444.0
+texture = ExtResource("2_4eyme")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MainMenuContainer/TextureRect"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 12.0
+offset_right = 125.0
+offset_bottom = 26.0
+text = "Pauza"
+
 [node name="MainMenuContainer" type="VBoxContainer" parent="MainMenuContainer"]
 layout_mode = 1
 anchors_preset = 8
@@ -34,23 +55,54 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 614.5
-offset_top = 319.5
-offset_right = 745.5
-offset_bottom = 420.5
+offset_left = 600.0
+offset_top = 295.0
+offset_right = 900.0
+offset_bottom = 489.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.5, 0.5)
 
-[node name="ResumeButton" type="Button" parent="MainMenuContainer/MainMenuContainer"]
+[node name="ResumeButton" type="TextureButton" parent="MainMenuContainer/MainMenuContainer"]
 layout_mode = 2
-text = "Wróć do gry"
+texture_normal = ExtResource("3_0rjpt")
+texture_pressed = ExtResource("4_1udlr")
 
-[node name="SettingsButton" type="Button" parent="MainMenuContainer/MainMenuContainer"]
+[node name="Label" type="Label" parent="MainMenuContainer/MainMenuContainer/ResumeButton"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 12.0
+offset_right = 212.0
+offset_bottom = 57.0
+theme_override_font_sizes/font_size = 50
+text = "Wznów"
+
+[node name="SettingsButton" type="TextureButton" parent="MainMenuContainer/MainMenuContainer"]
 layout_mode = 2
+texture_normal = ExtResource("3_0rjpt")
+texture_pressed = ExtResource("4_1udlr")
+
+[node name="Label" type="Label" parent="MainMenuContainer/MainMenuContainer/SettingsButton"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 10.0
+offset_right = 267.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 50
 text = "Ustawienia"
 
-[node name="QuitButton" type="Button" parent="MainMenuContainer/MainMenuContainer"]
+[node name="QuitButton" type="TextureButton" parent="MainMenuContainer/MainMenuContainer"]
 layout_mode = 2
+texture_normal = ExtResource("3_0rjpt")
+texture_pressed = ExtResource("4_1udlr")
+
+[node name="Label" type="Label" parent="MainMenuContainer/MainMenuContainer/QuitButton"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 12.0
+offset_right = 212.0
+offset_bottom = 57.0
+theme_override_font_sizes/font_size = 50
 text = "Wyjdź"
 
 [node name="SettingsContainer" type="Control" parent="."]
@@ -68,6 +120,23 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="SettingsContainer"]
+layout_mode = 0
+offset_left = -9.0
+offset_top = -37.0
+offset_right = 197.0
+offset_bottom = 154.0
+texture = ExtResource("2_4eyme")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="SettingsContainer/TextureRect"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 11.0
+offset_right = 142.0
+offset_bottom = 25.0
+text = "Ustawienia"
+
 [node name="SettingsContainer" type="VBoxContainer" parent="SettingsContainer"]
 layout_mode = 1
 anchors_preset = 8
@@ -75,22 +144,39 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -65.5
-offset_top = -46.5
-offset_right = 65.5
-offset_bottom = 46.5
+offset_left = -80.0
+offset_top = -64.0
+offset_right = 220.0
+offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.0018221816
+scale = Vector2(0.5, 0.5)
 
-[node name="Label" type="Label" parent="SettingsContainer/SettingsContainer"]
+[node name="GenderButton" type="TextureButton" parent="SettingsContainer/SettingsContainer"]
 layout_mode = 2
-text = "Ustawienia"
+texture_normal = ExtResource("3_0rjpt")
+texture_pressed = ExtResource("4_1udlr")
 
-[node name="GenderButton" type="Button" parent="SettingsContainer/SettingsContainer"]
-layout_mode = 2
-text = "Plec: Mężczyzna"
+[node name="Label" type="Label" parent="SettingsContainer/SettingsContainer/GenderButton"]
+layout_mode = 0
+offset_left = 11.788757
+offset_top = 12.0
+offset_right = 291.01563
+offset_bottom = 57.0
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
 
-[node name="BackButton" type="Button" parent="SettingsContainer/SettingsContainer"]
+[node name="BackButton" type="TextureButton" parent="SettingsContainer/SettingsContainer"]
 layout_mode = 2
-text = "Powrót"
+texture_normal = ExtResource("3_0rjpt")
+texture_pressed = ExtResource("4_1udlr")
+
+[node name="Label" type="Label" parent="SettingsContainer/SettingsContainer/BackButton"]
+layout_mode = 0
+offset_left = 105.857704
+offset_top = 12.19302
+offset_right = 199.8577
+offset_bottom = 57.19302
+theme_override_font_sizes/font_size = 50
+text = "Wróc"

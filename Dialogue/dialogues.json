@@ -32,7 +32,7 @@
 	  "lines": [
 		{
 		  "name": "Mareczek",
-		  "text": "Znowu tu? Przecież obwód już działa. Śmigaj do Negana, maszyna mu wariuje, a chłop zaraz wyjdzie z siebie.",
+		  "text": "Znowu tu? Przecież obwód już działa. Śmigaj do Gerwazego, maszyna mu wariuje, a chłop zaraz wyjdzie z siebie.",
 		  "portrait": "mareczek_normal"
 		}
 	  ]
@@ -48,7 +48,7 @@
 		},
 		{
 		  "name": "Mareczek",
-		  "text": "Klasa. Dobra robota. Leć teraz do Negana, chłop tam zaraz na zawał zejdzie przy wycinarce.",
+		  "text": "Klasa. Dobra robota. Leć teraz do Gerwazego, chłop tam zaraz na zawał zejdzie przy wycinarce.",
 		  "command": "add_tag:quest_1_completed",
 		  "portrait": "mareczek_happy"
 		}
@@ -116,8 +116,8 @@
 	  "requires": "quest_done:main_quest_2",
 	  "lines": [
 		{
-		  "name": "Negan",
-		  "text": "Co tak stoisz i patrzysz? Wycinarka już tnie. Kazałem Ci iść do Doroty.",
+		  "name": "Gerwazy",
+		  "text": "Co tak stoisz i patrzysz? Wycinarka już tnie. Kazałem Ci iść do Jadwigi.",
 		  "portrait": "negan_normal"
 		}
 	  ]
@@ -132,8 +132,8 @@
 		  "command": "finish_quest:main_quest_2"
 		},
 		{
-		  "name": "Negan",
-		  "text": "O proszę. Jednak do czegoś się tu przydajesz. Maszyna działa, więc możesz już zniknąć mi z oczu. Dorota z IT podobno płacze, że jej baza danych wyparowała. Leć ją ratować, zanim zamkną nam ten cały cyrk.",
+		  "name": "Gerwazy",
+		  "text": "O proszę. Jednak do czegoś się tu przydajesz. Maszyna działa, więc możesz już zniknąć mi z oczu. Jadwiga z IT podobno płacze, że jej baza danych wyparowała. Leć ją ratować, zanim zamkną nam ten cały cyrk.",
 		  "command": "add_tag:quest_2_completed",
 		  "portrait": "negan_normal"
 		}
@@ -144,7 +144,7 @@
 	  "requires": "quest_active:main_quest_2",
 	  "lines": [
 		{
-		  "name": "Negan",
+		  "name": "Gerwazy",
 		  "text": "Twoja godność? Nie kazałem ci czegoś robić? zaczynam się nudzić, a z taśmy wciąż zjeżdżają trójkąty. Psujesz mi nastrój.",
 		  "portrait": "negan_angry"
 		},
@@ -153,7 +153,7 @@
 		  "text": "Yyy tak tak, jeszcze po prostu przeliczam parametry.."
 		},
 		{
-		  "name": "Negan",
+		  "name": "Gerwazy",
 		  "text": "To przeliczaj szybciej, błagam, klepnij te poprawne wartości w panelu!",
 		  "portrait": "negan_angry"
 		}
@@ -164,7 +164,7 @@
 	  "requires": "quest_done:main_quest_1",
 	  "lines": [
 		{
-		  "name": "Negan",
+		  "name": "Gerwazy",
 		  "text": "No, wreszcie. Patrz na to. Miały być wsporniki, a ta kupa złomu maszyna CNC pluje trójkątami. Moi ludzie nie będą robić na rozkalibrowanym sprzęcie.",
 		  "portrait": "negan_angry",
 		  "command": "add_tag:talked_to_npc_2"
@@ -174,7 +174,7 @@
 		  "text": "Hmm wygląda mi to tak jakby rozjechała się kalibracja osi X i Y na wycinarce."
 		},
 		{
-		  "name": "Negan",
+		  "name": "Gerwazy",
 		  "text": "To wejdź w ten system i to napraw. I zrób to szybko. Nie lubię, jak ktoś marnuje mój czas.",
 		  "command": "start_quest:main_quest_2, unlock_machine:machine_2",
 		  "portrait": "negan_normal"
@@ -185,8 +185,8 @@
 	  "comment": "LOCKED - Jeśli nie zrobiłeś zadania Mareczka",
 	  "lines": [
 		{
-		  "name": "Negan",
-		  "text": "Widzę, że się rwiesz do mojej maszyny, Julia, ale Marek tam zaraz puści tę halę z dymem. Idź mu pomóż, bo nie zamierzam dzisiaj pracować w popiele.",
+		  "name": "Gerwazy",
+		  "text": "Widzę, że się rwiesz do mojej maszyny, ale Marek tam zaraz puści tę halę z dymem. Idź mu pomóż, bo nie zamierzam dzisiaj pracować w popiele.",
 		  "portrait": "negan_normal"
 		}
 	  ]
@@ -197,8 +197,8 @@
 	  "requires": "quest_done:main_quest_3",
 	  "lines": [
 		{
-		  "name": "Dorotka",
-		  "text": "Baza śmiga, nie ma co tu więcej psuć, zmykaj do Muciaka, goście cały czas czekają na tego robota, może kawy?",
+		  "name": "Jadwiga",
+		  "text": "Baza śmiga, nie ma co tu więcej psuć, zmykaj do John'a, goście cały czas czekają na tego robota, może kawy?",
 		  "portrait": "dorotka_happy"
 		}
 	  ]
@@ -213,8 +213,8 @@
 		  "command": "finish_quest:main_quest_3"
 		},
 		{
-		  "name": "Dorotka",
-		  "text": "Dzięki wielkie, masz u mnie dużą kawę. Słuchaj, Muciak cię szuka. Jacyś ważni goście przyjechali. Leć do niego, bo już świruje i coś gada po angielsku.",
+		  "name": "Jadwiga",
+		  "text": "Dzięki wielkie, masz u mnie dużą kawę. Słuchaj, Johnny cię szuka. Jacyś ważni goście przyjechali. Leć do niego, bo już świruje i coś gada po angielsku.",
 		  "command": "add_tag:quest_3_completed",
 		  "portrait": "dorotka_happy"
 		}
@@ -225,7 +225,7 @@
 	  "requires": "quest_active:main_quest_3",
 	  "lines": [
 		{
-		  "name": "Dorotka",
+		  "name": "Jadwiga",
 		  "text": "I jak tam łapanie wirtualnych robaczków? Bo wiesz, wykresy wydajności śmiesznie mi tu skaczą na czerwono",
 		  "portrait": "dorotka_normal"
 		},
@@ -234,7 +234,7 @@
 		  "text": "Jeszcze skanuję pętle i usuwam złośliwy kod."
 		},
 		{
-		  "name": "Dorotka",
+		  "name": "Jadwiga",
 		  "text": "Super, klikaj tam te swoje czary",
 		  "portrait": "dorotka_happy"
 		}
@@ -245,18 +245,18 @@
 	  "requires": "quest_done:main_quest_2",
 	  "lines": [
 		{
-		  "name": "Dorotka",
+		  "name": "Jadwiga",
 		  "text": "Cześć! Słuchaj jakby Ci to powiedzieć.. ktoś kliknął w zły załącznik i jakiś wirus zajął nam na główną bazę. Modyfikuje dane i wrzuca nam totalnie błędne rekordy.",
 		  "portrait": "dorotka_scared",
 		  "command": "add_tag:talked_to_npc_3"
 		},
 		{
 		  "name": "Gracz",
-		  "text": "Kto w ogóle dał mu komuś uprawnienia do produkcji?. Trzeba szybko odpalić skaner, wyizolować zainfekowane tabele i ręcznie wyciąć te śmieciowe dane, zanim rozsieją się po całej strukturze."
+		  "text": "Kto w ogóle dał temu komuś uprawnienia?. Pewnie będzie trzeba odpalić skaner, wyizolować zainfekowane tabele i ręcznie usunąć te śmieciowe dane, zanim rozsieją się po całej strukturze."
 		},
 		{
-		  "name": "Dorotka",
-		  "text": "Yyy.. nie wnikaj, hehe, wejdź na serwer i coś zrób. Na spokojnie, na pewno sobie poradzisz. Ja, jeśli pozwolisz, pójdę sobie na kawę",
+		  "name": "Jadwgia",
+		  "text": "Yyy.. nie wnikaj kto, hehe, wejdź na serwer i coś zrób. Na spokojnie, na pewno sobie poradzisz. Ja, jeśli pozwolisz, pójdę sobie na kawę",
 		  "command": "start_quest:main_quest_3, unlock_machine:machine_3",
 		  "portrait": "dorotka_normal"
 		}
@@ -266,8 +266,8 @@
 	  "comment": "LOCKED - Jeśli nie zrobiłeś zadania Negana",
 	  "lines": [
 		{
-		  "name": "Dorotka",
-		  "text": "Super, że jesteś, ale Negan tam chyba zaraz kogoś uszkodzi przy tej wycinarce. Leć do niego najpierw, ja tu sobie jeszcze chwilę popiję kawkę!",
+		  "name": "Jadwiga",
+		  "text": "Super, że jesteś, ale Gerwazy tam chyba zaraz kogoś uszkodzi przy tej wycinarce. Leć do niego najpierw, ja tu sobie jeszcze chwilę popiję kawkę!",
 		  "portrait": "dorotka_normal"
 		}
 	  ]
@@ -278,7 +278,7 @@
 	  "requires": "quest_done:main_quest_4",
 	  "lines": [
 		{
-		  "name": "Muciak",
+		  "name": "Johnny",
 		  "text": "I don’t want to scare you… ale to pora by iść do Prezesa",
 		  "portrait": "muciak_chill"
 		}
@@ -294,7 +294,7 @@
 		  "command": "finish_quest:main_quest_4"
 		},
 		{
-		  "name": "Muciak",
+		  "name": "Johnny",
 		  "text": "Perfect timing! Właśnie się z nimi przywitał i oprowadza ich jak rasowy guide. Jesteśmy uratowani, because już widziałem swoje wypowiedzenie. Dobra, final boss na ciebie czeka - Prezes. Good luck , przyda ci się.",
 		  "command": "add_tag:quest_4_completed",
 		  "portrait": "muciak_happy"
@@ -306,7 +306,7 @@
 	  "requires": "quest_active:main_quest_4",
 	  "lines": [
 		{
-		  "name": "Muciak",
+		  "name": "Johnny",
 		  "text": "Why are you here? Goście czekają w lobby i nie chcą pić już 4 kawy pod rząd w biurze.. HURRY UP!",
 		  "portrait": "muciak_angry"
 		},
@@ -315,8 +315,8 @@
 		  "text": "Analizuję jeszcze skrypt, żeby robot-przewodnik w nich nie wjechał."
 		},
 		{
-		  "name": "Muciak",
-		  "text": "To sprawdzaj szybciej, because zaraz Prezes wjedzie w nas! Wracaj do terminala, now!",
+		  "name": "Johnny",
+		  "text": "Lepiej sprawdzaj szybciej, because zaraz Prezes wjedzie w nas! Wracaj do terminala, fast!",
 		  "portrait": "muciak_angry"
 		}
 	  ]
@@ -326,7 +326,7 @@
 	  "requires": "quest_done:main_quest_3",
 	  "lines": [
 		{
-		  "name": "Muciak",
+		  "name": "Johnny",
 		  "text": "Słuchaj mnie, listen. Ważni inżynierowie z zagranicy przyjechali na inspekcję. We need robota, który ich oprowadzi.",
 		  "portrait": "muciak_chill",
 		  "command": "add_tag:talked_to_npc_4"
@@ -336,7 +336,7 @@
 		  "text": "Robota-przewodnika? Ostatnio wjeżdżał w ściany na testach.."
 		},
 		{
-		  "name": "Muciak",
+		  "name": "Johnny",
 		  "text": "Exactly! Dlatego musisz go zaprogramować na szybko, because Prezes is waiting. Wklep kod i odpal mu bezpieczną trasę, ASAP!",
 		  "command": "start_quest:main_quest_4, unlock_machine:machine_4",
 		  "portrait": "muciak_normal"
@@ -347,8 +347,8 @@
 	  "comment": "LOCKED - Jeśli nie zrobiłeś zadania Dorotki",
 	  "lines": [
 		{
-		  "name": "Muciak",
-		  "text": "Hold up! Dorotka ma critical error z bazą! Idź do niej, because nam zaraz całą firmę zamkną!",
+		  "name": "Johnny",
+		  "text": "Hold up! Jadzia ma critical error z bazą! Idź do niej, because nam zaraz całą firmę zamkną!",
 		  "portrait": "muciak_chill"
 		}
 	  ]
@@ -405,7 +405,19 @@
 		},
 		{
 		  "name": "Prezes",
-		  "text": "Kawał rewelacyjnej roboty! .Uratowana produkcja i wizerunek przed gośćmi z zagranicy. Staż z UP z informatyki przemysłowej, tak? Widać, masz talent do tego fachu. A teraz wyloguj się i leć do domu, zdecydowanie na to zasługujesz.",
+		  "text": "Kawał rewelacyjnej roboty! .Uratowana produkcja i wizerunek przed gośćmi z zagranicy. Staż z UP z informatyki przemysłowej, tak? Widać, masz talent do tego fachu. A teraz wyloguj się i leć do domu, zdecydowanie na to zasługujesz."
+		},
+		{
+		  "name": "Prezes",
+		  "text": "Słuchaj a może by tak.."
+		},
+		{
+		  "name": "Prezes",
+		  "text": "A może byśmy tak porozmawiali o zatrudnieniu?"
+		},
+		{
+		  "name": "Prezes",
+		  "text": "Kawał rewelacyjnej roboty!. Uratowana produkcja i wizerunek przed gośćmi z zagranicy. Staż z UP z informatyki przemysłowej, tak? Widać, masz talent do tego fachu. A teraz wyloguj się i leć do domu, zdecydowanie na to zasługujesz.",
 		  "command": "show_ending"
 		}
 	  ]
@@ -415,7 +427,7 @@
 	  "lines": [
 		{
 		  "name": "Prezes",
-		  "text": "Co mi tu zawracasz głowę? Nie widzisz, że mam calla z zarządem? Muciak tam piszczy, że goście czekają, marsz do niego!"
+		  "text": "Co mi tu zawracasz głowę? Nie widzisz, że mam calla z zarządem? John tam piszczy, że goście czekają, marsz do niego!"
 		},
 		{
 		  "name": "Gracz",
