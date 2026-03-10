@@ -40,7 +40,7 @@ public partial class Menu : Control
 		">> DESZYFRACJA STRUMIENIA DANYCH...",
 		">> SYNCHRONIZACJA SILNIKA FIZYCZNEGO...",
 		">> TRANSFER_DANYCH_99%...",
-        ">> TRANSMISJA ROZPOCZĘTA."
+		">> TRANSMISJA ROZPOCZĘTA."
 	};
 
 	[ExportGroup("Linki Zewnętrzne")]
@@ -55,7 +55,7 @@ public partial class Menu : Control
 		">> DOSTĘP PRZYZNANY: POZIOM_ADMIN",
 		">> URUCHAMIANIE SILNIKA PIXELFORGE...",
 		">> SYNCHRONIZACJA Z SEKTOREM 07...",
-        ">> SYSTEM GOTOWY DO PRACY."
+		">> SYSTEM GOTOWY DO PRACY."
 	};
 
 	[ExportGroup("Audio")]
@@ -78,7 +78,11 @@ public partial class Menu : Control
 	private VBoxContainer _buttonContainer;
 	private Control _infoPanel;
 	private Control _creditsPopup;
-	private ColorRect _crtOffFlash; // Błysk CRT (teraz bursztynowy)
+	private ColorRect _crtOffFlash; 
+
+	// NOWE: Referencje dla suwaka głośności
+	private HSlider _volumeSlider;
+	private Label _volumeLabel;
 
 	private AudioStreamPlayer _musicPlayer;
 	private AudioStreamPlayer _sfxPlayer;
@@ -129,6 +133,7 @@ public partial class Menu : Control
 		}
 
 		BuildCyberpunkUI();
+		SetupVolumeSlider(); // NOWE: Inicjalizacja suwaka głośności
 		
 		_splashScreen.Visible = true;
 		_bootingScreen.Visible = false;
@@ -170,10 +175,9 @@ public partial class Menu : Control
 		_creditsPopup = _mainMenu.GetNodeOrNull<Control>("CreditsPopup") ?? new Control { Name = "CreditsPopup" };
 		if (_creditsPopup.GetParent() == null) _mainMenu.AddChild(_creditsPopup);
 
-		// Element do animacji wyłączania monitora (Bursztynowy dla ochrony oczu)
 		_crtOffFlash = _layer.GetNodeOrNull<ColorRect>("CrtOffFlash") ?? new ColorRect { 
 			Name = "CrtOffFlash", 
-			Color = AMBER, // ZMIANA: Bursztynowy zamiast Białego
+			Color = AMBER, 
 			Visible = false,
 			MouseFilter = MouseFilterEnum.Ignore
 		};
@@ -216,7 +220,6 @@ public partial class Menu : Control
 		if (staticLabel.GetParent() == null) _infoPanel.AddChild(staticLabel);
 		staticLabel.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect, LayoutPresetMode.Minsize, 30);
 
-		// --- POPUP TWÓRCÓW (POPRAWKA HITBOXA) ---
 		_creditsPopup.CustomMinimumSize = new Vector2(550, 380);
 		_creditsPopup.Size = _creditsPopup.CustomMinimumSize; 
 		_creditsPopup.PivotOffset = _creditsPopup.CustomMinimumSize / 2;
@@ -267,6 +270,97 @@ public partial class Menu : Control
 			else if (index == ButtonLabels.Length - 1) b.Pressed += () => { PlaySfx(ClickSoundStream); GetTree().Quit(); };
 		}
 	}
+
+	// ==========================================
+	// --- NOWE: FUNKCJE SUWAKA GŁOŚNOŚCI ---
+	// ==========================================
+	private void SetupVolumeSlider()
+	{
+		// Kontener na tekst i suwak umieszczony w lewym dolnym rogu
+		var volumeContainer = _mainMenu.GetNodeOrNull<VBoxContainer>("VolumeContainer") ?? new VBoxContainer { Name = "VolumeContainer" };
+		if (volumeContainer.GetParent() == null) _mainMenu.AddChild(volumeContainer);
+
+		// ZWIĘKSZONO: Większy rozmiar kontenera i przesunięcie lekko w górę
+		volumeContainer.Position = new Vector2(100, TargetResolution.Y - 140); 
+		volumeContainer.CustomMinimumSize = new Vector2(400, 80);
+
+		// Label (Tekst wyświetlający procenty)
+		_volumeLabel = volumeContainer.GetNodeOrNull<Label>("VolumeLabel") ?? new Label { Name = "VolumeLabel" };
+		_volumeLabel.LabelSettings = new LabelSettings { FontSize = 22, FontColor = AMBER };
+		if (_volumeLabel.GetParent() == null) volumeContainer.AddChild(_volumeLabel);
+
+		// Suwak
+		_volumeSlider = volumeContainer.GetNodeOrNull<HSlider>("VolumeSlider") ?? new HSlider { Name = "VolumeSlider" };
+		_volumeSlider.MinValue = 0.0001; 
+		_volumeSlider.MaxValue = 1.0;
+		_volumeSlider.Step = 0.01;
+		
+		// ZWIĘKSZONO: Masywny obszar klikalny (łatwo w niego trafić nawet z przesunięciem shadera)
+		_volumeSlider.CustomMinimumSize = new Vector2(400, 45); 
+		_volumeSlider.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+		_volumeSlider.MouseDefaultCursorShape = CursorShape.PointingHand; // Zmienia kursor na "łapkę"
+
+		// ==================================================
+		// --- POGRUBIENIE I STYLIZACJA RETRO (BLOCK BAR) ---
+		// ==================================================
+		
+		// 1. Tło suwaka (ciemny, pusty pasek)
+		var bgStyle = new StyleBoxFlat();
+		bgStyle.BgColor = new Color(0.1f, 0.05f, 0.0f, 0.8f); 
+		bgStyle.ContentMarginTop = 16;    // Grubość paska w górę
+		bgStyle.ContentMarginBottom = 16; // Grubość paska w dół
+
+		// 2. Wypełnienie suwaka (jasny, bursztynowy pasek)
+		var fillStyle = new StyleBoxFlat();
+		fillStyle.BgColor = AMBER; 
+		fillStyle.ContentMarginTop = 16;
+		fillStyle.ContentMarginBottom = 16;
+
+		_volumeSlider.AddThemeStyleboxOverride("slider", bgStyle);
+		_volumeSlider.AddThemeStyleboxOverride("grabber_area", fillStyle);
+		_volumeSlider.AddThemeStyleboxOverride("grabber_area_highlight", fillStyle);
+
+		// 3. CAŁKOWITE USUNIĘCIE "KROPKI" (Grabbera)
+		// Używamy pustej tekstury, żeby suwak wyglądał jak nowoczesny / cyberpunkowy "Pasek energii"
+		var emptyTexture = new PlaceholderTexture2D { Size = Vector2.Zero };
+		_volumeSlider.AddThemeIconOverride("grabber", emptyTexture);
+		_volumeSlider.AddThemeIconOverride("grabber_highlight", emptyTexture);
+		
+		// ==================================================
+
+		// Pobranie początkowej wartości głośności z odtwarzacza
+		float currentVolumeDb = _musicPlayer != null ? _musicPlayer.VolumeDb : -4.4f;
+		_volumeSlider.Value = Mathf.DbToLinear(currentVolumeDb); 
+		UpdateVolumeLabel((float)_volumeSlider.Value);
+
+		if (_volumeSlider.GetParent() == null) volumeContainer.AddChild(_volumeSlider);
+
+		// Podłączanie eventu zmiany wartości suwaka
+		if (_volumeSlider.IsConnected("value_changed", Callable.From<double>(OnVolumeChanged)))
+			_volumeSlider.Disconnect("value_changed", Callable.From<double>(OnVolumeChanged));
+			
+		_volumeSlider.Connect("value_changed", Callable.From<double>(OnVolumeChanged));
+	}
+
+	private void OnVolumeChanged(double value)
+	{
+		if (_musicPlayer != null)
+		{
+			// Godot używa skali logarytmicznej w Decybelach. Zamieniamy wartość 0.0-1.0 na dB.
+			_musicPlayer.VolumeDb = Mathf.LinearToDb((float)value);
+		}
+		UpdateVolumeLabel((float)value);
+	}
+
+	private void UpdateVolumeLabel(float linearValue)
+	{
+		if (_volumeLabel != null)
+		{
+			int percent = Mathf.RoundToInt(linearValue * 100);
+			_volumeLabel.Text = $"POZIOM_AUDIO: {percent}%";
+		}
+	}
+	// ==========================================
 
 	private void AddBgWithFrame(Control p, string name, Color bgColor, Color? frameColor = null)
 	{
@@ -395,16 +489,12 @@ public partial class Menu : Control
 
 		await Task.Delay(1000);
 		
-		// --- EFEKT WYŁĄCZANIA MONITORA CRT (Poprawiony) ---
 		GD.Print(">>> SYSTEM: Wyłączanie monitora...");
 		
-		// 1. Ukrywamy tekst ładowania, aby nie przebijał przez animację ani po niej
 		_loadingText.Visible = false;
 
-		// 2. Zagraj dźwięk wyłączenia
 		if (CrtOffSoundStream != null) PlaySfx(CrtOffSoundStream);
 
-		// 3. Konfiguracja overlay błysku (Bursztynowy jest łagodniejszy)
 		_crtOffFlash.Visible = true;
 		_crtOffFlash.SetAnchorsAndOffsetsPreset(LayoutPreset.FullRect);
 		_crtOffFlash.PivotOffset = GetViewportRect().Size / 2;
@@ -413,17 +503,13 @@ public partial class Menu : Control
 
 		var crtTween = CreateTween().SetParallel(false);
 		
-		// KROK A: Obraz zwęża się do cienkiej poziomej linii
 		crtTween.TweenProperty(_crtOffFlash, "scale:y", 0.005f, 0.2f).SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.In);
-		
-		// KROK B: Linia zwęża się do kropki na środku i znika
 		crtTween.TweenProperty(_crtOffFlash, "scale:x", 0.0f, 0.15f).SetTrans(Tween.TransitionType.Expo).SetEase(Tween.EaseType.In);
 		
 		await ToSignal(crtTween, "finished");
 		
-		// 4. Całkowita ciemność przed zmianą sceny
 		_crtOffFlash.Visible = false; 
-		await Task.Delay(800); // Zwiększona chwila ciemności dla klimatu (0.8s)
+		await Task.Delay(800); 
 
 		GD.Print($">>> SYSTEM: Przenoszenie do {GameScenePath}...");
 		GetTree().ChangeSceneToFile(GameScenePath);

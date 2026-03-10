@@ -21,7 +21,12 @@
 		{
 		  "name": "Dyspozytor",
 		  "text": "Główny obwód na linii A. Szukaj Mareczka, chłop tam zaraz zje kable z nerwów. Uratuj tę fabrykę przed przestojem, inaczej zarząd nas wszystkich wywali. Powodzenia. Bez odbioru.",
-		  "command": "start_quest:story_main, show_controls"
+		  "command": "start_quest:story_main"
+		},
+		{
+		  "name": "Dyspozytor",
+		  "text": "Oto sterowanie:",
+		  "command": "show_controls"
 		}
 	  ]
 	}

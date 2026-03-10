@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dkn0f1frmtvql" path="res://UI/questbutton1.png" id="3_0rjpt"]
 [ext_resource type="Texture2D" uid="uid://bll77j1cq1mau" path="res://UI/questbutton2.png" id="4_1udlr"]
 
-[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("ResumeButton", "SettingsButton", "QuitButton", "MainMenuContainer", "SettingsContainer", "GenderButton", "GednerLabel", "BackButton")]
+[node name="PauseMenu" type="CanvasLayer" node_paths=PackedStringArray("ResumeButton", "SettingsButton", "QuitButton", "MainMenuContainer", "SettingsContainer", "GenderButton", "GednerLabel", "BackButton", "VolumeSlider", "VolumeLabel")]
 process_mode = 3
 script = ExtResource("1_07u4n")
 ResumeButton = NodePath("MainMenuContainer/MainMenuContainer/ResumeButton")
@@ -16,6 +16,8 @@ SettingsContainer = NodePath("SettingsContainer")
 GenderButton = NodePath("SettingsContainer/SettingsContainer/GenderButton")
 GednerLabel = NodePath("SettingsContainer/SettingsContainer/GenderButton/Label")
 BackButton = NodePath("SettingsContainer/SettingsContainer/BackButton")
+VolumeSlider = NodePath("SettingsContainer/SettingsContainer/TextureRect/VolumeSlider")
+VolumeLabel = NodePath("SettingsContainer/SettingsContainer/TextureRect/Label")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -166,6 +168,35 @@ offset_right = 291.01563
 offset_bottom = 57.0
 theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="SettingsContainer/SettingsContainer"]
+layout_mode = 2
+texture = ExtResource("3_0rjpt")
+
+[node name="VolumeSlider" type="HSlider" parent="SettingsContainer/SettingsContainer/TextureRect"]
+layout_mode = 0
+offset_left = 13.810497
+offset_top = 38.025352
+offset_right = 236.18097
+offset_bottom = 54.025352
+
+[node name="VolumeLabel" type="Label" parent="SettingsContainer/SettingsContainer/TextureRect"]
+layout_mode = 0
+offset_left = 107.85771
+offset_top = 12.196678
+offset_right = 194.85771
+offset_bottom = 34.19668
+theme_override_font_sizes/font_size = 24
+text = "Głośność"
+
+[node name="Label" type="Label" parent="SettingsContainer/SettingsContainer/TextureRect"]
+layout_mode = 0
+offset_left = 249.81738
+offset_top = 34.45539
+offset_right = 289.81738
+offset_bottom = 56.45539
+theme_override_font_sizes/font_size = 24
+text = "67"
 
 [node name="BackButton" type="TextureButton" parent="SettingsContainer/SettingsContainer"]
 layout_mode = 2
