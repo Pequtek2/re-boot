@@ -29,15 +29,15 @@ public partial class PlayerController : CharacterBody2D
 			UpdateSkin(); 
 		}
 		if (MainGameManager.Instance != null && MainGameManager.Instance.ShouldTeleportPlayer)
-	{
-		GD.Print($"[Player] Teleportacja na zapisaną pozycję: {MainGameManager.Instance.LastPlayerPosition}");
-		
-		// Ustawiamy pozycję
-		GlobalPosition = MainGameManager.Instance.LastPlayerPosition;
-		
-		// Resetujemy flagę, żeby przy normalnym restarcie gry nie teleportowało nas na środek
-		MainGameManager.Instance.ShouldTeleportPlayer = false;
-	}
+		{
+			GD.Print($"[Player] Teleportacja na zapisaną pozycję: {MainGameManager.Instance.LastPlayerPosition}");
+			
+			// Ustawiamy pozycję
+			GlobalPosition = MainGameManager.Instance.LastPlayerPosition;
+			
+			// Resetujemy flagę, żeby przy normalnym restarcie gry nie teleportowało nas na środek
+			MainGameManager.Instance.ShouldTeleportPlayer = false;
+		}
 	}
 
 	public override void _ExitTree()
@@ -70,17 +70,13 @@ public partial class PlayerController : CharacterBody2D
 		_astar.Region = LevelTileMap.GetUsedRect();
 		_astar.CellSize = LevelTileMap.TileSet.TileSize;
 		
-		// --- ZMIANA: WYMUSZENIE RUCHU 90 STOPNI ---
-		// Never = zakaz chodzenia na skos. Postać będzie chodzić "zygzakiem" po kratkach.
 		_astar.DiagonalMode = AStarGrid2D.DiagonalModeEnum.Never;
 		
-		// Manhattan = algorytm preferujący proste linie
 		_astar.DefaultComputeHeuristic = AStarGrid2D.Heuristic.Manhattan;
 		_astar.DefaultEstimateHeuristic = AStarGrid2D.Heuristic.Manhattan;
 		
 		_astar.Update();
 
-		// Oznaczanie ścian
 		for (int x = _astar.Region.Position.X; x < _astar.Region.End.X; x++)
 		{
 			for (int y = _astar.Region.Position.Y; y < _astar.Region.End.Y; y++)
@@ -105,6 +101,14 @@ public partial class PlayerController : CharacterBody2D
 	public override void _UnhandledInput(InputEvent @event)
 	{
 		if (_astar == null || LevelTileMap == null) return;
+
+		// ==========================================
+		// NOWE: Ignoruj kliknięcia myszką, gdy trwa dialog
+		// ==========================================
+		if (MainGameManager.Instance != null && MainGameManager.Instance.IsMovementBlocked)
+		{
+			return; 
+		}
 
 		if (@event is InputEventMouseButton mouseEvent)
 		{
@@ -168,6 +172,17 @@ public partial class PlayerController : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+		// ==========================================
+		// NOWE: Zatrzymaj gracza w miejscu, jeśli trwa dialog
+		// ==========================================
+		if (MainGameManager.Instance != null && MainGameManager.Instance.IsMovementBlocked)
+		{
+			_currentPath.Clear(); // Czyścimy ścieżkę, żeby nie poszedł dalej sam z siebie po zakończeniu dialogu
+			Velocity = Vector2.Zero;
+			AnimateMovement(Vector2.Zero); // Ustawiamy animację stania w miejscu
+			return;
+		}
+
 		if (_currentPath.Count == 0)
 		{
 			Velocity = Vector2.Zero;
@@ -197,7 +212,6 @@ public partial class PlayerController : CharacterBody2D
 	{
 		string anim = _lastAnim; 
 
-		// 1. CZY STOIMY?
 		if (dir.Length() < 0.1f)
 		{
 			if (_lastAnim.Contains("walk_"))
@@ -207,30 +221,23 @@ public partial class PlayerController : CharacterBody2D
 			return;
 		}
 
-		// 2. LOGIKA 4 KIERUNKÓW (DOPASOWANA DO IZOMETRII)
-		// Teraz, gdy ruch jest "Never Diagonal", wektor zawsze będzie miał wyraźne znaki.
-		// Mapowanie według Twoich zdjęć i opisu:
-		
 		if (dir.X > 0) 
 		{
-			// PRAWA STRONA EKRANU
 			if (dir.Y > 0) 
-				anim = "walk_down";   // Prawo-Dół (+X, +Y) -> Przód
+				anim = "walk_down";   
 			else 
-				anim = "walk_right";  // Prawo-Góra (+X, -Y) -> Bok Prawy
+				anim = "walk_right";  
 		}
 		else 
 		{
-			// LEWA STRONA EKRANU
 			if (dir.Y > 0) 
-				anim = "walk_left";   // Lewo-Dół (-X, +Y) -> Bok Lewy
+				anim = "walk_left";   
 			else 
-				anim = "walk_up";     // Lewo-Góra (-X, -Y) -> Tył
+				anim = "walk_up";     
 		}
 		
-		_animSprite.FlipH = false; // Masz wszystkie klatki, więc flip wyłączony
+		_animSprite.FlipH = false; 
 
-		// 3. ODTWARZANIE
 		if (_animSprite.Animation != anim)
 		{
 			if (_animSprite.SpriteFrames.HasAnimation(anim))
@@ -240,7 +247,6 @@ public partial class PlayerController : CharacterBody2D
 			}
 			else
 			{
-				// Debug w razie literówek
 				GD.PrintErr($"BRAK ANIMACJI: '{anim}'");
 			}
 		}

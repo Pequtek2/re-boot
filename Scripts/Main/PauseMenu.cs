@@ -20,7 +20,7 @@ public partial class PauseMenu : CanvasLayer
 	private bool _isPaused = false;
 	private int _musicBusIndex;
 
-	public override void _Ready()
+public override void _Ready()
 	{
 		Visible = false;
 
@@ -38,6 +38,14 @@ public partial class PauseMenu : CanvasLayer
 		if (SettingsButton != null) SettingsButton.Pressed += OpenSettings;
 		if (BackButton != null) BackButton.Pressed += CloseSettings;
 		if (GenderButton != null) GenderButton.Pressed += ToggleGender;
+
+		// ==========================================
+		// NOWE: Wczytanie początkowego tekstu płci
+		// ==========================================
+		if (MainGameManager.Instance != null && GednerLabel != null)
+		{
+			GednerLabel.Text = MainGameManager.Instance.IsMale ? "PŁEĆ: MĘŻCZYZNA" : "PŁEĆ: KOBIETA";
+		}
 
 		SetupVolumeSlider();
 	}
@@ -129,7 +137,7 @@ private void TogglePause()
 		if (MainMenuContainer != null) MainMenuContainer.Visible = true;
 	}
 
-	private void ToggleGender()
+private void ToggleGender()
 	{
 		if (MainGameManager.Instance == null) return;
 

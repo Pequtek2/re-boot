@@ -13,6 +13,7 @@ public partial class MainGameManager : Node
 
 	// --- DANE DO MINIGIER ---
 	public string CurrentMachineID { get; set; } = "";
+	public bool IsMovementBlocked { get; private set; } = false;
 
 	// --- DANE GRY (Questy, Maszyny) ---
 	public bool IsMale = true;
@@ -73,7 +74,11 @@ public partial class MainGameManager : Node
 		GD.Print($"[Manager] Wracam do świata: {LastScenePath}");
 		GetTree().ChangeSceneToFile(LastScenePath);
 	}
-
+	public void SetPlayerMovementBlocked(bool blocked)
+		{
+			IsMovementBlocked = blocked;
+			GD.Print($"[Manager] Blokada ruchu gracza: {blocked}");
+		}
 	// --- RESZTA LOGIKI (Bez zmian) ---
 	public bool IsDialogueSeen(string dialogueId) => _seenDialogues.Contains(dialogueId);
 	public void MarkDialogueSeen(string dialogueId) { if (!_seenDialogues.Contains(dialogueId)) _seenDialogues.Add(dialogueId); }

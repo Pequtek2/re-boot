@@ -76,27 +76,33 @@ public partial class DialogueManager : CanvasLayer
 
 	public void StartDialogue(string npcId)
 	{
-		// 1. Sprawdź, czy baza danych w ogóle się załadowała
+		// Zabezpieczenie przed "spamowaniem" klawisza akcji podczas trwania dialogu
+		if (_isActive) return;
+
+		// Sprawdź, czy baza danych w ogóle się załadowała
 		if (_dialogueDatabase == null)
 		{
 			GD.PrintErr("BŁĄD: Baza dialogów jest pusta! Sprawdź plik dialogues.json.");
-			GetTree().Paused = false; // WAŻNE: Odpauzuj, żeby gra nie wisiała
+			GetTree().Paused = false; 
 			return;
 		}
 
-		// 2. Sprawdź, czy mamy dialog dla tego NPC/ID
+		// Sprawdź, czy mamy dialog dla tego NPC/ID
 		if (!_dialogueDatabase.ContainsKey(npcId))
 		{
 			GD.PrintErr($"BŁĄD: Nie znaleziono dialogu o ID: '{npcId}'!");
 			GD.Print("Dostępne ID: " + string.Join(", ", _dialogueDatabase.Keys));
 			
-			GetTree().Paused = false; // WAŻNE: Odpauzuj grę!
+			GetTree().Paused = false; 
 			return;
 		}
 
+		// Zablokowanie poruszania się Gracza na czas rozmowy
+		MainGameManager.Instance?.SetPlayerMovementBlocked(true);
+
 		_currentNpcId = npcId; 
 
-		// Automatyczne ładowanie portretu (opcjonalne, w tryku/catch żeby nie wywaliło)
+		// Automatyczne ładowanie portretu
 		try { SetPortrait(npcId); } catch { /* ignoruj błąd braku obrazka */ }
 
 		var variants = _dialogueDatabase[npcId];
@@ -120,7 +126,6 @@ public partial class DialogueManager : CanvasLayer
 		}
 		else
 		{
-			// Jeśli jest wpis w bazie, ale żaden warunek nie pasuje (np. "requires" niespełnione)
 			PlayDefaultMessage(npcId);
 		}
 	}
@@ -134,19 +139,12 @@ public partial class DialogueManager : CanvasLayer
 		{
 			PortraitRect.Texture = ResourceLoader.Load<Texture2D>(fullPath);
 			PortraitRect.Visible = true;
-			// Reset pozycji przy zmianie obrazka
 			PortraitRect.Position = _portraitBasePos; 
-		}
-		else
-		{
-			// Jeśli nie ma pliku, po prostu ukryj (chyba że chcesz zostawić stary)
-			 // PortraitRect.Visible = false; 
 		}
 	}
 
 	private bool CheckConditions(Godot.Collections.Dictionary variant)
 	{
-		// Logika warunków (bez zmian)
 		if (variant.ContainsKey("requires"))
 		{
 			string reqs = (string)variant["requires"];
@@ -220,20 +218,11 @@ public partial class DialogueManager : CanvasLayer
 			}
 			_visibleRatio = 0;
 
-			// --- OBSŁUGA PORTRETU (NADPSYWANIE) ---
-			// Domyślnie mamy obrazek załadowany w StartDialogue (np. marek.png).
-			// Ale jeśli w tej konkretnej linijce JSON jest "portrait": "marek_angry", to zmieniamy.
+			// Obsługa portretu
 			if (line.ContainsKey("portrait"))
 			{
 				SetPortrait((string)line["portrait"]);
 			}
-			else
-			{
-				// Opcjonalnie: Jeśli linijka nie ma portretu, przywróć domyślny dla tego NPC
-				// (Odkomentuj poniższe, jeśli chcesz, żeby emocje znikały w kolejnym zdaniu)
-				// SetPortrait(_currentNpcId); 
-			}
-			// ---------------------------------------
 
 			if (line.ContainsKey("command")) ExecuteDialogueCommand((string)line["command"]);
 
@@ -249,16 +238,20 @@ public partial class DialogueManager : CanvasLayer
 	{
 		_isActive = false;
 		if (DialoguePanel != null) DialoguePanel.Visible = false;
+
+		// Odblokowanie Gracza po zakończeniu dialogu
+		if (MainGameManager.Instance != null)
+		{
+			MainGameManager.Instance.SetPlayerMovementBlocked(false);
+		}
 	}
 
-private void ExecuteDialogueCommand(string commandsRaw)
+	private void ExecuteDialogueCommand(string commandsRaw)
 	{
-		// Dzielimy ciąg po przecinkach, aby uzyskać listę pojedynczych komend
 		var commands = commandsRaw.Split(',');
 
 		foreach (var cmd in commands)
 		{
-			// Usuwamy białe znaki (np. spacje po przecinku) i dzielimy po dwukropku
 			var parts = cmd.Trim().Split(':');
 			string action = parts[0];
 
@@ -287,6 +280,38 @@ private void ExecuteDialogueCommand(string commandsRaw)
 		}
 	}
 
+	// Obsługa sterowania - blokada ESC i przyspieszanie tekstu myszką/akcją
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (!_isActive) return;
+
+		// Ignorujemy klawisz wyjścia (ESC), żeby nie dało się zamknąć dialogu!
+		if (@event.IsActionPressed("ui_cancel"))
+		{
+			GetViewport().SetInputAsHandled();
+			return;
+		}
+
+		bool isAccept = @event.IsActionPressed("ui_accept") || @event.IsActionPressed("interact");
+		bool isMouseClick = (@event is InputEventMouseButton mb && mb.Pressed && mb.ButtonIndex == MouseButton.Left);
+
+		if (isAccept || isMouseClick)
+		{
+			GetViewport().SetInputAsHandled();
+
+			// PRZYSPIESZENIE TEKSTU: jeśli wciąż się pisze, wymuś pojawienie się całości
+			if (TextLabel != null && TextLabel.VisibleRatio < 1.0f) 
+			{
+				_visibleRatio = 1.0;
+				TextLabel.VisibleRatio = 1.0f;
+				return; 
+			}
+
+			// Jeżeli tekst się już napisał do końca, przejdź do kolejnej linijki
+			ShowNextLine();
+		}
+	}
+
 	public override void _Process(double delta)
 	{
 		if (!_isActive) return;
@@ -305,31 +330,12 @@ private void ExecuteDialogueCommand(string commandsRaw)
 		{
 			if (isTyping)
 			{
-				// Używamy Sinusa czasu, żeby robić góra-dół
-				// Mathf.Abs sprawia, że skacze tylko do góry (jak piłeczka), a nie góra-dół
 				float bounce = Mathf.Abs(Mathf.Sin(Time.GetTicksMsec() / 100.0f * (BounceSpeed / 10.0f))) * BounceHeight;
-				
-				// Odejmujemy od Y, bo w Godot "w górę" to minus Y
 				PortraitRect.Position = new Vector2(_portraitBasePos.X, _portraitBasePos.Y - bounce);
 			}
 			else
 			{
-				// Jeśli przestał mówić, wróć na miejsce
 				PortraitRect.Position = _portraitBasePos; 
-			}
-		}
-		// -----------------------------
-
-		if (Input.IsActionJustPressed("ui_accept") || Input.IsActionJustPressed("interact"))
-		{
-			if (TextLabel != null && TextLabel.VisibleRatio < 1.0)
-			{
-				TextLabel.VisibleRatio = 1.0f;
-				_visibleRatio = 1.0;
-			}
-			else
-			{
-				ShowNextLine();
 			}
 		}
 	}

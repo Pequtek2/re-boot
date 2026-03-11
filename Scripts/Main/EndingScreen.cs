@@ -13,7 +13,7 @@ public partial class EndingScreen : CanvasLayer
 	[ExportGroup("Dźwięk i UI")]
 	[Export] public AudioStreamPlayer CongratsSound;
 	[Export] public AudioStreamPlayer CreditsMusic;
-	[Export] public Button RestartButton; // PRZECIĄGNIJ TUTAJ PRZYCISK Z INSPEKTORA
+	[Export] public Button RestartButton; 
 
 	private Control _background;
 	private TextureRect _handshakeImage;
@@ -33,7 +33,6 @@ public partial class EndingScreen : CanvasLayer
 
 		Visible = false;
 
-		// Ukrywamy przycisk na start i podpinamy sygnał kliknięcia
 		if (RestartButton != null)
 		{
 			RestartButton.Visible = false;
@@ -49,6 +48,11 @@ public partial class EndingScreen : CanvasLayer
 		if (_congratsText != null) _congratsText.Visible = true;
 		if (_creditsText != null) _creditsText.Visible = false;
 		if (RestartButton != null) RestartButton.Visible = false;
+
+		// ==================================================
+		// NOWE: Zatrzymujemy główną muzykę w tle
+		// ==================================================
+		MainSceneMusic.PauseBackgroundMusic();
 
 		if (CongratsSound != null) CongratsSound.Play();
 
@@ -77,7 +81,6 @@ public partial class EndingScreen : CanvasLayer
 		{
 			_creditsText.Position = new Vector2(_creditsText.Position.X, _creditsText.Position.Y - ScrollSpeed * (float)delta);
 
-			// Gdy napisy znikną za górną krawędzią
 			if (_creditsText.Position.Y + _creditsText.Size.Y < 0)
 			{
 				_isScrolling = false;
@@ -91,14 +94,12 @@ public partial class EndingScreen : CanvasLayer
 		if (RestartButton != null)
 		{
 			RestartButton.Visible = true;
-			// Możesz tu dodać kursor myszy, jeśli był ukryty:
 			Input.MouseMode = Input.MouseModeEnum.Visible;
 		}
 	}
 
 	private void OnRestartButtonPressed()
 	{
-		// Po kliknięciu wracamy do menu
 		if (!string.IsNullOrEmpty(MainMenuPath))
 		{
 			GetTree().ChangeSceneToFile(MainMenuPath);

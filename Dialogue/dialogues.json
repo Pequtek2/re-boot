@@ -45,6 +45,7 @@
 	{
 	  "comment": "SUKCES - Zadanie aktywne + Maszyna naprawiona",
 	  "requires": "quest_active:main_quest_1, machine_fixed:machine_1",
+	  "command": "add_tag:quest_1_completed",
 	  "lines": [
 		{
 		  "name": "Gracz",
@@ -95,7 +96,7 @@
 		},
 		{
 		  "name": "Mareczek",
-		  "text": "Zwarcie na głównym przekaźniku. Łap sprzęt i bierz się za to, zanim przyjdzie kierownik. Biegnij do tamtej maszyny",
+		  "text": "Zwarcie na głównym przekaźniku. Łap sprzęt i bierz się za to, zanim przyjdzie kierownik. Biegnij do tamtej maszyny.",
 		  "portrait": "mareczek_normal",
 		  "command": "unlock_machine:machine_1, start_quest:main_quest_1"
 		}
@@ -150,7 +151,7 @@
 	  "lines": [
 		{
 		  "name": "Gerwazy",
-		  "text": "Twoja godność? Nie kazałem ci czegoś robić? zaczynam się nudzić, a z taśmy wciąż zjeżdżają trójkąty. Psujesz mi nastrój.",
+		  "text": "Twoja godność? Nie kazałem ci czegoś robić? Zaczynam się nudzić, a z taśmy wciąż zjeżdżają trójkąty. Psujesz mi nastrój.",
 		  "portrait": "negan_angry"
 		},
 		{
@@ -170,7 +171,7 @@
 	  "lines": [
 		{
 		  "name": "Gerwazy",
-		  "text": "No, wreszcie. Patrz na to. Miały być wsporniki, a ta kupa złomu maszyna CNC pluje trójkątami. Moi ludzie nie będą robić na rozkalibrowanym sprzęcie.",
+		  "text": "No, wreszcie. Patrz na to. Miały być wsporniki, a ta kupa złomu, maszyna CNC pluje trójkątami. Moi ludzie nie będą robić na rozkalibrowanym sprzęcie.",
 		  "portrait": "negan_angry",
 		  "command": "add_tag:talked_to_npc_2"
 		},
@@ -257,11 +258,11 @@
 		},
 		{
 		  "name": "Gracz",
-		  "text": "Kto w ogóle dał temu komuś uprawnienia?. Pewnie będzie trzeba odpalić skaner, wyizolować zainfekowane tabele i ręcznie usunąć te śmieciowe dane, zanim rozsieją się po całej strukturze."
+		  "text": "Kto w ogóle dał temu komuś uprawnienia? Pewnie będzie trzeba odpalić skaner, wyizolować zainfekowane tabele i ręcznie usunąć te śmieciowe dane, zanim rozsieją się po całej strukturze."
 		},
 		{
 		  "name": "Jadwgia",
-		  "text": "Yyy.. nie wnikaj kto, hehe, wejdź na serwer i coś zrób. Na spokojnie, na pewno sobie poradzisz. Ja, jeśli pozwolisz, pójdę sobie na kawę",
+		  "text": "Yyy... nie wnikaj kto, hehe, wejdź na serwer i coś zrób. Na spokojnie, na pewno sobie poradzisz. Ja, jeśli pozwolisz, pójdę sobie na kawę",
 		  "command": "start_quest:main_quest_3, unlock_machine:machine_3",
 		  "portrait": "dorotka_normal"
 		}
@@ -364,7 +365,7 @@
 	  "lines": [
 		{
 		  "name": "Gracz",
-		  "text": "Nic nie wybuchło, uff. Ciekawe, ile jeszcze takich misji dzisiaj na mnie czeka, niezły tu zamęt"
+		  "text": "Nic nie wybuchło, uff. Ciekawe, ile jeszcze takich misji dzisiaj na mnie czeka, niezły tu zamęt."
 		}
 	  ]
 	}

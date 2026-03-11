@@ -13,7 +13,9 @@ config_version=5
 config/name="re-boot"
 run/main_scene="uid://cn5webe7bjsnt"
 config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://dph6qs5nufkww"
+config/macos_native_icon="res://favicon.icns"
+config/windows_native_icon="res://favicon.ico"
 
 [audio]
 

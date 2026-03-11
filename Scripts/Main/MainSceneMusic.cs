@@ -62,6 +62,14 @@ public partial class MainSceneMusic : Node
 			_globalMusicPlayer.StreamPaused = true;
 		}
 	}
+	// Funkcja pozwalająca zatrzymać globalną muzykę z zewnątrz
+	public static void PauseBackgroundMusic()
+	{
+		if (_globalMusicPlayer != null)
+		{
+			_globalMusicPlayer.StreamPaused = true;
+		}
+	}
 
 	private static void PlayNextTrack()
 	{
